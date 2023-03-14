@@ -3,17 +3,17 @@ package sample.cluster.client.grpc
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
-import akka.actor.Actor
-import akka.actor.ActorRef
-import akka.actor.Props
-import akka.cluster.Cluster
-import akka.cluster.pubsub._
-import akka.remote.testconductor.RoleName
-import akka.remote.testkit.MultiNodeConfig
-import akka.remote.testkit.MultiNodeSpec
-import akka.stream.Materializer
-import akka.testkit._
-import akka.util.Timeout
+import org.apache.pekko.actor.Actor
+import org.apache.pekko.actor.ActorRef
+import org.apache.pekko.actor.Props
+import org.apache.pekko.cluster.Cluster
+import org.apache.pekko.cluster.pubsub._
+import org.apache.pekko.remote.testconductor.RoleName
+import org.apache.pekko.remote.testkit.MultiNodeConfig
+import org.apache.pekko.remote.testkit.MultiNodeSpec
+import org.apache.pekko.stream.Materializer
+import org.apache.pekko.testkit._
+import org.apache.pekko.util.Timeout
 import com.typesafe.config.ConfigFactory
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.Matchers
@@ -27,10 +27,10 @@ object ClusterClientSpec extends MultiNodeConfig {
   val fourth = role("fourth")
 
   commonConfig(ConfigFactory.parseString("""
-    akka.loglevel = INFO
-    akka.http.server.preview.enable-http2 = on
-    akka.actor.provider = "cluster"
-    akka.remote.artery.canonical.port = 0
+    org.apache.pekko.loglevel = INFO
+    org.apache.pekko.http.server.preview.enable-http2 = on
+    org.apache.pekko.actor.provider = "cluster"
+    org.apache.pekko.remote.artery.canonical.port = 0
     """).withFallback(ConfigFactory.load()))
 
   val grpcPorts: Map[RoleName, Int] =
@@ -169,7 +169,7 @@ class ClusterClientSpec
     "work with ask and session" in within(10.seconds) {
       // ask with Send is inefficient but should work
       runOn(client) {
-        import akka.pattern.ask
+        import org.apache.pekko.pattern.ask
         val c = system.actorOf(ClusterClient.props(ClusterClientSettings(system)), "ask-session-client")
         implicit val timeout = Timeout(remaining)
         val reply1 = c ? ClusterClient.Send("/user/testService", "hello-1-request", localAffinity = true)
@@ -188,7 +188,7 @@ class ClusterClientSpec
 
     "work with explicit ask" in within(10.seconds) {
       runOn(client) {
-        import akka.pattern.ask
+        import org.apache.pekko.pattern.ask
         val c = system.actorOf(ClusterClient.props(ClusterClientSettings(system)), "ask-client")
         implicit val timeout = Timeout(remaining)
         val reply1 = c ? ClusterClient.SendAsk("/user/testService", "hello-1-request", localAffinity = true)
