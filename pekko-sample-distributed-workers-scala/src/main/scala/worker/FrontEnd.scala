@@ -3,10 +3,10 @@ package worker
 import java.util.UUID
 import java.util.concurrent.ThreadLocalRandom
 
-import akka.actor.typed._
-import akka.actor.typed.Behavior
-import akka.actor.typed.scaladsl.{ ActorContext, Behaviors, TimerScheduler }
-import akka.util.Timeout
+import org.apache.pekko.actor.typed._
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.scaladsl.{ ActorContext, Behaviors, TimerScheduler }
+import org.apache.pekko.util.Timeout
 import worker.WorkManager.SubmitWork
 
 import scala.concurrent.duration._

@@ -1,14 +1,14 @@
 package worker
 
-import akka.Done
-import akka.actor.typed.delivery.WorkPullingProducerController.{MessageWithConfirmation, RequestNext}
-import akka.actor.typed.delivery.{ConsumerController, WorkPullingProducerController}
-import akka.actor.typed.receptionist.ServiceKey
-import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.{ActorRef, Behavior}
-import akka.persistence.typed.{PersistenceId, RecoveryCompleted}
-import akka.persistence.typed.scaladsl.{Effect, EventSourcedBehavior}
-import akka.util.Timeout
+import org.apache.pekko.Done
+import org.apache.pekko.actor.typed.delivery.WorkPullingProducerController.{MessageWithConfirmation, RequestNext}
+import org.apache.pekko.actor.typed.delivery.{ConsumerController, WorkPullingProducerController}
+import org.apache.pekko.actor.typed.receptionist.ServiceKey
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.{ActorRef, Behavior}
+import org.apache.pekko.persistence.typed.{PersistenceId, RecoveryCompleted}
+import org.apache.pekko.persistence.typed.scaladsl.{Effect, EventSourcedBehavior}
+import org.apache.pekko.util.Timeout
 import worker.WorkState.{WorkAccepted, WorkCompleted, WorkDomainEvent, WorkStarted, WorkInProgressReset}
 
 import scala.concurrent.duration.{FiniteDuration, _}

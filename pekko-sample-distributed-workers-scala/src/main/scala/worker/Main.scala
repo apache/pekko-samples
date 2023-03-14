@@ -3,13 +3,13 @@ package worker
 import java.io.File
 import java.util.concurrent.CountDownLatch
 
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.scaladsl.Behaviors
-import akka.cluster.typed.Cluster
-import akka.persistence.cassandra.testkit.CassandraLauncher
+import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.cluster.typed.Cluster
+import org.apache.pekko.persistence.cassandra.testkit.CassandraLauncher
 import com.typesafe.config.{Config, ConfigFactory}
-import akka.cluster.typed.SelfUp
-import akka.cluster.typed.Subscribe
+import org.apache.pekko.cluster.typed.SelfUp
+import org.apache.pekko.cluster.typed.Subscribe
 
 object Main {
 
@@ -80,13 +80,13 @@ object Main {
 
   def config(port: Int, role: String): Config =
     ConfigFactory.parseString(s"""
-      akka.remote.artery.canonical.port=$port
-      akka.cluster.roles=[$role]
+      pekko.remote.artery.canonical.port=$port
+      pekko.cluster.roles=[$role]
     """).withFallback(ConfigFactory.load())
 
   /**
     * To make the sample easier to run we kickstart a Cassandra instance to
-    * act as the journal. Cassandra is a great choice of backend for Akka Persistence but
+    * act as the journal. Cassandra is a great choice of backend for Pekko Persistence but
     * in a real application a pre-existing Cassandra cluster should be used.
     */
   def startCassandraDatabase(): Unit = {

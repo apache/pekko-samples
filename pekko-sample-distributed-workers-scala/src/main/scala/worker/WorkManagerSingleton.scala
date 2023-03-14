@@ -1,11 +1,11 @@
 package worker
 
-import akka.actor.typed.ActorRef
-import akka.actor.typed.ActorSystem
-import akka.cluster.typed.ClusterSingleton
+import org.apache.pekko.actor.typed.ActorRef
+import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.cluster.typed.ClusterSingleton
 
 import scala.concurrent.duration._
-import akka.cluster.typed._
+import org.apache.pekko.cluster.typed._
 import worker.WorkManager.Command
 
 object WorkManagerSingleton {
