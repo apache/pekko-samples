@@ -28,7 +28,7 @@ object App {
   def startup(port: Int): Unit = {
     // Override the configuration of the port
     val config = ConfigFactory.parseString(s"""
-      org.apache.pekko.remote.artery.canonical.port=$port
+      pekko.remote.artery.canonical.port=$port
       """).withFallback(ConfigFactory.load())
 
     // Create an Pekko system

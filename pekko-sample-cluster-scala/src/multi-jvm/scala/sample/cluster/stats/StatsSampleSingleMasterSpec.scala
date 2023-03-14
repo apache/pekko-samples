@@ -38,9 +38,9 @@ object StatsSampleSingleMasterSpecConfig extends MultiNodeConfig {
   // this configuration will be used for all nodes
   // note that no fixed host names and ports are used
   commonConfig(ConfigFactory.parseString("""
-    org.apache.pekko.loglevel = INFO
-    org.apache.pekko.actor.provider = cluster
-    org.apache.pekko.cluster.roles = [compute]
+    pekko.loglevel = INFO
+    pekko.actor.provider = cluster
+    pekko.cluster.roles = [compute]
     """).withFallback(ConfigFactory.load()))
 
 }
