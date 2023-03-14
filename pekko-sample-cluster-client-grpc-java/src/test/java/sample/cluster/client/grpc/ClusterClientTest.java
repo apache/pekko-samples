@@ -47,8 +47,8 @@ public class ClusterClientTest {
 
   private static Config clusterConfig(int grpcPort) {
    return  ConfigFactory.parseString(
-        "org.apache.pekko.actor.provider = cluster \n" +
-          "org.apache.pekko.remote.artery.canonical.port = 0 \n" +
+        "pekko.actor.provider = cluster \n" +
+          "pekko.remote.artery.canonical.port = 0 \n" +
           "sample.cluster.client.grpc.receptionist.canonical.port = " + grpcPort + " \n" +
           "").withFallback(ConfigFactory.load());
   }
@@ -57,7 +57,7 @@ public class ClusterClientTest {
   public static void setup() {
     Config clientConfig =
       ConfigFactory.parseString(
-        "org.apache.pekko.actor.provider = local \n" +
+        "pekko.actor.provider = local \n" +
           "").withFallback(ConfigFactory.load());
 
     clientNode = ActorSystem.create("ClusterClientTest");

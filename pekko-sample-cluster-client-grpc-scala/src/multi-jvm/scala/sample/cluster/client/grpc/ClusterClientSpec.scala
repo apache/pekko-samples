@@ -27,10 +27,10 @@ object ClusterClientSpec extends MultiNodeConfig {
   val fourth = role("fourth")
 
   commonConfig(ConfigFactory.parseString("""
-    org.apache.pekko.loglevel = INFO
-    org.apache.pekko.http.server.preview.enable-http2 = on
-    org.apache.pekko.actor.provider = "cluster"
-    org.apache.pekko.remote.artery.canonical.port = 0
+    pekko.loglevel = INFO
+    pekko.http.server.preview.enable-http2 = on
+    pekko.actor.provider = "cluster"
+    pekko.remote.artery.canonical.port = 0
     """).withFallback(ConfigFactory.load()))
 
   val grpcPorts: Map[RoleName, Int] =
