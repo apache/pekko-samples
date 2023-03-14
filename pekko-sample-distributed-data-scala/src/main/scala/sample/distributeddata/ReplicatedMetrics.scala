@@ -4,21 +4,21 @@ import java.lang.management.ManagementFactory
 import java.lang.management.MemoryMXBean
 import scala.concurrent.duration._
 import scala.concurrent.duration.FiniteDuration
-import akka.actor.Address
-import akka.actor.typed.Behavior
-import akka.actor.typed.eventstream.EventStream
-import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.scaladsl.LoggerOps
-import akka.cluster.ClusterEvent
-import akka.cluster.ddata.LWWMap
-import akka.cluster.ddata.LWWMapKey
-import akka.cluster.ddata.ReplicatedData
-import akka.cluster.ddata.Replicator._
-import akka.cluster.ddata.SelfUniqueAddress
-import akka.cluster.ddata.typed.scaladsl.DistributedData
-import akka.cluster.ddata.typed.scaladsl.Replicator.Update
-import akka.cluster.typed.Cluster
-import akka.cluster.typed.Subscribe
+import org.apache.pekko.actor.Address
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.eventstream.EventStream
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.scaladsl.LoggerOps
+import org.apache.pekko.cluster.ClusterEvent
+import org.apache.pekko.cluster.ddata.LWWMap
+import org.apache.pekko.cluster.ddata.LWWMapKey
+import org.apache.pekko.cluster.ddata.ReplicatedData
+import org.apache.pekko.cluster.ddata.Replicator._
+import org.apache.pekko.cluster.ddata.SelfUniqueAddress
+import org.apache.pekko.cluster.ddata.typed.scaladsl.DistributedData
+import org.apache.pekko.cluster.ddata.typed.scaladsl.Replicator.Update
+import org.apache.pekko.cluster.typed.Cluster
+import org.apache.pekko.cluster.typed.Subscribe
 
 object ReplicatedMetrics {
   sealed trait Command

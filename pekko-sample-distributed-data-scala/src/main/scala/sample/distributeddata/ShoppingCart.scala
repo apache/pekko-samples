@@ -1,16 +1,16 @@
 package sample.distributeddata
 
 import scala.concurrent.duration._
-import akka.actor.typed.ActorRef
-import akka.actor.typed.Behavior
-import akka.actor.typed.scaladsl.Behaviors
-import akka.cluster.ddata.LWWMap
-import akka.cluster.ddata.LWWMapKey
-import akka.cluster.ddata.ReplicatedData
-import akka.cluster.ddata.Replicator._
-import akka.cluster.ddata.SelfUniqueAddress
-import akka.cluster.ddata.typed.scaladsl.DistributedData
-import akka.cluster.ddata.typed.scaladsl.Replicator.{ Update, Get }
+import org.apache.pekko.actor.typed.ActorRef
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.cluster.ddata.LWWMap
+import org.apache.pekko.cluster.ddata.LWWMapKey
+import org.apache.pekko.cluster.ddata.ReplicatedData
+import org.apache.pekko.cluster.ddata.Replicator._
+import org.apache.pekko.cluster.ddata.SelfUniqueAddress
+import org.apache.pekko.cluster.ddata.typed.scaladsl.DistributedData
+import org.apache.pekko.cluster.ddata.typed.scaladsl.Replicator.{ Update, Get }
 
 object ShoppingCart {
   sealed trait Command

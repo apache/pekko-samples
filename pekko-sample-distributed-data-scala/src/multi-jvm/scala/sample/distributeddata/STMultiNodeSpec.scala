@@ -1,6 +1,6 @@
 package sample.distributeddata
 
-import akka.remote.testkit.MultiNodeSpecCallbacks
+import org.apache.pekko.remote.testkit.MultiNodeSpecCallbacks
 
 import org.scalatest.{ BeforeAndAfterAll, WordSpecLike }
 import org.scalatest.Matchers
