@@ -1,27 +1,27 @@
 package sample.distributeddata;
 
-import static akka.cluster.ddata.typed.javadsl.Replicator.readLocal;
-import static akka.cluster.ddata.typed.javadsl.Replicator.writeLocal;
+import static org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.readLocal;
+import static org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.writeLocal;
 
 import java.util.Optional;
 import scala.Option;
 
-import akka.actor.typed.ActorRef;
-import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.ActorContext;
-import akka.actor.typed.javadsl.Behaviors;
-import akka.cluster.ddata.Key;
-import akka.cluster.ddata.LWWMap;
-import akka.cluster.ddata.LWWMapKey;
-import akka.cluster.ddata.SelfUniqueAddress;
-import akka.cluster.ddata.typed.javadsl.DistributedData;
-import akka.cluster.ddata.typed.javadsl.Replicator.Get;
-import akka.cluster.ddata.typed.javadsl.Replicator.GetResponse;
-import akka.cluster.ddata.typed.javadsl.Replicator.GetSuccess;
-import akka.cluster.ddata.typed.javadsl.Replicator.NotFound;
-import akka.cluster.ddata.typed.javadsl.Replicator.Update;
-import akka.cluster.ddata.typed.javadsl.Replicator.UpdateResponse;
-import akka.cluster.ddata.typed.javadsl.ReplicatorMessageAdapter;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.javadsl.ActorContext;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.cluster.ddata.Key;
+import org.apache.pekko.cluster.ddata.LWWMap;
+import org.apache.pekko.cluster.ddata.LWWMapKey;
+import org.apache.pekko.cluster.ddata.SelfUniqueAddress;
+import org.apache.pekko.cluster.ddata.typed.javadsl.DistributedData;
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.Get;
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.GetResponse;
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.GetSuccess;
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.NotFound;
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.Update;
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.UpdateResponse;
+import org.apache.pekko.cluster.ddata.typed.javadsl.ReplicatorMessageAdapter;
 
 public class ReplicatedCache {
 

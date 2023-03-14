@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.math.BigInteger;
 import java.util.Map;
 
-import akka.actor.typed.ActorRef;
-import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.ActorContext;
-import akka.actor.typed.javadsl.BehaviorBuilder;
-import akka.actor.typed.javadsl.Behaviors;
-import akka.cluster.ddata.*;
-import akka.cluster.ddata.typed.javadsl.DistributedData;
-import akka.cluster.ddata.typed.javadsl.ReplicatorMessageAdapter;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.javadsl.ActorContext;
+import org.apache.pekko.actor.typed.javadsl.BehaviorBuilder;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.cluster.ddata.*;
+import org.apache.pekko.cluster.ddata.typed.javadsl.DistributedData;
+import org.apache.pekko.cluster.ddata.typed.javadsl.ReplicatorMessageAdapter;
 
-import static akka.cluster.ddata.typed.javadsl.Replicator.*;
+import static org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.*;
 
 public class VotingService {
 

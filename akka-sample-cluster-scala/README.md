@@ -1,4 +1,4 @@
-This tutorial contains 3 samples illustrating different [Akka cluster](https://doc.akka.io/docs/akka/2.6/typed/cluster.html) features.
+This tutorial contains 3 samples illustrating different [Akka cluster](https://pekko.apache.org/docs/pekko/current/typed/cluster.html) features.
 
 - Subscribe to cluster membership events
 - Sending messages to actors running on nodes in the cluster
@@ -18,7 +18,7 @@ Open [SimpleClusterApp.scala](src/main/scala/sample/cluster/simple/App.scala).
 
 The small program together with its configuration starts an ActorSystem with the Cluster enabled. It joins the cluster and starts an actor that logs some membership events. Take a look at the [SimpleClusterListener.scala](src/main/scala/sample/cluster/simple/ClusterListener.scala) actor.
 
-You can read more about the cluster concepts in the [documentation](https://doc.akka.io/docs/akka/2.6/typed/cluster.html).
+You can read more about the cluster concepts in the [documentation](https://pekko.apache.org/docs/pekko/current/typed/cluster.html).
 
 To run this sample, type `sbt "runMain sample.cluster.simple.App"`.
 
@@ -50,7 +50,7 @@ Shut down one of the nodes by pressing 'ctrl-c' in one of the terminal windows. 
 
 Look at the source code of the actor again. It registers itself as subscriber of certain cluster events. It gets notified a stream of events leading up to the current state. After that it receives events for changes that happen in the cluster.
 
-Now we have seen how to subscribe to cluster membership events. You can read more about it in the [documentation](https://doc.akka.io/docs/akka/2.6/typed/cluster.html#cluster-subscriptions). The membership events show us the state of the cluster but it does not help with accessing actors on other nodes the cluster. To do that we need to use the [Receptionist](https://doc.akka.io/docs/akka/2.6/typed/actor-discovery.html#receptionist).
+Now we have seen how to subscribe to cluster membership events. You can read more about it in the [documentation](https://pekko.apache.org/docs/pekko/current/typed/cluster.html#cluster-subscriptions). The membership events show us the state of the cluster but it does not help with accessing actors on other nodes the cluster. To do that we need to use the [Receptionist](https://pekko.apache.org/docs/pekko/current/typed/actor-discovery.html#receptionist).
 
 ## Worker registration example
 
@@ -85,7 +85,7 @@ There is a component built into Akka that performs the task of subscribing to th
 
 ## Cluster Aware Routers
 
-The [group routers](https://doc.akka.io/docs/akka/2.6/typed/routers.html#group-router) relies on the `Receptionist` and will therefore route messages to services registered in any node of the cluster.
+The [group routers](https://pekko.apache.org/docs/pekko/current/typed/routers.html#group-router) relies on the `Receptionist` and will therefore route messages to services registered in any node of the cluster.
 
 Let's take a look at a few samples that make use of cluster aware routers.
 

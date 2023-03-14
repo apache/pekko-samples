@@ -1,6 +1,6 @@
 package sample.distributeddata;
 
-import static akka.cluster.ddata.typed.javadsl.Replicator.writeLocal;
+import static org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.writeLocal;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
@@ -8,30 +8,30 @@ import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
 
-import akka.actor.Address;
-import akka.actor.typed.ActorRef;
-import akka.actor.typed.Behavior;
-import akka.actor.typed.eventstream.EventStream;
-import akka.actor.typed.javadsl.AbstractBehavior;
-import akka.actor.typed.javadsl.ActorContext;
-import akka.actor.typed.javadsl.Behaviors;
-import akka.actor.typed.javadsl.Receive;
-import akka.cluster.ClusterEvent.MemberRemoved;
-import akka.cluster.ClusterEvent.MemberUp;
-import akka.cluster.ClusterEvent;
-import akka.cluster.ddata.Key;
-import akka.cluster.ddata.LWWMap;
-import akka.cluster.ddata.LWWMapKey;
-import akka.cluster.ddata.ReplicatedData;
-import akka.cluster.ddata.SelfUniqueAddress;
-import akka.cluster.ddata.typed.javadsl.DistributedData;
-import akka.cluster.ddata.typed.javadsl.Replicator.Changed;
-import akka.cluster.ddata.typed.javadsl.Replicator.SubscribeResponse;
-import akka.cluster.ddata.typed.javadsl.Replicator.Update;
-import akka.cluster.ddata.typed.javadsl.Replicator.UpdateResponse;
-import akka.cluster.ddata.typed.javadsl.ReplicatorMessageAdapter;
-import akka.cluster.typed.Cluster;
-import akka.cluster.typed.Subscribe;
+import org.apache.pekko.actor.Address;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.eventstream.EventStream;
+import org.apache.pekko.actor.typed.javadsl.AbstractBehavior;
+import org.apache.pekko.actor.typed.javadsl.ActorContext;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.actor.typed.javadsl.Receive;
+import org.apache.pekko.cluster.ClusterEvent.MemberRemoved;
+import org.apache.pekko.cluster.ClusterEvent.MemberUp;
+import org.apache.pekko.cluster.ClusterEvent;
+import org.apache.pekko.cluster.ddata.Key;
+import org.apache.pekko.cluster.ddata.LWWMap;
+import org.apache.pekko.cluster.ddata.LWWMapKey;
+import org.apache.pekko.cluster.ddata.ReplicatedData;
+import org.apache.pekko.cluster.ddata.SelfUniqueAddress;
+import org.apache.pekko.cluster.ddata.typed.javadsl.DistributedData;
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.Changed;
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.SubscribeResponse;
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.Update;
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.UpdateResponse;
+import org.apache.pekko.cluster.ddata.typed.javadsl.ReplicatorMessageAdapter;
+import org.apache.pekko.cluster.typed.Cluster;
+import org.apache.pekko.cluster.typed.Subscribe;
 
 public class ReplicatedMetrics extends AbstractBehavior<ReplicatedMetrics.Command> {
 

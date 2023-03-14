@@ -1,4 +1,4 @@
-This example illustrates event sourcing with [Akka Persistence](https://doc.akka.io/docs/akka/2.6/typed/persistence.html).
+This example illustrates event sourcing with [Akka Persistence](https://pekko.apache.org/docs/pekko/current/typed/persistence.html).
 
 Study the source code of the [ShoppingCart.scala](src/main/scala/sample/persistence/ShoppingCart.scala). A few things
 to note:
@@ -7,7 +7,7 @@ to note:
 * It defines `Command`, `Event` and `State`
 * Commands define `replyTo: ActorRef` to send a confirmation when the event has been successfully persisted
 * `State` is only updated in the event handler
-* `withRetention` to enable [snapshotting](https://doc.akka.io/docs/akka/2.6/typed/persistence-snapshot.html)
+* `withRetention` to enable [snapshotting](https://pekko.apache.org/docs/pekko/current/typed/persistence-snapshot.html)
 * `onPersistFailure` defines restarts with backoff in case of failures
 
 Tests are defined in [ShoppingCartSpec.scala](src/test/scala/sample/persistence/ShoppingCartSpec.scala).

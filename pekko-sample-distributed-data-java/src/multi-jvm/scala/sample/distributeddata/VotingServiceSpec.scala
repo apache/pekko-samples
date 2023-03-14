@@ -2,16 +2,16 @@ package sample.distributeddata
 
 import java.math.BigInteger
 import scala.concurrent.duration._
-import akka.actor.testkit.typed.scaladsl.TestProbe
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.scaladsl.adapter._
-import akka.cluster.ddata.typed.javadsl.DistributedData
-import akka.cluster.ddata.typed.javadsl.Replicator.GetReplicaCount
-import akka.cluster.ddata.typed.javadsl.Replicator.ReplicaCount
-import akka.cluster.typed.{ Cluster, Join }
-import akka.remote.testconductor.RoleName
-import akka.remote.testkit.MultiNodeConfig
-import akka.remote.testkit.MultiNodeSpec
+import org.apache.pekko.actor.testkit.typed.scaladsl.TestProbe
+import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.actor.typed.scaladsl.adapter._
+import org.apache.pekko.cluster.ddata.typed.javadsl.DistributedData
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.GetReplicaCount
+import org.apache.pekko.cluster.ddata.typed.javadsl.Replicator.ReplicaCount
+import org.apache.pekko.cluster.typed.{ Cluster, Join }
+import org.apache.pekko.remote.testconductor.RoleName
+import org.apache.pekko.remote.testkit.MultiNodeConfig
+import org.apache.pekko.remote.testkit.MultiNodeSpec
 import com.typesafe.config.ConfigFactory
 
 object VotingServiceSpec extends MultiNodeConfig {
@@ -20,9 +20,9 @@ object VotingServiceSpec extends MultiNodeConfig {
   val node3 = role("node-3")
 
   commonConfig(ConfigFactory.parseString("""
-    akka.loglevel = INFO
-    akka.actor.provider = "cluster"
-    akka.log-dead-letters-during-shutdown = off
+    pekko.loglevel = INFO
+    pekko.actor.provider = "cluster"
+    pekko.log-dead-letters-during-shutdown = off
     """))
 
 }
