@@ -4,31 +4,31 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>akka-sample-cluster-java</artifactId>
-  <groupId>com.lightbend.akka.samples</groupId>
-  <name>Akka Cluster in Java</name>
+  <artifactId>pekko-sample-cluster-java</artifactId>
+  <groupId>org.apache.pekko</groupId>
+  <name>Pekko Cluster in Java</name>
   <version>empty</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <akka.version>2.6.20</akka.version>
+    <pekko.version>0.0.0+26617-325e2156-SNAPSHOT</pekko.version>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-actor-typed_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-actor-typed_2.13</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-cluster-typed_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-cluster-typed_2.13</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-serialization-jackson_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-serialization-jackson_2.13</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -36,9 +36,9 @@
       <version>1.2.11</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-actor-testkit-typed_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-actor-testkit-typed_2.13</artifactId>
+      <version>${pekko.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
