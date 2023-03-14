@@ -34,11 +34,11 @@ jobs:
       - name: Test akka-sample-cluster-client-grpc-java
         run: cd akka-sample-cluster-client-grpc-java && mvn test
 
-      - name: Test akka-sample-distributed-data-java
-        run: cd akka-sample-distributed-data-java && sbt multi-jvm:test
+      - name: Test pekko-sample-distributed-data-java
+        run: cd pekko-sample-distributed-data-java && sbt multi-jvm:test
 
-      - name: Test akka-sample-distributed-data-scala
-        run: cd akka-sample-distributed-data-scala && sbt multi-jvm:test
+      - name: Test pekko-sample-distributed-data-scala
+        run: cd pekko-sample-distributed-data-scala && sbt multi-jvm:test
 
       - name: Test akka-sample-fsm-java
         run: cd akka-sample-fsm-java && mvn test
