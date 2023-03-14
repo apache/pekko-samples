@@ -1,8 +1,8 @@
 package sample.cluster.client.grpc
 
-import akka.actor.ActorSystem
-import akka.serialization.SerializationExtension
-import akka.serialization.Serializers
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.serialization.SerializationExtension
+import org.apache.pekko.serialization.Serializers
 import com.google.protobuf.ByteString
 
 class ClusterClientSerialization(system: ActorSystem) {
