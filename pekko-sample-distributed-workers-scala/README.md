@@ -1,9 +1,9 @@
-# Akka Distributed Workers with Scala Guide
+# Pekko Distributed Workers with Scala Guide
 
 To be reactive, distributed applications must deal gracefully with temporary and prolonged outages as well as have
 the ability to scale up and down to make the best use of resources.
-Akka Cluster provides these capabilities so that you don't have to implement them yourself.
-The distributed workers example demonstrates the following Akka clustering capabilities:
+Pekko Cluster provides these capabilities so that you don't have to implement them yourself.
+The distributed workers example demonstrates the following Pekko clustering capabilities:
 
 * elastic addition and removal of the front-end actors that accept client requests
 * elastic addition and removal of the back-end actors that perform the work distribution of actors across different nodes
@@ -22,12 +22,12 @@ sbt run
 After waiting a few seconds for the cluster to form the output should start look _something_ like this (scroll all the way to the right to see the Actor output):
 
 ```bash
-[INFO] [07/21/2017 17:41:53.320] [ClusterSystem-akka.actor.default-dispatcher-16] [akka://ClusterSystem@127.0.0.1:51983/user/producer] Produced work: 3
-[INFO] [07/21/2017 17:41:53.322] [ClusterSystem-akka.actor.default-dispatcher-3] [akka://ClusterSystem@127.0.0.1:2551/user/master/singleton] Accepted work: 3bce4d6d-eaae-4da6-b316-0c6f566f2399
-[INFO] [07/21/2017 17:41:53.328] [ClusterSystem-akka.actor.default-dispatcher-3] [akka://ClusterSystem@127.0.0.1:2551/user/master/singleton] Giving worker 2b646020-6273-437c-aa0d-4aad6f12fb47 some work 3bce4d6d-eaae-4da6-b316-0c6f566f2399
-[INFO] [07/21/2017 17:41:53.328] [ClusterSystem-akka.actor.default-dispatcher-2] [akka://ClusterSystem@127.0.0.1:51980/user/worker] Got work: 3
-[INFO] [07/21/2017 17:41:53.328] [ClusterSystem-akka.actor.default-dispatcher-16] [akka://ClusterSystem@127.0.0.1:51980/user/worker] Work is complete. Result 3 * 3 = 9.
-[INFO] [07/21/2017 17:41:53.329] [ClusterSystem-akka.actor.default-dispatcher-19] [akka://ClusterSystem@127.0.0.1:2551/user/master/singleton] Work 3bce4d6d-eaae-4da6-b316-0c6f566f2399 is done by worker 2b646020-6273-437c-aa0d-4aad6f12fb47
+[INFO] [07/21/2017 17:41:53.320] [ClusterSystem-pekko.actor.default-dispatcher-16] [pekko://ClusterSystem@127.0.0.1:51983/user/producer] Produced work: 3
+[INFO] [07/21/2017 17:41:53.322] [ClusterSystem-pekko.actor.default-dispatcher-3] [pekko://ClusterSystem@127.0.0.1:2551/user/master/singleton] Accepted work: 3bce4d6d-eaae-4da6-b316-0c6f566f2399
+[INFO] [07/21/2017 17:41:53.328] [ClusterSystem-pekko.actor.default-dispatcher-3] [pekko://ClusterSystem@127.0.0.1:2551/user/master/singleton] Giving worker 2b646020-6273-437c-aa0d-4aad6f12fb47 some work 3bce4d6d-eaae-4da6-b316-0c6f566f2399
+[INFO] [07/21/2017 17:41:53.328] [ClusterSystem-pekko.actor.default-dispatcher-2] [pekko://ClusterSystem@127.0.0.1:51980/user/worker] Got work: 3
+[INFO] [07/21/2017 17:41:53.328] [ClusterSystem-pekko.actor.default-dispatcher-16] [pekko://ClusterSystem@127.0.0.1:51980/user/worker] Work is complete. Result 3 * 3 = 9.
+[INFO] [07/21/2017 17:41:53.329] [ClusterSystem-pekko.actor.default-dispatcher-19] [pekko://ClusterSystem@127.0.0.1:2551/user/master/singleton] Work 3bce4d6d-eaae-4da6-b316-0c6f566f2399 is done by worker 2b646020-6273-437c-aa0d-4aad6f12fb47
 ```
 
 Now take a look at what happened under the covers.
@@ -46,9 +46,9 @@ Let's look at the details of each part of the application, starting with the fro
 ## Front end
 
 Typically in systems built with Akka, clients submit requests using a RESTful API or a gRPC API.
-Either [Akka HTTP](http://doc.akka.io/docs/akka-http/current/scala/http/introduction.html) or [Play Framework](https://www.playframework.com)
+Either [PekkoHTTP](http://doc.pekko.io/docs/pekko-http/current/scala/http/introduction.html) or [Play Framework](https://www.playframework.com)
 are great choices for implementing an HTTP API for the front-end, [Akka
-gRPC](https://doc.akka.io/docs/akka-grpc/current/index.html) can be used of a gRPC front end is preferred.
+gRPC](https://doc.pekko.io/docs/pekko-grpc/current/index.html) can be used of a gRPC front end is preferred.
 
 To limit the scope of this example, we have chosen to emulate client activity with two ordinary actors:
 
@@ -79,7 +79,7 @@ The cluster contains one `WorkManager` actor. The `FrontEnd` actor does not need
 The 'WorkManager' actor can accept or deny a work request and we need to deal with unexpected errors:
 
 * If the 'WorkManager' accepts the request, the actor schedules a new tick to itself and toggles back to the idle behavior.
-* To deal with failures, the message uses the [ask pattern](http://doc.akka.io/docs/akka/current/scala/actors.html#ask-send-and-receive-future) to add a timeout to wait for a reply. If the timeout expires before the master responds, the returned 'Future' fails with an akka.pattern.AskTimeoutException.
+* To deal with failures, the message uses the [ask pattern](http://pekko.apache.org/docs/pekko/current//scala/actors.html#ask-send-and-receive-future) to add a timeout to wait for a reply. If the timeout expires before the master responds, the returned 'Future' fails with an pekko.pattern.AskTimeoutException.
 * We transform timeouts or denials from the 'WorkManager' into a 'Failed' value that is automatically piped back to `self` and a `Retry` is scheduled.
 
 When a workload has been acknowledged by the master, the actor goes back to the  `idle` behavior which schedules
@@ -100,13 +100,13 @@ In an actual application you would probably want a way for clients to poll or st
 
 The back-end nodes host the `WorkManager` actor, which manages work, keeps track of available workers,
 and notifies registered workers when new work is available. The single `WorkManager` actor is the heart of the solution,
-with built-in resilience provided by the [Akka Cluster Singleton](http://doc.akka.io/docs/akka/current/scala/guide/modules.html#cluster-singleton).
+with built-in resilience provided by the [Pekko Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton).
 
 ### The WorkManager singleton
 
-The [Cluster Singleton](http://doc.akka.io/docs/akka/current/scala/guide/modules.html#cluster-singleton) tool in Akka makes sure an
+The [Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton) tool in Pekko makes sure an
 actor only runs concurrently on one node within the subset of nodes marked with the role `back-end` at any given time.
-It will run on the oldest back-end node. If the node on which the 'WorkManager' is running is removed from the cluster, Akka starts a new
+It will run on the oldest back-end node. If the node on which the 'WorkManager' is running is removed from the cluster, Pekkostarts a new
 `WorkManager` on the next oldest node. Other nodes in the cluster interact with the `WorkManager` through the `ClusterSingletonProxy` without
 knowing the explicit location. You can see this interaction in the `FrontEnd` and `Worker` actors.
 
@@ -128,24 +128,24 @@ Let's now explore the implementation of the `WorkManager` actor in depth.
 ## Work manager in detail
 
 The `WorkManager` actor is without question the most involved component in this example.
-This is because it is designed to deal with failures. While the Akka cluster takes care of restarting the `WorkManager` in case of a failure, we also want to make sure that the new `WorkManager` can arrive at the same state as the failed `WorkManager`. We use event sourcing and Akka Persistence to achieve this.
+This is because it is designed to deal with failures. While the Pekko Cluster takes care of restarting the `WorkManager` in case of a failure, we also want to make sure that the new `WorkManager` can arrive at the same state as the failed `WorkManager`. We use event sourcing and PekkoPersistence to achieve this.
 
-If the `back-end` node hosting the `WorkManager` actor would crash the Akka Cluster Singleton makes sure it starts up on a different node, but we would also want it to reach the exact same state as the crashed node `WorkManager`. This is achieved through use of event sourcing and [Akka Persistence](http://doc.akka.io/docs/akka/current/scala/persistence.html).
+If the `back-end` node hosting the `WorkManager` actor would crash the Pekko Cluster Singleton makes sure it starts up on a different node, but we would also want it to reach the exact same state as the crashed node `WorkManager`. This is achieved through use of event sourcing and [PekkoPersistence](http://pekko.apache.org/docs/pekko/current//scala/persistence.html).
 
 ### Tracking current work items
 
 The current set of work item is modelled in the `WorkState` class. It keeps track of the current set of work that is pending, has been accepted by a worker, has completed etc. Every change to the `WorkState` is modelled as a domain event.
 
 This allows us to capture and store each such event that happens, we can later replay all of them on an empty model and
-arrive at the exact same state. This is how event sourcing and [Akka Persistence](http://doc.akka.io/docs/akka/current/scala/persistence.html) allows the actor to start on any node and reach the same state as a previous instance.
+arrive at the exact same state. This is how event sourcing and [PekkoPersistence](http://pekko.apache.org/docs/pekko/current//scala/persistence.html) allows the actor to start on any node and reach the same state as a previous instance.
 
 If the `WorkManager` fails and is restarted, the replacement `WorkManager` replays events from the log to retrieve the current state. This means that when the WorkState is modified, the `WorkManager` must persist the event before acting on it. When the event is successfully stored, we can modify the state. Otherwise, if a failure occurs before the event is persisted, the replacement `WorkManager` will not be able to attain the same state as the failed `WorkManager`.
 
-Let's look at how a command to process a work item from the front-end comes in. The first thing you might notice is the comment saying _idempotent_, this means that the same work message may arrive multiple times, but regardless how many times the same work arrives, it should only be executed once. This is needed since the `FrontEnd` actor re-sends work in case of the `Work` or `Ack` messages getting lost (Akka does not provide any guarantee of delivery, [see details in the docs](http://doc.akka.io/docs/akka/current/scala/general/message-delivery-reliability.html#discussion-why-no-guaranteed-delivery-)).
+Let's look at how a command to process a work item from the front-end comes in. The first thing you might notice is the comment saying _idempotent_, this means that the same work message may arrive multiple times, but regardless how many times the same work arrives, it should only be executed once. This is needed since the `FrontEnd` actor re-sends work in case of the `Work` or `Ack` messages getting lost (Pekkodoes not provide any guarantee of delivery, [see details in the docs](http://pekko.apache.org/docs/pekko/current//scala/general/message-delivery-reliability.html#discussion-why-no-guaranteed-delivery-)).
 
 To make the logic idempotent we simple check if the work id is already known, and if it is we simply `Ack` it without further logic. If the work is previously unknown, we start by transforming it into a `WorkAccepted` event, which we persist,  and only in the `EventHandler` that is called after the event has been persisted do we actually update the `workState`, and send an `Ack` back to the `FrontEnd` and trigger a search for available workers. In this case the event handler delegates the logic to the `WorkState` domain class.
 
-### Implementation items required for Akka Persistence
+### Implementation items required for PekkoPersistence
 
 In a "normal" Actor the only thing we have only to provide a `Behavior`. For a `PersistentBehavior`
 there are three things that needs to be implemented:
@@ -231,7 +231,7 @@ sbt "runMain worker.Main 5001 3"
 
 Look at the log output in the different terminal windows. In the second window (front-end) you should see that the produced jobs are processed and logged as `"Consumed result"`.
 
-Take a look at the logging that is done in `WorkProducer`, `WorkManager` and `Worker`. Identify the corresponding log entries in the 3 terminal windows with Akka nodes.
+Take a look at the logging that is done in `WorkProducer`, `WorkManager` and `Worker`. Identify the corresponding log entries in the 3 terminal windows with Pekkonodes.
 
 Shutdown the worker node (fourth terminal window) with `ctrl-c`. Observe how the `"Consumed result"` logs in the front-end node (second terminal window) stops. Start the worker node again.
 
@@ -249,7 +249,7 @@ sbt "runMain worker.Main 2552"
 
 The nodes with port 2551 to 2554 are configured to be used as "seed nodes" in this sample, if you shutdown all or start none of these the other nodes will not know how to join the cluster. If all four are shut down and 2551 is started it will join itself and form a new cluster.
 
-As long as one of the four nodes is alive the cluster will keep working. You can read more about this in the [Akka documentation section on seed nodes](http://doc.akka.io/docs/akka/current/scala/cluster-usage.html).
+As long as one of the four nodes is alive the cluster will keep working. You can read more about this in the [Pekkodocumentation section on seed nodes](http://pekko.apache.org/docs/pekko/current//scala/cluster-usage.html).
 
 You can start more cluster front-end nodes using port numbers between 3000-3999:
 
@@ -277,19 +277,19 @@ The following are some ideas where to take this sample next. Implementation of e
 
 ### A HTTP Based API
 
-The `FrontEnd` in this sample is a dummy that automatically generates work. A real application could for example use [Akka HTTP](http://doc.akka.io/docs/akka-http/current/scala/http/introduction.html) to provide a HTTP REST (or other) API for external clients.
+The `FrontEnd` in this sample is a dummy that automatically generates work. A real application could for example use [PekkoHTTP](http://doc.pekko.io/docs/pekko-http/current/scala/http/introduction.html) to provide a HTTP REST (or other) API for external clients.
 
 ### Scaling better with many masters
 
-If the singleton master becomes a bottleneck we could start several master actors and shard the jobs among them. This could be achieved by using [Akka Cluster Sharding](http://doc.akka.io/docs/akka/current/scala/cluster-sharding.html) with many `WorkManager` actors as entities and a hash of some sort on the payload deciding which master it should go to.
+If the singleton master becomes a bottleneck we could start several master actors and shard the jobs among them. This could be achieved by using [Pekko Cluster Sharding](http://pekko.apache.org/docs/pekko/current//scala/cluster-sharding.html) with many `WorkManager` actors as entities and a hash of some sort on the payload deciding which master it should go to.
 
 ### More tools for building distributed systems
 
 In this example we have used
-[Cluster Singleton](http://doc.akka.io/docs/akka/current/scala/cluster-singleton.html#cluster-singleton)
+[Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/cluster-singleton.html#cluster-singleton)
 and
-[Distributed Publish Subscribe](http://doc.akka.io/docs/akka/current/scala/distributed-pub-sub.html)
- but those are not the only tools in Akka Cluster.
+[Distributed Publish Subscribe](http://pekko.apache.org/docs/pekko/current//scala/distributed-pub-sub.html)
+ but those are not the only tools in Pekko Cluster.
 
- You can also find a good overview of the various modules that make up Akka in
- [this section of the official documentation](http://doc.akka.io/docs/akka/current/scala/guide/modules.html#cluster-singleton)
+ You can also find a good overview of the various modules that make up Pekkoin
+ [this section of the official documentation](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton)
