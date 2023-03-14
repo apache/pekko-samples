@@ -1,4 +1,4 @@
-This tutorial contains 3 samples illustrating different [Akka cluster](https://pekko.apache.org/docs/pekko/current/typed/cluster.html) features.
+This tutorial contains 3 samples illustrating different [Pekko cluster](https://pekko.apache.org/docs/pekko/current/typed/cluster.html) features.
 
 - Subscribe to cluster membership events
 - Sending messages to actors running on nodes in the cluster

@@ -4,7 +4,7 @@
     <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
 
     <!-- This is a development logging configuration that logs to standard out, for an example of a production
-         logging config, see the Akka docs: https://pekko.apache.org/docs/pekko/current/typed/logging.html#logback -->
+         logging config, see the Pekko docs: https://pekko.apache.org/docs/pekko/current/typed/logging.html#logback -->
     <appender name="STDOUT" target="System.out" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>[%date{ISO8601}] [%level] [%X{akkaAddress}] [%logger] [%thread] [%X{akkaSource}] - %msg%n</pattern>
