@@ -1,8 +1,8 @@
 package sample.cluster.transformation
 
-import akka.actor.typed.{ActorSystem, Behavior}
-import akka.actor.typed.scaladsl.Behaviors
-import akka.cluster.typed.Cluster
+import org.apache.pekko.actor.typed.{ActorSystem, Behavior}
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.cluster.typed.Cluster
 import com.typesafe.config.ConfigFactory
 
 object App {
@@ -43,8 +43,8 @@ object App {
     // Override the configuration of the port and role
     val config = ConfigFactory
       .parseString(s"""
-        akka.remote.artery.canonical.port=$port
-        akka.cluster.roles = [$role]
+        org.apache.pekko.remote.artery.canonical.port=$port
+        org.apache.pekko.cluster.roles = [$role]
         """)
       .withFallback(ConfigFactory.load("transformation"))
 

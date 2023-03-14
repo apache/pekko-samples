@@ -1,8 +1,8 @@
 package sample.cluster.stats
 
-import akka.actor.typed.ActorRef
-import akka.actor.typed.Behavior
-import akka.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.ActorRef
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
 import sample.cluster.CborSerializable
 
 import scala.concurrent.duration._

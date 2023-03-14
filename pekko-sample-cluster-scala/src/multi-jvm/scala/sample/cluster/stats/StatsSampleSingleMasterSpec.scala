@@ -1,24 +1,24 @@
 package sample.cluster.stats
 
-import akka.actor.testkit.typed.scaladsl.TestProbe
-import akka.actor.typed.scaladsl.AskPattern._
-import akka.actor.typed.scaladsl.adapter._
-import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.scaladsl.Routers
-import akka.actor.typed.ActorRef
-import akka.actor.typed.Behavior
-import akka.actor.typed.Props
-import akka.actor.typed.SpawnProtocol
-import akka.cluster.Cluster
-import akka.cluster.ClusterEvent.CurrentClusterState
-import akka.cluster.ClusterEvent.MemberUp
-import akka.cluster.typed.ClusterSingleton
-import akka.cluster.typed.ClusterSingletonSettings
-import akka.cluster.typed.SingletonActor
-import akka.remote.testkit.MultiNodeConfig
-import akka.remote.testkit.MultiNodeSpec
-import akka.testkit.ImplicitSender
-import akka.util.Timeout
+import org.apache.pekko.actor.testkit.typed.scaladsl.TestProbe
+import org.apache.pekko.actor.typed.scaladsl.AskPattern._
+import org.apache.pekko.actor.typed.scaladsl.adapter._
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.scaladsl.Routers
+import org.apache.pekko.actor.typed.ActorRef
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.Props
+import org.apache.pekko.actor.typed.SpawnProtocol
+import org.apache.pekko.cluster.Cluster
+import org.apache.pekko.cluster.ClusterEvent.CurrentClusterState
+import org.apache.pekko.cluster.ClusterEvent.MemberUp
+import org.apache.pekko.cluster.typed.ClusterSingleton
+import org.apache.pekko.cluster.typed.ClusterSingletonSettings
+import org.apache.pekko.cluster.typed.SingletonActor
+import org.apache.pekko.remote.testkit.MultiNodeConfig
+import org.apache.pekko.remote.testkit.MultiNodeSpec
+import org.apache.pekko.testkit.ImplicitSender
+import org.apache.pekko.util.Timeout
 import com.typesafe.config.ConfigFactory
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.Matchers
@@ -38,9 +38,9 @@ object StatsSampleSingleMasterSpecConfig extends MultiNodeConfig {
   // this configuration will be used for all nodes
   // note that no fixed host names and ports are used
   commonConfig(ConfigFactory.parseString("""
-    akka.loglevel = INFO
-    akka.actor.provider = cluster
-    akka.cluster.roles = [compute]
+    org.apache.pekko.loglevel = INFO
+    org.apache.pekko.actor.provider = cluster
+    org.apache.pekko.cluster.roles = [compute]
     """).withFallback(ConfigFactory.load()))
 
 }

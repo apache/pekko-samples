@@ -1,12 +1,12 @@
 package sample.cluster.stats
 
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.Behavior
-import akka.actor.typed.receptionist.Receptionist
-import akka.actor.typed.receptionist.ServiceKey
-import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.scaladsl.Routers
-import akka.cluster.typed.Cluster
+import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.receptionist.Receptionist
+import org.apache.pekko.actor.typed.receptionist.ServiceKey
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.scaladsl.Routers
+import org.apache.pekko.cluster.typed.Cluster
 import com.typesafe.config.ConfigFactory
 
 object App {
@@ -60,8 +60,8 @@ object App {
     // Override the configuration of the port when specified as program argument
     val config = ConfigFactory
       .parseString(s"""
-      akka.remote.artery.canonical.port=$port
-      akka.cluster.roles = [$role]
+      org.apache.pekko.remote.artery.canonical.port=$port
+      org.apache.pekko.cluster.roles = [$role]
       """)
       .withFallback(ConfigFactory.load("stats"))
 

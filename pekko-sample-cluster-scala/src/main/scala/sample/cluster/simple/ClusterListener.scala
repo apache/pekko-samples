@@ -1,16 +1,16 @@
 package sample.cluster.simple
 
-import akka.actor.typed.ActorRef
-import akka.actor.typed.Behavior
-import akka.actor.typed.scaladsl.Behaviors
-import akka.cluster.ClusterEvent.MemberEvent
-import akka.cluster.ClusterEvent.MemberRemoved
-import akka.cluster.ClusterEvent.MemberUp
-import akka.cluster.ClusterEvent.ReachabilityEvent
-import akka.cluster.ClusterEvent.ReachableMember
-import akka.cluster.ClusterEvent.UnreachableMember
-import akka.cluster.typed.Cluster
-import akka.cluster.typed.Subscribe
+import org.apache.pekko.actor.typed.ActorRef
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.cluster.ClusterEvent.MemberEvent
+import org.apache.pekko.cluster.ClusterEvent.MemberRemoved
+import org.apache.pekko.cluster.ClusterEvent.MemberUp
+import org.apache.pekko.cluster.ClusterEvent.ReachabilityEvent
+import org.apache.pekko.cluster.ClusterEvent.ReachableMember
+import org.apache.pekko.cluster.ClusterEvent.UnreachableMember
+import org.apache.pekko.cluster.typed.Cluster
+import org.apache.pekko.cluster.typed.Subscribe
 
 object ClusterListener {
 

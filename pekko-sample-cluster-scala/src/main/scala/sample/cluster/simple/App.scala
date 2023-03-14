@@ -1,8 +1,8 @@
 package sample.cluster.simple
 
-import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.Behavior
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.actor.typed.Behavior
 import com.typesafe.config.ConfigFactory
 
 object App {
@@ -28,10 +28,10 @@ object App {
   def startup(port: Int): Unit = {
     // Override the configuration of the port
     val config = ConfigFactory.parseString(s"""
-      akka.remote.artery.canonical.port=$port
+      org.apache.pekko.remote.artery.canonical.port=$port
       """).withFallback(ConfigFactory.load())
 
-    // Create an Akka system
+    // Create an Pekko system
     ActorSystem[Nothing](RootBehavior(), "ClusterSystem", config)
   }
 
