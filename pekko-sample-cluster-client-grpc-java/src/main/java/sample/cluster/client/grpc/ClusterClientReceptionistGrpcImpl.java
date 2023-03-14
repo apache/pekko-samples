@@ -1,13 +1,13 @@
 package sample.cluster.client.grpc;
 
-import akka.NotUsed;
-import akka.actor.ActorRef;
-import akka.cluster.pubsub.DistributedPubSubMediator;
-import akka.event.LoggingAdapter;
-import akka.pattern.Patterns;
-import akka.stream.Materializer;
-import akka.stream.OverflowStrategy;
-import akka.stream.javadsl.Source;
+import org.apache.pekko.NotUsed;
+import org.apache.pekko.actor.ActorRef;
+import org.apache.pekko.cluster.pubsub.DistributedPubSubMediator;
+import org.apache.pekko.event.LoggingAdapter;
+import org.apache.pekko.pattern.Patterns;
+import org.apache.pekko.stream.Materializer;
+import org.apache.pekko.stream.OverflowStrategy;
+import org.apache.pekko.stream.javadsl.Source;
 
 import java.util.Optional;
 import java.util.UUID;

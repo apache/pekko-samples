@@ -3,53 +3,52 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <akka.version>2.6.20</akka.version>
-    <akka.grpc.version>0.8.4</akka.grpc.version>
-  </properties>
-
-  <groupId>com.lightbend.akka.samples</groupId>
-  <artifactId>akka-sample-cluster-client-grpc-java</artifactId>
+  <groupId>org.apache.pekko</groupId>
+  <artifactId>pekko-sample-cluster-client-grpc-java</artifactId>
   <packaging>jar</packaging>
   <version>empty</version>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <pekko.version>0.0.0+26617-325e2156-SNAPSHOT</pekko.version>
+    <pekko.grpc.version>0.0.0-14-273ad4e4-SNAPSHOT</pekko.grpc.version>
+  </properties>
+
   <dependencies>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-stream_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-stream_2.13</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-cluster_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-cluster_2.13</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-cluster-tools_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-cluster-tools_2.13</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-serialization-jackson_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-serialization-jackson_2.13</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-discovery_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-discovery_2.13</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.lightbend.akka.grpc</groupId>
-      <artifactId>akka-grpc-runtime_2.13</artifactId>
-      <version>${akka.grpc.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-grpc-runtime_2.13</artifactId>
+      <version>${pekko.grpc.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-testkit_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-testkit_2.13</artifactId>
+      <version>${pekko.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -78,9 +77,9 @@
       </plugin>
 
       <plugin>
-        <groupId>com.lightbend.akka.grpc</groupId>
-        <artifactId>akka-grpc-maven-plugin</artifactId>
-        <version>${akka.grpc.version}</version>
+        <groupId>org.apache.pekko</groupId>
+        <artifactId>pekko-grpc-maven-plugin</artifactId>
+        <version>${pekko.grpc.version}</version>
         <configuration>
           <language>Java</language>
         </configuration>
