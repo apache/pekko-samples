@@ -6,21 +6,21 @@ import scala.concurrent.Future
 import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.duration._
 
-import akka.actor.ActorRef
-import akka.actor.ActorSystem
-import akka.actor.ExtendedActorSystem
-import akka.actor.Extension
-import akka.actor.ExtensionId
-import akka.actor.ExtensionIdProvider
-import akka.cluster.Cluster
-import akka.cluster.pubsub.DistributedPubSub
-import akka.cluster.pubsub.DistributedPubSubMediator
-import akka.event.Logging
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.HttpConnectionContext
-import akka.http.scaladsl.model.HttpRequest
-import akka.http.scaladsl.model.HttpResponse
-import akka.stream.Materializer
+import org.apache.pekko.actor.ActorRef
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.ExtendedActorSystem
+import org.apache.pekko.actor.Extension
+import org.apache.pekko.actor.ExtensionId
+import org.apache.pekko.actor.ExtensionIdProvider
+import org.apache.pekko.cluster.Cluster
+import org.apache.pekko.cluster.pubsub.DistributedPubSub
+import org.apache.pekko.cluster.pubsub.DistributedPubSubMediator
+import org.apache.pekko.event.Logging
+import org.apache.pekko.http.scaladsl.Http
+import org.apache.pekko.http.scaladsl.HttpConnectionContext
+import org.apache.pekko.http.scaladsl.model.HttpRequest
+import org.apache.pekko.http.scaladsl.model.HttpResponse
+import org.apache.pekko.stream.Materializer
 
 object ClusterClientReceptionist extends ExtensionId[ClusterClientReceptionist] with ExtensionIdProvider {
   override def get(system: ActorSystem): ClusterClientReceptionist =
@@ -33,9 +33,9 @@ object ClusterClientReceptionist extends ExtensionId[ClusterClientReceptionist] 
 }
 
 /**
- * Extension that starts gRPC service and accompanying `akka.cluster.pubsub.DistributedPubSubMediator`
+ * Extension that starts gRPC service and accompanying `org.apache.pekko.cluster.pubsub.DistributedPubSubMediator`
  * with settings defined in config section `sample.cluster.client.grpc.receptionist`.
- * The `akka.cluster.pubsub.DistributedPubSubMediator` is started by the `akka.cluster.pubsub.DistributedPubSub`
+ * The `org.apache.pekko.cluster.pubsub.DistributedPubSubMediator` is started by the `org.apache.pekko.cluster.pubsub.DistributedPubSub`
  * extension.
  */
 final class ClusterClientReceptionist(system: ExtendedActorSystem) extends Extension {

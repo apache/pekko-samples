@@ -2,13 +2,13 @@ package sample.cluster.client.grpc
 
 import java.util.UUID
 
-import akka.NotUsed
-import akka.actor.ActorRef
-import akka.cluster.pubsub.DistributedPubSubMediator
-import akka.event.LoggingAdapter
-import akka.stream.{Materializer, OverflowStrategy}
-import akka.stream.scaladsl.Source
-import akka.util.Timeout
+import org.apache.pekko.NotUsed
+import org.apache.pekko.actor.ActorRef
+import org.apache.pekko.cluster.pubsub.DistributedPubSubMediator
+import org.apache.pekko.event.LoggingAdapter
+import org.apache.pekko.stream.{Materializer, OverflowStrategy}
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.Timeout
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
@@ -78,7 +78,7 @@ class ClusterClientReceptionistGrpcImpl(
 
   override def askSend(sendReq: SendReq): Future[Rsp] = {
     try {
-      import akka.pattern.ask
+      import org.apache.pekko.pattern.ask
       implicit val timeout = Timeout(settings.askSendTimeout)
       implicit val ec = mat.executionContext
       val msg = serialization.deserializePayload(sendReq.payload.get)
