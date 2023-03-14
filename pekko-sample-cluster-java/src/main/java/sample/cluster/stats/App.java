@@ -1,15 +1,15 @@
 package sample.cluster.stats;
 
 
-import akka.actor.typed.ActorSystem;
-import akka.actor.typed.ActorRef;
-import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.Behaviors;
-import akka.actor.typed.javadsl.PoolRouter;
-import akka.actor.typed.javadsl.Routers;
-import akka.actor.typed.receptionist.Receptionist;
-import akka.actor.typed.receptionist.ServiceKey;
-import akka.cluster.typed.Cluster;
+import org.apache.pekko.actor.typed.ActorSystem;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.actor.typed.javadsl.PoolRouter;
+import org.apache.pekko.actor.typed.javadsl.Routers;
+import org.apache.pekko.actor.typed.receptionist.Receptionist;
+import org.apache.pekko.actor.typed.receptionist.ServiceKey;
+import org.apache.pekko.cluster.typed.Cluster;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -71,8 +71,8 @@ public class App {
 
       // Override the configuration of the port
       Map<String, Object> overrides = new HashMap<>();
-      overrides.put("akka.remote.artery.canonical.port", port);
-      overrides.put("akka.cluster.roles", Collections.singletonList(role));
+      overrides.put("org.apache.pekko.remote.artery.canonical.port", port);
+      overrides.put("org.apache.pekko.cluster.roles", Collections.singletonList(role));
 
       Config config = ConfigFactory.parseMap(overrides)
           .withFallback(ConfigFactory.load("stats"));

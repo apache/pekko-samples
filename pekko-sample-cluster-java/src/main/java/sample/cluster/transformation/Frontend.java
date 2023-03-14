@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import akka.actor.typed.ActorRef;
-import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.*;
-import akka.actor.typed.receptionist.Receptionist;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.javadsl.*;
+import org.apache.pekko.actor.typed.receptionist.Receptionist;
 
 //#frontend
 public class Frontend extends AbstractBehavior<Frontend.Event> {

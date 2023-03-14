@@ -1,8 +1,8 @@
 package sample.cluster.simple;
 
-import akka.actor.typed.ActorSystem;
-import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.actor.typed.ActorSystem;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -35,12 +35,12 @@ public class App {
     // Override the configuration of the port
     // Override the configuration of the port
     Map<String, Object> overrides = new HashMap<>();
-    overrides.put("akka.remote.artery.canonical.port", port);
+    overrides.put("org.apache.pekko.remote.artery.canonical.port", port);
 
     Config config = ConfigFactory.parseMap(overrides)
         .withFallback(ConfigFactory.load());
 
-    // Create an Akka system
+    // Create an Pekko system
     ActorSystem<Void> system = ActorSystem.create(rootBehavior(), "ClusterSystem", config);
   }
 }

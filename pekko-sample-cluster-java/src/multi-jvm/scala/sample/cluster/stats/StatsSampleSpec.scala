@@ -1,12 +1,12 @@
 package sample.cluster.stats
 
-import akka.actor.testkit.typed.scaladsl.TestProbe
-import akka.actor.typed.receptionist.Receptionist
-import akka.actor.typed.scaladsl.adapter._
-import akka.cluster.Cluster
-import akka.cluster.ClusterEvent.CurrentClusterState
-import akka.cluster.ClusterEvent.MemberUp
-import akka.remote.testkit.MultiNodeConfig
+import org.apache.pekko.actor.testkit.typed.scaladsl.TestProbe
+import org.apache.pekko.actor.typed.receptionist.Receptionist
+import org.apache.pekko.actor.typed.scaladsl.adapter._
+import org.apache.pekko.cluster.Cluster
+import org.apache.pekko.cluster.ClusterEvent.CurrentClusterState
+import org.apache.pekko.cluster.ClusterEvent.MemberUp
+import org.apache.pekko.remote.testkit.MultiNodeConfig
 import com.typesafe.config.ConfigFactory
 
 import scala.concurrent.duration._
@@ -22,8 +22,8 @@ object StatsSampleSpecConfig extends MultiNodeConfig {
   // this configuration will be used for all nodes
   // note that no fixed host names and ports are used
   commonConfig(ConfigFactory.parseString("""
-    akka.actor.provider = cluster
-    akka.cluster.roles = [compute]
+    org.apache.pekko.actor.provider = cluster
+    org.apache.pekko.cluster.roles = [compute]
     """).withFallback(ConfigFactory.load()))
 
 }
@@ -32,8 +32,8 @@ class StatsSampleSpecMultiJvmNode1 extends StatsSampleSpec
 class StatsSampleSpecMultiJvmNode2 extends StatsSampleSpec
 class StatsSampleSpecMultiJvmNode3 extends StatsSampleSpec
 
-import akka.remote.testkit.MultiNodeSpec
-import akka.testkit.ImplicitSender
+import org.apache.pekko.remote.testkit.MultiNodeSpec
+import org.apache.pekko.testkit.ImplicitSender
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.Matchers
 import org.scalatest.WordSpecLike
