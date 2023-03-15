@@ -24,7 +24,7 @@ import java.util.concurrent.CompletionStage;
 /**
  * This actor is intended to be used on an external node that is not member
  * of the cluster. It acts like a gateway for sending messages to actors
- * somewhere in the cluster. With service discovery and Pekko gRPC it will establish
+ * somewhere in the cluster. With service discovery and Apache Pekko gRPC it will establish
  * a connection to a {@link ClusterClientReceptionist} somewhere in the cluster.
  * <p>
  * You can send messages via the `ClusterClient` to any actor in the cluster
