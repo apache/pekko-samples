@@ -1,7 +1,7 @@
 Akka Replicated Event Sourcing Multi DC Sample
 =====================================
 
-This is an example project demonstrating [Akka Replicated Event Sourcing](https://doc.akka.io/docs/akka/current/typed/replicated-eventsourcing.html)
+This is an example project demonstrating [Akka Replicated Event Sourcing](https://pekko.apache.org/docs/pekko/current//typed/replicated-eventsourcing.html)
 to run a replica per datacenter.
 
 ## How to run

@@ -12,25 +12,25 @@ lazy val `akka-sample-cluster-scala` = project
     baseProject := "akka-sample-cluster-scala"
   )
 
-lazy val `akka-sample-distributed-data-java` = project
+lazy val `pekko-sample-distributed-data-java` = project
   .enablePlugins(AkkaSamplePlugin)
   .settings(
     name        := "Akka Distributed Data with Java",
-    baseProject := "akka-sample-distributed-data-java"
+    baseProject := "pekko-sample-distributed-data-java"
   )
 
-lazy val `akka-sample-distributed-data-scala` = project
+lazy val `pekko-sample-distributed-data-scala` = project
   .enablePlugins(AkkaSamplePlugin)
   .settings(
     name        := "Akka Distributed Data with Scala",
-    baseProject := "akka-sample-distributed-data-scala"
+    baseProject := "pekko-sample-distributed-data-scala"
   )
 
-lazy val `akka-sample-distributed-workers-scala` = project
+lazy val `pekko-sample-distributed-workers-scala` = project
   .enablePlugins(AkkaSamplePlugin)
   .settings(
     name        := "Akka Distributed Workers with Scala",
-    baseProject := "akka-sample-distributed-workers-scala"
+    baseProject := "pekko-sample-distributed-workers-scala"
   )
 
 lazy val `akka-sample-fsm-java` = project

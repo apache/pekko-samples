@@ -77,7 +77,7 @@ public class MainApp {
 
   /**
    * To make the sample easier to run we kickstart a Cassandra instance to
-   * act as the journal. Cassandra is a great choice of backend for Akka Persistence but
+   * act as the journal. Apache Cassandra is a great choice of backend for Akka Persistence but
    * in a real application a pre-existing Cassandra cluster should be used.
    */
   private static void startCassandraDatabase() {
