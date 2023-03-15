@@ -2,14 +2,14 @@ lazy val `akka-sample-cluster-java` = project
   .enablePlugins(AkkaSamplePlugin)
   .settings(
     name        := "Akka Cluster with Java",
-    baseProject := "akka-sample-cluster-java"
+    baseProject := "pekko-sample-cluster-java"
   )
 
 lazy val `akka-sample-cluster-scala` = project
   .enablePlugins(AkkaSamplePlugin)
   .settings(
     name        := "Akka Cluster with Scala",
-    baseProject := "akka-sample-cluster-scala"
+    baseProject := "pekko-sample-cluster-scala"
   )
 
 lazy val `pekko-sample-distributed-data-java` = project
