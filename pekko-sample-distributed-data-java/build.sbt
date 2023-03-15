@@ -10,9 +10,9 @@ val `pekko-sample-distributed-data-java` = project
     organization := "org.apache.pekko",
     version := "1.0",
     scalaVersion := "2.13.8",
-    scalacOptions in Compile ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint"),
-    javacOptions in Compile ++= Seq("-parameters", "-Xlint:unchecked", "-Xlint:deprecation", "-Xdiags:verbose"),
-    javaOptions in run ++= Seq("-Xms128m", "-Xmx1024m"),
+    Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint"),
+    Compile / javacOptions ++= Seq("-parameters", "-Xlint:unchecked", "-Xlint:deprecation", "-Xdiags:verbose"),
+    run / javaOptions ++= Seq("-Xms128m", "-Xmx1024m"),
     libraryDependencies ++= Seq(
       "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
       "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
@@ -20,13 +20,13 @@ val `pekko-sample-distributed-data-java` = project
       "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
       "ch.qos.logback" % "logback-classic" % "1.2.11" % Test,
       "org.scalatest" %% "scalatest" % "3.0.8" % Test),
-    fork in run := true,
+    run / fork := true,
     Global / cancelable := false, // ctrl-c
     // disable parallel tests
-    parallelExecution in Test := false,
+    Test / parallelExecution := false,
     // show full stack traces and test case durations
-    testOptions in Test += Tests.Argument("-oDF"),
-    logBuffered in Test := false,
+    Test / testOptions += Tests.Argument("-oDF"),
+    Test / logBuffered := false,
     licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0")))
   )
   .configs (MultiJvm)
