@@ -23,11 +23,11 @@ After waiting a few seconds for the cluster to form the output should start look
 
 ```bash
 [INFO] [07/21/2017 17:41:53.320] [ClusterSystem-pekko.actor.default-dispatcher-16] [pekko://ClusterSystem@127.0.0.1:51983/user/producer] Produced work: 3
-[INFO] [07/21/2017 17:41:53.322] [ClusterSystem-pekko.actor.default-dispatcher-3] [pekko://ClusterSystem@127.0.0.1:2551/user/master/singleton] Accepted work: 3bce4d6d-eaae-4da6-b316-0c6f566f2399
-[INFO] [07/21/2017 17:41:53.328] [ClusterSystem-pekko.actor.default-dispatcher-3] [pekko://ClusterSystem@127.0.0.1:2551/user/master/singleton] Giving worker 2b646020-6273-437c-aa0d-4aad6f12fb47 some work 3bce4d6d-eaae-4da6-b316-0c6f566f2399
+[INFO] [07/21/2017 17:41:53.322] [ClusterSystem-pekko.actor.default-dispatcher-3] [pekko://ClusterSystem@127.0.0.1:7345/user/master/singleton] Accepted work: 3bce4d6d-eaae-4da6-b316-0c6f566f2399
+[INFO] [07/21/2017 17:41:53.328] [ClusterSystem-pekko.actor.default-dispatcher-3] [pekko://ClusterSystem@127.0.0.1:7345/user/master/singleton] Giving worker 2b646020-6273-437c-aa0d-4aad6f12fb47 some work 3bce4d6d-eaae-4da6-b316-0c6f566f2399
 [INFO] [07/21/2017 17:41:53.328] [ClusterSystem-pekko.actor.default-dispatcher-2] [pekko://ClusterSystem@127.0.0.1:51980/user/worker] Got work: 3
 [INFO] [07/21/2017 17:41:53.328] [ClusterSystem-pekko.actor.default-dispatcher-16] [pekko://ClusterSystem@127.0.0.1:51980/user/worker] Work is complete. Result 3 * 3 = 9.
-[INFO] [07/21/2017 17:41:53.329] [ClusterSystem-pekko.actor.default-dispatcher-19] [pekko://ClusterSystem@127.0.0.1:2551/user/master/singleton] Work 3bce4d6d-eaae-4da6-b316-0c6f566f2399 is done by worker 2b646020-6273-437c-aa0d-4aad6f12fb47
+[INFO] [07/21/2017 17:41:53.329] [ClusterSystem-pekko.actor.default-dispatcher-19] [pekko://ClusterSystem@127.0.0.1:7345/user/master/singleton] Work 3bce4d6d-eaae-4da6-b316-0c6f566f2399 is done by worker 2b646020-6273-437c-aa0d-4aad6f12fb47
 ```
 
 Now take a look at what happened under the covers.
@@ -206,10 +206,10 @@ You could also run your own local installation of Apache Cassandra given that it
 With the database running, go to the second terminal window and start the first seed node with the following command:
 
 ```bash
-sbt "runMain worker.Main 2551"
+sbt "runMain worker.Main 7345"
 ```
 
-2551 corresponds to the port of the first seed-nodes element in the configuration. In the log output you see that the cluster node has been started and changed status to 'Up'.
+7345 corresponds to the port of the first seed-nodes element in the configuration. In the log output you see that the cluster node has been started and changed status to 'Up'.
 
 In the third terminal window, start the front-end node with the following command:
 
@@ -217,7 +217,7 @@ In the third terminal window, start the front-end node with the following comman
 sbt "runMain worker.Main 3001"
 ```
 
-3001 is to the port of the node. In the log output you see that the cluster node has been started and joins the 2551 node and becomes a member of the cluster. Its status changed to 'Up'.
+3001 is to the port of the node. In the log output you see that the cluster node has been started and joins the 7345 node and becomes a member of the cluster. Its status changed to 'Up'.
 
 Switch over to the second terminal window and see in the log output that the member joined. So far, no `Worker` has not been started, i.e. jobs are produced and accepted but not processed.
 
@@ -244,10 +244,10 @@ You can also start more such worker nodes in new terminal windows.
 You can start more cluster back-end nodes using port numbers between 2000-2999.
 
 ```bash
-sbt "runMain worker.Main 2552"
+sbt "runMain worker.Main 7355"
 ```
 
-The nodes with port 2551 to 2554 are configured to be used as "seed nodes" in this sample, if you shutdown all or start none of these the other nodes will not know how to join the cluster. If all four are shut down and 2551 is started it will join itself and form a new cluster.
+The nodes with port 7345 to 2554 are configured to be used as "seed nodes" in this sample, if you shutdown all or start none of these the other nodes will not know how to join the cluster. If all four are shut down and 7345 is started it will join itself and form a new cluster.
 
 As long as one of the four nodes is alive the cluster will keep working. You can read more about this in the [Pekkodocumentation section on seed nodes](http://pekko.apache.org/docs/pekko/current//scala/cluster-usage.html).
 

@@ -13,7 +13,7 @@ import org.apache.pekko.cluster.typed.Subscribe
 
 object Main {
 
-  // note that 2551 and 2552 are expected to be seed nodes though, even if
+  // note that 7345 and 7355 are expected to be seed nodes though, even if
   // the back-end starts at 2000
   val backEndPortRange = 2000 to 2999
 
@@ -42,8 +42,8 @@ object Main {
   def startClusterInSameJvm(): Unit = {
     startCassandraDatabase()
     // two backend nodes
-    start(2551, "back-end")
-    start(2552, "back-end")
+    start(7345, "back-end")
+    start(7355, "back-end")
     // two front-end nodes
     start(3000, "front-end")
     start(3001, "front-end")
@@ -86,7 +86,7 @@ object Main {
 
   /**
     * To make the sample easier to run we kickstart a Apache Cassandra instance to
-    * act as the journal. Apache Apache Cassandra is a great choice of backend for Apache Pekko Persistence but
+    * act as the journal. Apache Cassandra is a great choice of backend for Apache Pekko Persistence but
     * in a real application a pre-existing Apache Cassandra cluster should be used.
     */
   def startCassandraDatabase(): Unit = {
