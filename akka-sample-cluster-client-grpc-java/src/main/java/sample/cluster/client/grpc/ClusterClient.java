@@ -24,7 +24,11 @@ import java.util.concurrent.CompletionStage;
 /**
  * This actor is intended to be used on an external node that is not member
  * of the cluster. It acts like a gateway for sending messages to actors
+<<<<<<< HEAD:akka-sample-cluster-client-grpc-java/src/main/java/sample/cluster/client/grpc/ClusterClient.java
  * somewhere in the cluster. With service discovery and Akka gRPC it will establish
+=======
+ * somewhere in the cluster. With service discovery and Apache Pekko gRPC it will establish
+>>>>>>> 8ce35cf... Update docs Pekko and Cassandra references to have Apache prefix:pekko-sample-cluster-client-grpc-java/src/main/java/sample/cluster/client/grpc/ClusterClient.java
  * a connection to a {@link ClusterClientReceptionist} somewhere in the cluster.
  * <p>
  * You can send messages via the `ClusterClient` to any actor in the cluster
