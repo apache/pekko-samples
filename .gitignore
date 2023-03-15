@@ -82,6 +82,7 @@ tm.out
 worker*.log
 *-shim.sbt
 test-output
+*.bsp
 
 # test output of QuickStart guide
 factorials.txt

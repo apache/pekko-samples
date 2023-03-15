@@ -5,6 +5,9 @@ version := "1.0"
 scalaVersion := "2.13.8"
 val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
 
+// allow access to snapshots
+resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
+
 val cassandraPluginVersion = "1.0.6"
 
 Global / cancelable := false
