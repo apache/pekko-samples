@@ -11,8 +11,20 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <pekko.version>0.0.0+26617-325e2156-SNAPSHOT</pekko.version>
-    <pekko.grpc.version>0.0.0-14-273ad4e4-SNAPSHOT</pekko.grpc.version>
+    <pekko.grpc.version>0.0.0-15-3d8bff9d-SNAPSHOT</pekko.grpc.version>
   </properties>
+
+  <repositories>
+    <repository>
+      <id>apache-pekko-snapshots</id>
+      <name>Apache Snapshots Repository</name>
+      <url>https://repository.apache.org/content/repositories/snapshots/</url>
+      <layout>default</layout>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 
   <dependencies>
     <dependency>
@@ -76,7 +88,7 @@
         </configuration>
       </plugin>
 
-      <plugin>
+      <!-- <plugin>
         <groupId>org.apache.pekko</groupId>
         <artifactId>pekko-grpc-maven-plugin</artifactId>
         <version>${pekko.grpc.version}</version>
@@ -90,7 +102,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin> -->
 
     </plugins>
   </build>
