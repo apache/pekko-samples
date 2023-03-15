@@ -1,5 +1,7 @@
 # Apache Pekko Distributed Workers with Scala Guide
 
+**Currently broken, awaiting fix as part of issue https://github.com/apache/incubator-pekko-samples/issues/8**
+
 To be reactive, distributed applications must deal gracefully with temporary and prolonged outages as well as have
 the ability to scale up and down to make the best use of resources.
 Apache Pekko Cluster provides these capabilities so that you don't have to implement them yourself.
