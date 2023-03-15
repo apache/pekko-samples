@@ -27,7 +27,7 @@ lazy val killrweather = project
   .in(file("killrweather"))
   .settings(commonSettings)
   .settings(
-    mainClass in (Compile, run) := Some("sample.killrweather.KillrWeather"),
+    run / mainClass := Some("sample.killrweather.KillrWeather"),
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-cluster-sharding-typed" % AkkaVersion,
       "com.typesafe.akka" %% "akka-serialization-jackson" % AkkaVersion,
@@ -42,7 +42,7 @@ lazy val `killrweather-fog` = project
   .in(file("killrweather-fog"))
   .settings(commonSettings)
   .settings(
-    mainClass in (Compile, run) := Some("sample.killrweather.fog.Fog"),
+    run / mainClass := Some("sample.killrweather.fog.Fog"),
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
       "com.typesafe.akka" %% "akka-stream-typed" % AkkaVersion,

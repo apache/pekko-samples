@@ -11,14 +11,14 @@ lazy val `akka-sample-cluster-client-grpc-scala` = project
   .settings(
     organization := "com.typesafe.akka",
     scalaVersion := "2.13.8",
-    scalacOptions in Compile ++= Seq(
+    Compile / scalacOptions ++= Seq(
       "-deprecation",
       "-feature",
       "-unchecked",
       "-Xlog-reflective-calls",
       "-Xlint"
     ),
-    javacOptions in Compile ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
+    Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
     // javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.9" % "runtime",
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-cluster" % akkaVersion,

@@ -7,14 +7,14 @@ val LogbackVersion = "1.2.11"
 
 ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / organization := "com.lightbend.akka.samples"
-ThisBuild / scalacOptions in Compile ++= Seq(
+ThisBuild / Compile/ scalacOptions ++= Seq(
   "-deprecation",
   "-feature",
   "-unchecked",
   "-Xlog-reflective-calls",
   "-Xlint")
-ThisBuild / javacOptions in Compile ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
-ThisBuild / testOptions in Test += Tests.Argument("-oDF")
+ThisBuild / Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
+ThisBuild / Test / testOptions += Tests.Argument("-oDF")
 ThisBuild / licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0")))
 ThisBuild / resolvers ++= Seq(
   "Akka Snapshots" at "https://repo.akka.io/snapshots",
@@ -63,7 +63,7 @@ lazy val processor = project
 
 lazy val producer = project
   .in(file("producer"))
-  .settings(PB.targets in Compile := Seq(scalapb.gen() -> (sourceManaged in Compile).value))
+  .settings(Compile / PB.targets := Seq(scalapb.gen() -> (Compile / sourceManaged).value))
   .settings(libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-stream-kafka" % AlpakkaKafkaVersion,
       "com.typesafe.akka" %% "akka-stream" % AkkaVersion,

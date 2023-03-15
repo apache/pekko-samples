@@ -12,10 +12,10 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.1.0" % Test
 )
 
-scalacOptions in Compile ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint")
+Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint")
 
 // show full stack traces and test case durations
-testOptions in Test += Tests.Argument("-oDF")
-logBuffered in Test := false
+Test / testOptions += Tests.Argument("-oDF")
+Test / logBuffered := false
 
 licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0")))
