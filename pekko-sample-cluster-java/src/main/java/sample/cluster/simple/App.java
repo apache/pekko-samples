@@ -40,7 +40,7 @@ public class App {
     Config config = ConfigFactory.parseMap(overrides)
         .withFallback(ConfigFactory.load());
 
-    // Create an Pekko system
+    // Create an Apache Pekko system
     ActorSystem<Void> system = ActorSystem.create(rootBehavior(), "ClusterSystem", config);
   }
 }

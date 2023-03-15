@@ -31,7 +31,7 @@ public class MainApp {
       startClusterInSameJvm();
     } else if (args[0].equals("cassandra")) {
       startCassandraDatabase();
-      System.out.println("Started Cassandra, press Ctrl + C to kill");
+      System.out.println("Started Apache Cassandra, press Ctrl + C to kill");
       try {
         new CountDownLatch(1).await();
       } catch (InterruptedException e) {}
@@ -76,7 +76,7 @@ public class MainApp {
   }
 
   /**
-   * To make the sample easier to run we kickstart a Cassandra instance to
+   * To make the sample easier to run we kickstart an Apache Cassandra instance to
    * act as the journal. Apache Cassandra is a great choice of backend for Akka Persistence but
    * in a real application a pre-existing Cassandra cluster should be used.
    */

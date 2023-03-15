@@ -31,7 +31,7 @@ object App {
       pekko.remote.artery.canonical.port=$port
       """).withFallback(ConfigFactory.load())
 
-    // Create an Pekko system
+    // Create an Apache Pekko system
     ActorSystem[Nothing](RootBehavior(), "ClusterSystem", config)
   }
 

@@ -8,7 +8,7 @@ This tutorial contains 3 samples illustrating different [Pekko cluster](https://
 
 Open [application.conf](src/main/resources/application.conf)
 
-To enable cluster capabilities in your Pekko project you should, at a minimum, add the remote settings, and use `cluster` as the `org.apache.pekko.actor.provider`. The `org.apache.pekko.cluster.seed-nodes` should normally also be added to your `application.conf` file.
+To enable cluster capabilities in your Apache Pekko project you should, at a minimum, add the remote settings, and use `cluster` as the `org.apache.pekko.actor.provider`. The `org.apache.pekko.cluster.seed-nodes` should normally also be added to your `application.conf` file.
 
 The seed nodes are configured contact points which newly started nodes will try to connect with in order to join the cluster.
 
@@ -81,7 +81,7 @@ TransformationApp starts 5 actor systems (cluster members) in the same JVM proce
 
     sbt "runMain sample.cluster.transformation.App frontend 0"
 
-There is a component built into Pekko that performs the task of subscribing to the receptionist and keeping track of available actors significantly simplifying such interactions: the group router. Let's look into how we can use those in the next section!
+There is a component built into Apache Pekko that performs the task of subscribing to the receptionist and keeping track of available actors significantly simplifying such interactions: the group router. Let's look into how we can use those in the next section!
 
 ## Cluster Aware Routers
 
@@ -93,7 +93,7 @@ Let's take a look at a few samples that make use of cluster aware routers.
 
 Let's take a look at two different ways to distribute work across a cluster using routers. 
 
-Note that the samples just shows off various parts of Pekko Cluster and does not provide a complete structure to build a resilient distributed application with. The [Distributed Workers With Akka](https://developer.lightbend.com/guides/akka-distributed-workers-scala/) sample covers  more of the problems you would have to solve to build a resilient distributed processing application.
+Note that the samples just shows off various parts of Apache Pekko Cluster and does not provide a complete structure to build a resilient distributed application with. The [Distributed Workers With Akka](https://developer.lightbend.com/guides/akka-distributed-workers-scala/) sample covers  more of the problems you would have to solve to build a resilient distributed processing application.
 
 ### Example with Group of routees
 
@@ -133,7 +133,7 @@ StatsSample starts 4 actor systems (cluster members) in the same JVM process. It
 
 [StatsSampleOneMaster.scala](src/main/scala/sample/cluster/stats/AppOneMaster.scala) each `compute` node starts 
 N workers, that register themselves with the receptionist. The `StatsService` is run in a single instance in the cluster
-through the Pekko Cluster Singleton. The actual work is performed by workers on all compute nodes though. The workers
+through the Apache Pekko Cluster Singleton. The actual work is performed by workers on all compute nodes though. The workers
 are reached through a group router used by the singleton. 
   
 With this design it would be possible to query the singleton for current work - it knows all current requests in flight 
