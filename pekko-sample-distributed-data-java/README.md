@@ -1,4 +1,4 @@
-This tutorial contains 5 samples illustrating how to use [Pekko Distributed Data](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html).
+This tutorial contains 5 samples illustrating how to use [Apache Pekko Distributed Data](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html).
 
 - Low Latency Voting Service
 - Highly Available Shopping Cart
@@ -6,7 +6,7 @@ This tutorial contains 5 samples illustrating how to use [Pekko Distributed Data
 - Replicated Cache
 - Replicated Metrics
 
-**Pekko Distributed Data** is useful when you need to share data between nodes in an Pekko Cluster. The data is accessed with an actor providing a key-value store like API. The keys are unique identifiers with type information of the data values. The values are _Conflict Free Replicated Data Types_ (CRDTs).
+**Apache Pekko Distributed Data** is useful when you need to share data between nodes in a Pekko Cluster. The data is accessed with an actor providing a key-value store like API. The keys are unique identifiers with type information of the data values. The values are _Conflict Free Replicated Data Types_ (CRDTs).
 
 All data entries are spread to all nodes, or nodes with a certain role, in the cluster via direct replication and gossip based dissemination. You have fine grained control of the consistency level for reads and writes.
 
@@ -14,7 +14,7 @@ The nature CRDTs makes it possible to perform updates from any node without coor
 
 It is eventually consistent and geared toward providing high read and write availability (partition tolerance), with low latency. Note that in an eventually consistent system a read may return an out-of-date value.
 
-Note that there are some [Limitations](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#limitations) that you should be aware of. For example, Pekko Distributed Data is not intended for _Big Data_.
+Note that there are some [Limitations](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#limitations) that you should be aware of. For example, Apache Pekko Distributed Data is not intended for _Big Data_.
 
 ## Low Latency Voting Service
 
@@ -88,7 +88,7 @@ The multi-node test for the `ReplicatedCache` can be found in [ReplicatedCacheSp
 
 ## Replicated Metrics
 
-This example illustrates to spread metrics data to all nodes in an Pekko cluster.
+This example illustrates to spread metrics data to all nodes in an Apache Pekko cluster.
 
 Open [ReplicatedMetrics.java](src/main/java/sample/distributeddata/ReplicatedMetrics.java).
 
@@ -96,4 +96,4 @@ Open [ReplicatedMetrics.java](src/main/java/sample/distributeddata/ReplicatedMet
 
 The multi-node test for the `ReplicatedCache` can be found in [ReplicatedMetricsSpec.scala](src/multi-jvm/scala/sample/distributeddata/ReplicatedMetricsSpec.scala).
 
-Note that there are some [Limitations](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#limitations) that you should be aware of. For example, Pekko Distributed Data is not intended for _Big Data_.
+Note that there are some [Limitations](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#limitations) that you should be aware of. For example, Apache Pekko Distributed Data is not intended for _Big Data_.

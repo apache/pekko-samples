@@ -33,7 +33,7 @@ object Main {
 
       case Some("cassandra") =>
         startCassandraDatabase()
-        println("Started Cassandra, press Ctrl + C to kill")
+        println("Started Apache Cassandra, press Ctrl + C to kill")
         new CountDownLatch(1).await()
 
     }
@@ -85,9 +85,9 @@ object Main {
     """).withFallback(ConfigFactory.load())
 
   /**
-    * To make the sample easier to run we kickstart a Cassandra instance to
-    * act as the journal. Cassandra is a great choice of backend for Pekko Persistence but
-    * in a real application a pre-existing Cassandra cluster should be used.
+    * To make the sample easier to run we kickstart a Apache Cassandra instance to
+    * act as the journal. Apache Apache Cassandra is a great choice of backend for Apache Pekko Persistence but
+    * in a real application a pre-existing Apache Cassandra cluster should be used.
     */
   def startCassandraDatabase(): Unit = {
     val databaseDirectory = new File("target/cassandra-db")

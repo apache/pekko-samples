@@ -1,9 +1,9 @@
-# Pekko Distributed Workers with Scala Guide
+# Apache Pekko Distributed Workers with Scala Guide
 
 To be reactive, distributed applications must deal gracefully with temporary and prolonged outages as well as have
 the ability to scale up and down to make the best use of resources.
-Pekko Cluster provides these capabilities so that you don't have to implement them yourself.
-The distributed workers example demonstrates the following Pekko clustering capabilities:
+Apache Pekko Cluster provides these capabilities so that you don't have to implement them yourself.
+The distributed workers example demonstrates the following Apache Pekko clustering capabilities:
 
 * elastic addition and removal of the front-end actors that accept client requests
 * elastic addition and removal of the back-end actors that perform the work distribution of actors across different nodes
@@ -79,7 +79,7 @@ The cluster contains one `WorkManager` actor. The `FrontEnd` actor does not need
 The 'WorkManager' actor can accept or deny a work request and we need to deal with unexpected errors:
 
 * If the 'WorkManager' accepts the request, the actor schedules a new tick to itself and toggles back to the idle behavior.
-* To deal with failures, the message uses the [ask pattern](http://pekko.apache.org/docs/pekko/current//scala/actors.html#ask-send-and-receive-future) to add a timeout to wait for a reply. If the timeout expires before the master responds, the returned 'Future' fails with an pekko.pattern.AskTimeoutException.
+* To deal with failures, the message uses the [ask pattern](http://pekko.apache.org/docs/pekko/current//scala/actors.html#ask-send-and-receive-future) to add a timeout to wait for a reply. If the timeout expires before the master responds, the returned 'Future' fails with a pekko.pattern.AskTimeoutException.
 * We transform timeouts or denials from the 'WorkManager' into a 'Failed' value that is automatically piped back to `self` and a `Retry` is scheduled.
 
 When a workload has been acknowledged by the master, the actor goes back to the  `idle` behavior which schedules
@@ -100,11 +100,11 @@ In an actual application you would probably want a way for clients to poll or st
 
 The back-end nodes host the `WorkManager` actor, which manages work, keeps track of available workers,
 and notifies registered workers when new work is available. The single `WorkManager` actor is the heart of the solution,
-with built-in resilience provided by the [Pekko Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton).
+with built-in resilience provided by the [Apache Pekko Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton).
 
 ### The WorkManager singleton
 
-The [Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton) tool in Pekko makes sure an
+The [Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton) tool in Apache Pekko makes sure an
 actor only runs concurrently on one node within the subset of nodes marked with the role `back-end` at any given time.
 It will run on the oldest back-end node. If the node on which the 'WorkManager' is running is removed from the cluster, Pekkostarts a new
 `WorkManager` on the next oldest node. Other nodes in the cluster interact with the `WorkManager` through the `ClusterSingletonProxy` without
@@ -128,9 +128,9 @@ Let's now explore the implementation of the `WorkManager` actor in depth.
 ## Work manager in detail
 
 The `WorkManager` actor is without question the most involved component in this example.
-This is because it is designed to deal with failures. While the Pekko Cluster takes care of restarting the `WorkManager` in case of a failure, we also want to make sure that the new `WorkManager` can arrive at the same state as the failed `WorkManager`. We use event sourcing and PekkoPersistence to achieve this.
+This is because it is designed to deal with failures. While the Apache Pekko Cluster takes care of restarting the `WorkManager` in case of a failure, we also want to make sure that the new `WorkManager` can arrive at the same state as the failed `WorkManager`. We use event sourcing and PekkoPersistence to achieve this.
 
-If the `back-end` node hosting the `WorkManager` actor would crash the Pekko Cluster Singleton makes sure it starts up on a different node, but we would also want it to reach the exact same state as the crashed node `WorkManager`. This is achieved through use of event sourcing and [PekkoPersistence](http://pekko.apache.org/docs/pekko/current//scala/persistence.html).
+If the `back-end` node hosting the `WorkManager` actor would crash the Apache Pekko Cluster Singleton makes sure it starts up on a different node, but we would also want it to reach the exact same state as the crashed node `WorkManager`. This is achieved through use of event sourcing and [PekkoPersistence](http://pekko.apache.org/docs/pekko/current//scala/persistence.html).
 
 ### Tracking current work items
 
@@ -191,17 +191,17 @@ Now that we have covered all the details, we can experiment with different sets 
 
 ## Experimenting
 
-When running the appliction without parameters it runs a six node cluster within the same JVM and starts a Cassandra database. It can be more interesting to run them in separate processes. Open four terminal windows.
+When running the appliction without parameters it runs a six node cluster within the same JVM and starts a Apache Cassandra database. It can be more interesting to run them in separate processes. Open four terminal windows.
 
-In the first terminal window, start the Cassandra database with the following command:
+In the first terminal window, start the Apache Cassandra database with the following command:
 
 ```bash
 sbt "runMain worker.Main cassandra"
 ```
 
-The Cassandra database will stay alive as long as you do not kill this process, when you want to stop it you can do that with `Ctrl + C`. Without the database the back-end nodes will not be able to start up.
+The Apache Cassandra database will stay alive as long as you do not kill this process, when you want to stop it you can do that with `Ctrl + C`. Without the database the back-end nodes will not be able to start up.
 
-You could also run your own local installation of Cassandra given that it runs on the default port on localhost and does not require a password.
+You could also run your own local installation of Apache Cassandra given that it runs on the default port on localhost and does not require a password.
 
 With the database running, go to the second terminal window and start the first seed node with the following command:
 
@@ -265,7 +265,7 @@ sbt "runMain worker.Main 5009 4
 
 ## The journal
 
-The files of the Cassandra database are saved in the target directory and when you restart the application the state is recovered. You can clean the state with:
+The files of the Apache Cassandra database are saved in the target directory and when you restart the application the state is recovered. You can clean the state with:
 
 ```bash
 sbt clean
@@ -281,7 +281,7 @@ The `FrontEnd` in this sample is a dummy that automatically generates work. A re
 
 ### Scaling better with many masters
 
-If the singleton master becomes a bottleneck we could start several master actors and shard the jobs among them. This could be achieved by using [Pekko Cluster Sharding](http://pekko.apache.org/docs/pekko/current//scala/cluster-sharding.html) with many `WorkManager` actors as entities and a hash of some sort on the payload deciding which master it should go to.
+If the singleton master becomes a bottleneck we could start several master actors and shard the jobs among them. This could be achieved by using [Apache Pekko Cluster Sharding](http://pekko.apache.org/docs/pekko/current//scala/cluster-sharding.html) with many `WorkManager` actors as entities and a hash of some sort on the payload deciding which master it should go to.
 
 ### More tools for building distributed systems
 
@@ -289,7 +289,7 @@ In this example we have used
 [Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/cluster-singleton.html#cluster-singleton)
 and
 [Distributed Publish Subscribe](http://pekko.apache.org/docs/pekko/current//scala/distributed-pub-sub.html)
- but those are not the only tools in Pekko Cluster.
+ but those are not the only tools in Apache Pekko Cluster.
 
  You can also find a good overview of the various modules that make up Pekkoin
  [this section of the official documentation](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton)
