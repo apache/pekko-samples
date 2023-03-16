@@ -10,5 +10,5 @@ Project structure:
 * [ClusterClient](src/main/scala/sample/cluster/client/grpc/ClusterClient.scala) is the actor on the client
   side that messages are sent via
 * [ClusterClientReceptionist](src/main/scala/sample/cluster/client/grpc/ClusterClientReceptionist.scala)
-  is an Apache Pekko extension on the cluster (server) side that implements the gPRC service and delegates
+  is an Apache Pekko extension on the cluster (server) side that implements the gRPC service and delegates
   messages to actors in the cluster that have been registered in Distributed PubSub. 
