@@ -34,7 +34,7 @@ object MainApp {
 
       case Some("cassandra") =>
         startCassandraDatabase()
-        println("Started Cassandra, press Ctrl + C to kill")
+        println("Started Apache Cassandra, press Ctrl + C to kill")
         new CountDownLatch(1).await()
 
     }
@@ -80,7 +80,7 @@ object MainApp {
     """).withFallback(ConfigFactory.load("application.conf"))
 
   /**
-   * To make the sample easier to run we kickstart a Cassandra instance to
+   * To make the sample easier to run we kickstart an Apache Cassandra instance to
    * act as the journal. Apache Cassandra is a great choice of backend for Akka Persistence but
    * in a real application a pre-existing Cassandra cluster should be used.
    */

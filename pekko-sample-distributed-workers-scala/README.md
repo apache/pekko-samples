@@ -47,7 +47,7 @@ Let's look at the details of each part of the application, starting with the fro
 
 ## Front end
 
-Typically in systems built with Pekko, clients submit requests using a RESTful API or a gRPC API.
+Typically in systems built with Apache Pekko, clients submit requests using a RESTful API or a gRPC API.
 Either [PekkoHTTP](http://doc.pekko.io/docs/pekko-http/current/scala/http/introduction.html) or [Play Framework](https://www.playframework.com)
 are great choices for implementing an HTTP API for the front-end, [Pekko
 gRPC](https://doc.pekko.io/docs/pekko-grpc/current/index.html) can be used of a gRPC front end is preferred.

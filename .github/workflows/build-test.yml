@@ -22,11 +22,11 @@ jobs:
       - name: Cache Coursier cache
         uses: coursier/cache-action@v6.4
 
-      - name: Test akka-sample-cluster-java
-        run: cd akka-sample-cluster-java && sbt multi-jvm:test
+      - name: Test pekko-sample-cluster-java
+        run: cd pekko-sample-cluster-java && sbt multi-jvm:test
 
-      - name: Test akka-sample-cluster-scala
-        run: cd akka-sample-cluster-scala && sbt multi-jvm:test
+      - name: Test pekko-sample-cluster-scala
+        run: cd pekko-sample-cluster-scala && sbt multi-jvm:test
 
       - name: Test akka-sample-cluster-client-grpc-scala
         run: cd akka-sample-cluster-client-grpc-scala && sbt multi-jvm:test
