@@ -28,8 +28,8 @@ object App {
   def main(args: Array[String]): Unit = {
     // starting 2 frontend nodes and 3 backend nodes
     if (args.isEmpty) {
-      startup("backend", 25251)
-      startup("backend", 25252)
+      startup("backend", 17356)
+      startup("backend", 17357)
       startup("frontend", 0)
       startup("frontend", 0)
       startup("frontend", 0)

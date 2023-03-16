@@ -14,8 +14,8 @@ public class App {
 
   public static void main(String[] args) {
     if (args.length == 0) {
-      startup(25251);
-      startup(25252);
+      startup(17356);
+      startup(17357);
       startup(0);
     } else
       Arrays.stream(args).map(Integer::parseInt).forEach(App::startup);

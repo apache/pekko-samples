@@ -26,15 +26,15 @@ To run this sample, type `sbt "runMain sample.cluster.simple.App"`.
 
 In the first terminal window, start the first seed node with the following command:
 
-    sbt "runMain sample.cluster.simple.App 25251"
+    sbt "runMain sample.cluster.simple.App 17356"
 
-25251 corresponds to the port of the first seed-nodes element in the configuration. In the log output you see that the cluster node has been started and changed status to 'Up'.
+17356 corresponds to the port of the first seed-nodes element in the configuration. In the log output you see that the cluster node has been started and changed status to 'Up'.
 
 In the second terminal window, start the second seed node with the following command:
 
-    sbt "runMain sample.cluster.simple.App 25252"
+    sbt "runMain sample.cluster.simple.App 17357"
 
-25252 corresponds to the port of the second seed-nodes element in the configuration. In the log output you see that the cluster node has been started and joins the other seed node and becomes a member of the cluster. Its status changed to 'Up'.
+17357 corresponds to the port of the second seed-nodes element in the configuration. In the log output you see that the cluster node has been started and joins the other seed node and becomes a member of the cluster. Its status changed to 'Up'.
 
 Switch over to the first terminal window and see in the log output that the member joined.
 
@@ -71,9 +71,9 @@ To run this sample, make sure you have shut down any previously started cluster 
 
 TransformationApp starts 5 actor systems (cluster members) in the same JVM process. It can be more interesting to run them in separate processes. Stop the application and run the following commands in separate terminal windows.
 
-    sbt "runMain sample.cluster.transformation.App backend 25251"
+    sbt "runMain sample.cluster.transformation.App backend 17356"
 
-    sbt "runMain sample.cluster.transformation.App backend 25252"
+    sbt "runMain sample.cluster.transformation.App backend 17357"
 
     sbt "runMain sample.cluster.transformation.App backend 0"
 
@@ -120,9 +120,9 @@ To run the sample, type `sbt "runMain sample.cluster.stats.App"` if it is not al
 
 StatsSample starts 4 actor systems (cluster members) in the same JVM process. It can be more interesting to run them in separate processes. Stop the application and run the following commands in separate terminal windows.
 
-    sbt "runMain sample.cluster.stats.App compute 25251"
+    sbt "runMain sample.cluster.stats.App compute 17356"
 
-    sbt "runMain sample.cluster.stats.App compute 25252"
+    sbt "runMain sample.cluster.stats.App compute 17357"
 
     sbt "runMain sample.cluster.stats.App compute  0"
 
@@ -145,9 +145,9 @@ To run this sample, type `sbt "runMain sample.cluster.stats.AppOneMaster"` if it
 
 StatsSampleOneMaster starts 4 actor systems (cluster members) in the same JVM process. It can be more interesting to run them in separate processes. Stop the application and run the following commands in separate terminal windows.
 
-    sbt "runMain sample.cluster.stats.AppOneMaster compute 25251"
+    sbt "runMain sample.cluster.stats.AppOneMaster compute 17356"
 
-    sbt "runMain sample.cluster.stats.AppOneMaster compute 25252"
+    sbt "runMain sample.cluster.stats.AppOneMaster compute 17357"
 
     sbt "runMain sample.cluster.stats.AppOneMaster compute 0"
 
