@@ -19,7 +19,7 @@ object App {
   def main(args: Array[String]): Unit = {
     val ports =
       if (args.isEmpty)
-        Seq(25251, 25252, 0)
+        Seq(17356, 17357, 0)
       else
         args.toSeq.map(_.toInt)
     ports.foreach(startup)

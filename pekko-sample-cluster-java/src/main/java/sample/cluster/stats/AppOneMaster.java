@@ -71,8 +71,8 @@ public class AppOneMaster {
 
   public static void main(String[] args) {
     if (args.length == 0) {
-      startup("compute", 25251);
-      startup("compute", 25252);
+      startup("compute", 17356);
+      startup("compute", 17357);
       startup("compute", 0);
       startup("client", 0);
     } else {

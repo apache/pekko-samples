@@ -1,11 +1,11 @@
 package sample.cluster.client.grpc
 
-import akka.NotUsed
-import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props, Terminated}
-import akka.event.LoggingAdapter
-import akka.grpc.GrpcClientSettings
-import akka.stream._
-import akka.stream.scaladsl.Source
+import org.apache.pekko.NotUsed
+import org.apache.pekko.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props, Terminated}
+import org.apache.pekko.event.LoggingAdapter
+import org.apache.pekko.grpc.GrpcClientSettings
+import org.apache.pekko.stream._
+import org.apache.pekko.stream.scaladsl.Source
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
@@ -13,11 +13,11 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
 object ClusterClient {
 
   /**
-    * Factory method for `ClusterClient` [[akka.actor.Props]].
+    * Factory method for `ClusterClient` [[org.apache.pekko.actor.Props]].
     */
   def props(
     settings: ClusterClientSettings
-  )(implicit materializer: Materializer): Props =
+  )(implicit materializer: Materializer, sys: ActorSystem): Props =
     Props(new ClusterClient(settings))
 
   sealed trait Command
@@ -49,7 +49,7 @@ object ClusterClient {
 
   private def createClientStub(
     settings: ClusterClientSettings
-  )(implicit mat: Materializer): ClusterClientReceptionistServiceClient = {
+  )(implicit mat: Materializer, sys: ActorSystem): ClusterClientReceptionistServiceClient = {
     implicit val ec: ExecutionContext = mat.executionContext
     ClusterClientReceptionistServiceClient(settings.grpcClientSettings)
   }
@@ -126,7 +126,7 @@ object ClusterClient {
 /**
   * This actor is intended to be used on an external node that is not member
   * of the cluster. It acts like a gateway for sending messages to actors
-  * somewhere in the cluster. With service discovery and Akka gRPC it will establish
+  * somewhere in the cluster. With service discovery and Apache Pekko gRPC it will establish
   * a connection to a [[ClusterClientReceptionist]] somewhere in the cluster.
   *
   * You can send messages via the `ClusterClient` to any actor in the cluster
@@ -150,7 +150,7 @@ object ClusterClient {
   * to the named topic.
   *
   * Use the factory method [[ClusterClient#props]]) to create the
-  * [[akka.actor.Props]] for the actor.
+  * [[org.apache.pekko.actor.Props]] for the actor.
   *
   * If the receptionist is not currently available, the client will buffer the messages
   * and then deliver them when the connection to the receptionist has been established.
@@ -162,7 +162,8 @@ object ClusterClient {
   * nature of the actors involved.
   */
 final class ClusterClient(settings: ClusterClientSettings)(
-  implicit materializer: Materializer
+  implicit materializer: Materializer,
+  sys: ActorSystem
 ) extends Actor
     with ActorLogging {
 
@@ -185,7 +186,7 @@ final class ClusterClient(settings: ClusterClientSettings)(
 
   def receive: Receive = {
     case send: SendAsk =>
-      import akka.pattern.pipe
+      import org.apache.pekko.pattern.pipe
       import context.dispatcher
       askSend(receptionistServiceClient, send, serialization).pipeTo(sender())
 

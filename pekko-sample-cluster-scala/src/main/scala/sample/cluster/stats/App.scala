@@ -45,8 +45,8 @@ object App {
 
   def main(args: Array[String]): Unit = {
     if (args.isEmpty) {
-      startup("compute", 25251)
-      startup("compute", 25252)
+      startup("compute", 17356)
+      startup("compute", 17357)
       startup("compute", 0)
       startup("client", 0)
     } else {
