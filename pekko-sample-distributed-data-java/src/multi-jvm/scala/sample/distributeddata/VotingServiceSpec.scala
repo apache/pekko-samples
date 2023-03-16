@@ -67,7 +67,7 @@ class VotingServiceSpec extends MultiNodeSpec(VotingServiceSpec) with STMultiNod
       val N = 1000
       runOn(node1) {
         votingService ! VotingService.Open.INSTANCE
-        for (n ← 1 to N) {
+        for (n <- 1 to N) {
           votingService ! new Vote("#" + ((n % 20) + 1))
         }
       }
@@ -78,7 +78,7 @@ class VotingServiceSpec extends MultiNodeSpec(VotingServiceSpec) with STMultiNod
           votingService.tell(new GetVotes(p.ref))
           p.expectMessageType[Votes](3.seconds).open should be(true)
         }
-        for (n ← 1 to N) {
+        for (n <- 1 to N) {
           votingService ! new Vote("#" + ((n % 20) + 1))
         }
       }

@@ -78,13 +78,13 @@ class ReplicatedCacheSpec extends MultiNodeSpec(ReplicatedCacheSpec) with STMult
 
     "replicate many cached entries" in within(10.seconds) {
       runOn(node1) {
-        for (i ← 100 to 200)
+        for (i <- 100 to 200)
           replicatedCache ! new PutInCache("key" + i, "entry-" + i)
       }
 
       awaitAssert {
         val probe = TestProbe[Cached]()
-        for (i ← 100 to 200) {
+        for (i <- 100 to 200) {
           replicatedCache.tell(new GetFromCache("key" + i, probe.ref))
           probe.expectMessage(new Cached("key" + i, Optional.of("entry-" + i)))
         }
