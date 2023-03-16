@@ -133,7 +133,7 @@ public class ClusterClient extends AbstractLoggingActor {
 
   private static ClusterClientReceptionistServiceClient createClientStub(ClusterClientSettings settings,
       Materializer mat) {
-    return ClusterClientReceptionistServiceClient.create(settings.grpcClientSettings,mat, mat.executionContext());
+    return ClusterClientReceptionistServiceClient.create(settings.grpcClientSettings, mat.system());
   }
 
   private static CompletionStage<ActorRef> newSession(
