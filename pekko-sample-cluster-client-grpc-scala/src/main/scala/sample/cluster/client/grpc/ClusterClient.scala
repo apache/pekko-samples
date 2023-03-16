@@ -17,7 +17,7 @@ object ClusterClient {
     */
   def props(
     settings: ClusterClientSettings
-  )(implicit materializer: Materializer): Props =
+  )(implicit materializer: Materializer, sys: ActorSystem): Props =
     Props(new ClusterClient(settings))
 
   sealed trait Command
@@ -49,7 +49,7 @@ object ClusterClient {
 
   private def createClientStub(
     settings: ClusterClientSettings
-  )(implicit mat: Materializer): ClusterClientReceptionistServiceClient = {
+  )(implicit mat: Materializer, sys: ActorSystem): ClusterClientReceptionistServiceClient = {
     implicit val ec: ExecutionContext = mat.executionContext
     ClusterClientReceptionistServiceClient(settings.grpcClientSettings)
   }
@@ -162,7 +162,8 @@ object ClusterClient {
   * nature of the actors involved.
   */
 final class ClusterClient(settings: ClusterClientSettings)(
-  implicit materializer: Materializer
+  implicit materializer: Materializer,
+  sys: ActorSystem
 ) extends Actor
     with ActorLogging {
 
