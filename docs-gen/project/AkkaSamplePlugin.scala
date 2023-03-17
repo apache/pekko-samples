@@ -18,8 +18,8 @@ object AkkaSamplePlugin extends sbt.AutoPlugin {
     baseUrl := "https://github.com/akka/akka-samples/blob/2.6",
     crossPaths := false,
     // Copy README.md file
-    sourceDirectory in (Compile, paradox) := {
-      val outDir = (managedSourceDirectories in Compile).value.head / "paradox"
+    Compile / paradox / sourceDirectory := {
+      val outDir = (Compile / managedSourceDirectories).value.head / "paradox"
       val outFile = outDir / "index.md"
       val inDir = baseDirectory.value / ".." / ".." / baseProject.value
       val inFile = inDir / "README.md"
