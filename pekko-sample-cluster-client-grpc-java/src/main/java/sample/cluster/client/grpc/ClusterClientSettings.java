@@ -1,7 +1,7 @@
 package sample.cluster.client.grpc;
 
-import akka.actor.ActorSystem;
-import akka.grpc.GrpcClientSettings;
+import org.apache.pekko.actor.ActorSystem;
+import org.apache.pekko.grpc.GrpcClientSettings;
 import com.typesafe.config.Config;
 
 import java.time.Duration;

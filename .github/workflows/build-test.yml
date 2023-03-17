@@ -31,8 +31,8 @@ jobs:
       - name: Test pekko-sample-cluster-client-grpc-scala
         run: cd pekko-sample-cluster-client-grpc-scala && sbt multi-jvm:test
 
-      - name: Test akka-sample-cluster-client-grpc-java
-        run: cd akka-sample-cluster-client-grpc-java && mvn test
+      - name: Test pekko-sample-cluster-client-grpc-java
+        run: cd pekko-sample-cluster-client-grpc-java && mvn test
 
       - name: Test pekko-sample-distributed-data-java
         run: cd pekko-sample-distributed-data-java && sbt multi-jvm:test

@@ -1,17 +1,17 @@
 package sample.cluster.client.grpc;
 
 
-import akka.actor.AbstractActor;
-import akka.actor.ActorRef;
-import akka.actor.ActorSystem;
-import akka.actor.Props;
-import akka.cluster.Cluster;
-import akka.cluster.pubsub.DistributedPubSub;
-import akka.cluster.pubsub.DistributedPubSubMediator;
-import akka.japi.pf.ReceiveBuilder;
-import akka.pattern.Patterns;
-import akka.stream.Materializer;
-import akka.testkit.javadsl.TestKit;
+import org.apache.pekko.actor.AbstractActor;
+import org.apache.pekko.actor.ActorRef;
+import org.apache.pekko.actor.ActorSystem;
+import org.apache.pekko.actor.Props;
+import org.apache.pekko.cluster.Cluster;
+import org.apache.pekko.cluster.pubsub.DistributedPubSub;
+import org.apache.pekko.cluster.pubsub.DistributedPubSubMediator;
+import org.apache.pekko.japi.pf.ReceiveBuilder;
+import org.apache.pekko.pattern.Patterns;
+import org.apache.pekko.stream.Materializer;
+import org.apache.pekko.testkit.javadsl.TestKit;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import org.junit.AfterClass;
@@ -47,8 +47,8 @@ public class ClusterClientTest {
 
   private static Config clusterConfig(int grpcPort) {
    return  ConfigFactory.parseString(
-        "akka.actor.provider = cluster \n" +
-          "akka.remote.artery.canonical.port = 0 \n" +
+        "pekko.actor.provider = cluster \n" +
+          "pekko.remote.artery.canonical.port = 0 \n" +
           "sample.cluster.client.grpc.receptionist.canonical.port = " + grpcPort + " \n" +
           "").withFallback(ConfigFactory.load());
   }
@@ -57,7 +57,7 @@ public class ClusterClientTest {
   public static void setup() {
     Config clientConfig =
       ConfigFactory.parseString(
-        "akka.actor.provider = local \n" +
+        "pekko.actor.provider = local \n" +
           "").withFallback(ConfigFactory.load());
 
     clientNode = ActorSystem.create("ClusterClientTest");

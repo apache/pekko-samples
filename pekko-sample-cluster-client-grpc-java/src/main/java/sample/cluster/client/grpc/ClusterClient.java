@@ -1,19 +1,19 @@
 package sample.cluster.client.grpc;
 
-import akka.NotUsed;
-import akka.actor.AbstractLoggingActor;
-import akka.actor.ActorRef;
-import akka.actor.Props;
-import akka.actor.Terminated;
-import akka.event.LoggingAdapter;
-import akka.japi.pf.ReceiveBuilder;
-import akka.pattern.Patterns;
-import akka.stream.KillSwitches;
-import akka.stream.Materializer;
-import akka.stream.OverflowStrategy;
-import akka.stream.SharedKillSwitch;
-import akka.stream.WatchedActorTerminatedException;
-import akka.stream.javadsl.Source;
+import org.apache.pekko.NotUsed;
+import org.apache.pekko.actor.AbstractLoggingActor;
+import org.apache.pekko.actor.ActorRef;
+import org.apache.pekko.actor.Props;
+import org.apache.pekko.actor.Terminated;
+import org.apache.pekko.event.LoggingAdapter;
+import org.apache.pekko.japi.pf.ReceiveBuilder;
+import org.apache.pekko.pattern.Patterns;
+import org.apache.pekko.stream.KillSwitches;
+import org.apache.pekko.stream.Materializer;
+import org.apache.pekko.stream.OverflowStrategy;
+import org.apache.pekko.stream.SharedKillSwitch;
+import org.apache.pekko.stream.WatchedActorTerminatedException;
+import org.apache.pekko.stream.javadsl.Source;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ import java.util.concurrent.CompletionStage;
 /**
  * This actor is intended to be used on an external node that is not member
  * of the cluster. It acts like a gateway for sending messages to actors
- * somewhere in the cluster. With service discovery and Akka gRPC it will establish
+ * somewhere in the cluster. With service discovery and Apache Pekko gRPC it will establish
  * a connection to a {@link ClusterClientReceptionist} somewhere in the cluster.
  * <p>
  * You can send messages via the `ClusterClient` to any actor in the cluster
@@ -48,7 +48,7 @@ import java.util.concurrent.CompletionStage;
  * to the named topic.
  * <p>
  * Use the factory method {@link ClusterClient#props ClusterClient.props}) to create the
- * `akka.actor.Props` for the actor.
+ * `org.apache.pekko.actor.Props` for the actor.
  * <p>
  * If the receptionist is not currently available, the client will buffer the messages
  * and then deliver them when the connection to the receptionist has been established.
@@ -62,7 +62,7 @@ import java.util.concurrent.CompletionStage;
 public class ClusterClient extends AbstractLoggingActor {
 
   /**
-   * Factory method for `ClusterClient` `akka.actor.Props`.
+   * Factory method for `ClusterClient` `org.apache.pekko.actor.Props`.
    */
   public static Props props(ClusterClientSettings settings, Materializer materializer) {
     return Props.create(ClusterClient.class, () -> new ClusterClient(settings, materializer));
@@ -133,7 +133,7 @@ public class ClusterClient extends AbstractLoggingActor {
 
   private static ClusterClientReceptionistServiceClient createClientStub(ClusterClientSettings settings,
       Materializer mat) {
-    return ClusterClientReceptionistServiceClient.create(settings.grpcClientSettings,mat, mat.executionContext());
+    return ClusterClientReceptionistServiceClient.create(settings.grpcClientSettings, mat.system());
   }
 
   private static CompletionStage<ActorRef> newSession(
