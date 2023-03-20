@@ -36,7 +36,6 @@ private[killrweather] object WeatherStation {
       WeatherStation(entityContext.entityId)
     })
 
-
   // actor commands and responses
   sealed trait Command extends CborSerializable
 
@@ -44,8 +43,8 @@ private[killrweather] object WeatherStation {
   final case class DataRecorded(wsid: String) extends CborSerializable
 
   final case class Query(dataType: DataType, func: Function, replyTo: ActorRef[QueryResult]) extends Command
-  final case class QueryResult(wsid: String, dataType: DataType, func: Function, readings: Int, value: Vector[TimeWindow]) extends CborSerializable
-
+  final case class QueryResult(wsid: String, dataType: DataType, func: Function, readings: Int,
+      value: Vector[TimeWindow]) extends CborSerializable
 
   // small domain model for querying and storing weather data
 
@@ -54,6 +53,7 @@ private[killrweather] object WeatherStation {
   @JsonDeserialize(using = classOf[DataTypeJsonDeserializer])
   sealed trait DataType
   object DataType {
+
     /** Temperature in celcius */
     case object Temperature extends DataType
     case object Dewpoint extends DataType
@@ -82,7 +82,6 @@ private[killrweather] object WeatherStation {
   final case class Data(eventTime: Long, dataType: DataType, value: Double)
   final case class TimeWindow(start: Long, end: Long, value: Double)
 
-
   def apply(wsid: String): Behavior[Command] = Behaviors.setup { context =>
     context.log.info("Starting weather station {}", wsid)
 
@@ -99,13 +98,13 @@ private[killrweather] object WeatherStation {
         val updated = values :+ data
         if (context.log.isDebugEnabled) {
           val averageForSameType = average(updated.filter(_.dataType == data.dataType).map(_.value))
-          context.log.debugN("{} total readings from station {}, type {}, average {}, diff: processingTime - eventTime: {} ms",
+          context.log.debugN(
+            "{} total readings from station {}, type {}, average {}, diff: processingTime - eventTime: {} ms",
             updated.size,
             wsid,
             data.dataType,
             averageForSameType,
-            received - data.eventTime
-          )
+            received - data.eventTime)
         }
         replyTo ! DataRecorded(wsid)
         running(context, wsid, updated) // store
@@ -132,7 +131,7 @@ private[killrweather] object WeatherStation {
                   .map(e => TimeWindow(e.eventTime, e.eventTime, e.value))
                   .get)
 
-          }
+            }
         replyTo ! QueryResult(wsid, dataType, func, valuesForType.size, queryResult)
         Behaviors.same
 

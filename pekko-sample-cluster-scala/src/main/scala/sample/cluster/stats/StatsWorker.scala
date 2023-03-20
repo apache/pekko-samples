@@ -29,7 +29,7 @@ object StatsWorker {
   }
 
   private def withCache(ctx: ActorContext[Command],
-                        cache: Map[String, Int]): Behavior[Command] =
+      cache: Map[String, Int]): Behavior[Command] =
     Behaviors.receiveMessage {
       case Process(word, replyTo) =>
         ctx.log.info("Worker processing request [{}]", word)

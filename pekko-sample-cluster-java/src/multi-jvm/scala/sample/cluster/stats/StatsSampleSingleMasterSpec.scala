@@ -43,7 +43,7 @@ class StatsSampleSingleMasterSpecMultiJvmNode2 extends StatsSampleSingleMasterSp
 class StatsSampleSingleMasterSpecMultiJvmNode3 extends StatsSampleSingleMasterSpec
 
 abstract class StatsSampleSingleMasterSpec extends MultiNodeSpec(StatsSampleSingleMasterSpecConfig)
-  with WordSpecLike with Matchers with BeforeAndAfterAll {
+    with WordSpecLike with Matchers with BeforeAndAfterAll {
 
   import StatsSampleSingleMasterSpecConfig._
 
@@ -66,7 +66,7 @@ abstract class StatsSampleSingleMasterSpec extends MultiNodeSpec(StatsSampleSing
       val secondAddress = node(second).address
       val thirdAddress = node(third).address
 
-      Cluster(system) join firstAddress
+      Cluster(system).join(firstAddress)
 
       receiveN(3).collect { case MemberUp(m) => m.address }.toSet should be(
         Set(firstAddress, secondAddress, thirdAddress))
@@ -81,9 +81,7 @@ abstract class StatsSampleSingleMasterSpec extends MultiNodeSpec(StatsSampleSing
             val workersRouter = ctx.spawn(Routers.pool(2)(StatsWorker.create()), "WorkersRouter")
             StatsService.create(workersRouter)
           },
-          "StatsService",
-        ).withSettings(singletonSettings)
-      )
+          "StatsService").withSettings(singletonSettings))
 
       testConductor.enter("all-up")
     }

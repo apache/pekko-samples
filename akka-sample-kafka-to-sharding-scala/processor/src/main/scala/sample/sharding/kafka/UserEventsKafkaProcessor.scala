@@ -12,7 +12,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.scaladsl.adapter._
 import akka.actor.typed.ActorRef
 import akka.actor.typed.Behavior
-import akka.actor.typed.{ActorSystem => TypedActorSystem}
+import akka.actor.typed.{ ActorSystem => TypedActorSystem }
 import akka.kafka.cluster.sharding.KafkaClusterSharding
 import akka.kafka.scaladsl.Committer
 import akka.kafka.scaladsl.Consumer
@@ -49,9 +49,8 @@ object UserEventsKafkaProcessor {
       .narrow
   }
 
-
-  private def startConsumingFromTopic(shardRegion: ActorRef[UserEvents.Command], processorSettings: ProcessorSettings)
-                     (implicit actorSystem: TypedActorSystem[_]): Future[Done] = {
+  private def startConsumingFromTopic(shardRegion: ActorRef[UserEvents.Command], processorSettings: ProcessorSettings)(
+      implicit actorSystem: TypedActorSystem[_]): Future[Done] = {
 
     implicit val ec: ExecutionContext = actorSystem.executionContext
     implicit val scheduler: Scheduler = actorSystem.toClassic.scheduler
@@ -63,24 +62,23 @@ object UserEventsKafkaProcessor {
       .topics(processorSettings.topics: _*)
       .withRebalanceListener(rebalanceListener.toClassic)
 
-
     Consumer.sourceWithOffsetContext(processorSettings.kafkaConsumerSettings(), subscription)
       // MapAsync and Retries can be replaced by reliable delivery
       .mapAsync(20) { record =>
         logger.info(s"user id consumed kafka partition ${record.key()}->${record.partition()}")
-        retry(() =>
-          shardRegion.ask[Done](replyTo => {
-            val purchaseProto = UserPurchaseProto.parseFrom(record.value())
-            UserEvents.UserPurchase(
-              purchaseProto.userId,
-              purchaseProto.product,
-              purchaseProto.quantity,
-              purchaseProto.price,
-              replyTo)
-          })(processorSettings.askTimeout, actorSystem.scheduler),
+        retry(
+          () =>
+            shardRegion.ask[Done](replyTo => {
+              val purchaseProto = UserPurchaseProto.parseFrom(record.value())
+              UserEvents.UserPurchase(
+                purchaseProto.userId,
+                purchaseProto.product,
+                purchaseProto.quantity,
+                purchaseProto.price,
+                replyTo)
+            })(processorSettings.askTimeout, actorSystem.scheduler),
           attempts = 5,
-          delay = 1.second
-        )
+          delay = 1.second)
       }
       .runWith(Committer.sinkWithOffsetContext(CommitterSettings(classic)))
   }

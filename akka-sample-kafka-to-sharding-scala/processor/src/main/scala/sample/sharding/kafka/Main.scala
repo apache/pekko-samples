@@ -1,17 +1,17 @@
 package sample.sharding.kafka
 
 import akka.actor.typed.scaladsl.adapter._
-import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
-import akka.actor.typed.{ActorRef, ActorSystem, Behavior, Terminated}
-import akka.cluster.typed.{Cluster, SelfUp, Subscribe}
+import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
+import akka.actor.typed.{ ActorRef, ActorSystem, Behavior, Terminated }
+import akka.cluster.typed.{ Cluster, SelfUp, Subscribe }
 import akka.http.scaladsl._
-import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
+import akka.http.scaladsl.model.{ HttpRequest, HttpResponse }
 import akka.management.scaladsl.AkkaManagement
 import akka.stream.Materializer
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.{ Config, ConfigFactory }
 
 import scala.concurrent.Future
-import scala.util.{Failure, Success}
+import scala.util.{ Failure, Success }
 
 sealed trait Command
 case object NodeMemberUp extends Command
@@ -37,20 +37,21 @@ object Main {
 
   def init(remotingPort: Int, akkaManagementPort: Int, frontEndPort: Int): Unit = {
     ActorSystem(Behaviors.setup[Command] {
-      ctx =>
-        AkkaManagement(ctx.system.toClassic).start()
-        val cluster = Cluster(ctx.system)
-        val upAdapter = ctx.messageAdapter[SelfUp](_ => NodeMemberUp)
-        cluster.subscriptions ! Subscribe(upAdapter, classOf[SelfUp])
-        val settings = ProcessorSettings("kafka-to-sharding-processor", ctx.system.toClassic)
-        ctx.pipeToSelf(UserEvents.init(ctx.system, settings)) {
-          case Success(extractor) => ShardingStarted(extractor)
-          case Failure(ex) => throw ex
-        }
-        starting(ctx, None, joinedCluster = false, settings)
-    }, "KafkaToSharding", config(remotingPort, akkaManagementPort))
+        ctx =>
+          AkkaManagement(ctx.system.toClassic).start()
+          val cluster = Cluster(ctx.system)
+          val upAdapter = ctx.messageAdapter[SelfUp](_ => NodeMemberUp)
+          cluster.subscriptions ! Subscribe(upAdapter, classOf[SelfUp])
+          val settings = ProcessorSettings("kafka-to-sharding-processor", ctx.system.toClassic)
+          ctx.pipeToSelf(UserEvents.init(ctx.system, settings)) {
+            case Success(extractor) => ShardingStarted(extractor)
+            case Failure(ex)        => throw ex
+          }
+          starting(ctx, None, joinedCluster = false, settings)
+      }, "KafkaToSharding", config(remotingPort, akkaManagementPort))
 
-    def start(ctx: ActorContext[Command], region: ActorRef[UserEvents.Command], settings: ProcessorSettings): Behavior[Command] = {
+    def start(ctx: ActorContext[Command], region: ActorRef[UserEvents.Command], settings: ProcessorSettings)
+        : Behavior[Command] = {
       import ctx.executionContext
       ctx.log.info("Sharding started and joined cluster. Starting event processor")
       val eventProcessor = ctx.spawn[Nothing](UserEventsKafkaProcessor(region, settings), "kafka-event-processor")
@@ -63,7 +64,8 @@ object Main {
       running(ctx, binding, eventProcessor)
     }
 
-    def starting(ctx: ActorContext[Command], sharding: Option[ActorRef[UserEvents.Command]], joinedCluster: Boolean, settings: ProcessorSettings): Behavior[Command] = Behaviors
+    def starting(ctx: ActorContext[Command], sharding: Option[ActorRef[UserEvents.Command]], joinedCluster: Boolean,
+        settings: ProcessorSettings): Behavior[Command] = Behaviors
       .receive[Command] {
         case (ctx, ShardingStarted(region)) if joinedCluster =>
           ctx.log.info("Sharding has started")
@@ -74,12 +76,13 @@ object Main {
         case (ctx, NodeMemberUp) if sharding.isDefined =>
           ctx.log.info("Member has joined the cluster")
           start(ctx, sharding.get, settings)
-        case (_, NodeMemberUp)  =>
+        case (_, NodeMemberUp) =>
           ctx.log.info("Member has joined the cluster")
           starting(ctx, sharding, joinedCluster = true, settings)
       }
 
-    def running(ctx: ActorContext[Command], binding: Future[Http.ServerBinding], processor: ActorRef[Nothing]): Behavior[Command] =
+    def running(ctx: ActorContext[Command], binding: Future[Http.ServerBinding], processor: ActorRef[Nothing])
+        : Behavior[Command] =
       Behaviors.receiveMessagePartial[Command] {
         case BindingFailed(t) =>
           ctx.log.error("Failed to bind front end", t)
@@ -91,8 +94,8 @@ object Main {
           Behaviors.stopped
       }
 
-
-    def startGrpc(system: ActorSystem[_], frontEndPort: Int, region: ActorRef[UserEvents.Command]): Future[Http.ServerBinding] = {
+    def startGrpc(
+        system: ActorSystem[_], frontEndPort: Int, region: ActorRef[UserEvents.Command]): Future[Http.ServerBinding] = {
       val mat = Materializer.createMaterializer(system.toClassic)
       val service: HttpRequest => Future[HttpResponse] =
         UserServiceHandler(new UserGrpcService(system, region))(mat, system.toClassic)

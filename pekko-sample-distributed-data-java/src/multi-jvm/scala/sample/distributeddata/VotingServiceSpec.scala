@@ -92,9 +92,9 @@ class VotingServiceSpec extends MultiNodeSpec(VotingServiceSpec) with STMultiNod
         val p = TestProbe[Votes]()
         votingService ! new GetVotes(p.ref)
         val votes = p.expectMessageType[Votes](3.seconds)
-        votes.open should be (false)
+        votes.open should be(false)
         import scala.collection.JavaConverters._
-        votes.result.asScala.toMap should be (expected)
+        votes.result.asScala.toMap should be(expected)
       }
 
       enterBarrier("after-2")
@@ -102,4 +102,3 @@ class VotingServiceSpec extends MultiNodeSpec(VotingServiceSpec) with STMultiNod
   }
 
 }
-

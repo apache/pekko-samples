@@ -78,7 +78,7 @@ class ShoppingCartSpec extends MultiNodeSpec(ShoppingCartSpec) with STMultiNodeS
         shoppingCart ! new ShoppingCart.GetCart(probe.ref)
         val cart = probe.expectMessageType[Cart]
         cart.items.asScala.toSet should be(Set(
-            new LineItem("1", "Apples", 2), new LineItem("2", "Oranges", 3)))
+          new LineItem("1", "Apples", 2), new LineItem("2", "Oranges", 3)))
       }
 
       enterBarrier("after-2")
@@ -99,7 +99,7 @@ class ShoppingCartSpec extends MultiNodeSpec(ShoppingCartSpec) with STMultiNodeS
         shoppingCart ! new ShoppingCart.GetCart(probe.ref)
         val cart = probe.expectMessageType[Cart]
         cart.items.asScala.toSet should be(
-            Set(new LineItem("1", "Apples", 7), new LineItem("3", "Bananas", 4)))
+          Set(new LineItem("1", "Apples", 7), new LineItem("3", "Bananas", 4)))
       }
 
       enterBarrier("after-3")
@@ -108,4 +108,3 @@ class ShoppingCartSpec extends MultiNodeSpec(ShoppingCartSpec) with STMultiNodeS
   }
 
 }
-

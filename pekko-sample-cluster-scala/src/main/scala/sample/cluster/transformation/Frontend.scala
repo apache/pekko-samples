@@ -20,7 +20,6 @@ object Frontend {
   private final case class TransformCompleted(originalText: String, transformedText: String) extends Event
   private final case class JobFailed(why: String, text: String) extends Event
 
-
   def apply(): Behavior[Event] = Behaviors.setup { ctx =>
     Behaviors.withTimers { timers =>
       // subscribe to available workers
@@ -36,7 +35,8 @@ object Frontend {
     }
   }
 
-  private def running(ctx: ActorContext[Event], workers: IndexedSeq[ActorRef[Worker.TransformText]], jobCounter: Int): Behavior[Event] =
+  private def running(
+      ctx: ActorContext[Event], workers: IndexedSeq[ActorRef[Worker.TransformText]], jobCounter: Int): Behavior[Event] =
     Behaviors.receiveMessage {
       case WorkersUpdated(newWorkers) =>
         ctx.log.info("List of services registered with the receptionist changed: {}", newWorkers)
@@ -53,7 +53,7 @@ object Frontend {
           val text = s"hello-$jobCounter"
           ctx.ask(selectedWorker, Worker.TransformText(text, _)) {
             case Success(transformedText) => TransformCompleted(transformedText.text, text)
-            case Failure(ex) => JobFailed("Processing timed out", text)
+            case Failure(ex)              => JobFailed("Processing timed out", text)
           }
           running(ctx, workers, jobCounter + 1)
         }

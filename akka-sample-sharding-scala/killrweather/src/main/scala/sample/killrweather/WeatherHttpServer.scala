@@ -1,11 +1,11 @@
 package sample.killrweather
 
-import scala.util.{Failure, Success}
+import scala.util.{ Failure, Success }
 import scala.concurrent.duration._
 
 import akka.actor.typed.ActorSystem
 import akka.actor.CoordinatedShutdown
-import akka.{Done, actor => classic}
+import akka.{ actor => classic, Done }
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 
@@ -27,19 +27,16 @@ private[killrweather] object WeatherHttpServer {
         system.log.info(
           "WeatherServer online at http://{}:{}/",
           address.getHostString,
-          address.getPort
-        )
+          address.getPort)
 
         shutdown.addTask(
           CoordinatedShutdown.PhaseServiceRequestsDone,
-          "http-graceful-terminate"
-        ) { () =>
+          "http-graceful-terminate") { () =>
           binding.terminate(10.seconds).map { _ =>
             system.log.info(
               "WeatherServer http://{}:{}/ graceful shutdown completed",
               address.getHostString,
-              address.getPort
-            )
+              address.getPort)
             Done
           }
         }

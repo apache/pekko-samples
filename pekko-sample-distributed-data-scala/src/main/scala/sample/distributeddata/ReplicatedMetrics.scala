@@ -61,7 +61,7 @@ object ReplicatedMetrics {
           replicator.subscribe(UsedHeapKey, InternalSubscribeResponse.apply)
           replicator.subscribe(MaxHeapKey, InternalSubscribeResponse.apply)
 
-          val memberUpRef      = context.messageAdapter(InternalClusterMemberUp.apply)
+          val memberUpRef = context.messageAdapter(InternalClusterMemberUp.apply)
           val memberRemovedRef = context.messageAdapter(InternalClusterMemberRemoved.apply)
           cluster.subscriptions ! Subscribe(memberUpRef, classOf[ClusterEvent.MemberUp])
           cluster.subscriptions ! Subscribe(memberRemovedRef, classOf[ClusterEvent.MemberRemoved])
@@ -76,16 +76,18 @@ object ReplicatedMetrics {
               val max = heap.getMax
 
               replicator.askUpdate(
-                askReplyTo => Update(UsedHeapKey, LWWMap.empty[String, Long], WriteLocal, askReplyTo)(_ :+ (node -> used)),
+                askReplyTo =>
+                  Update(UsedHeapKey, LWWMap.empty[String, Long], WriteLocal, askReplyTo)(_ :+ (node -> used)),
                 InternalUpdateResponse.apply)
 
               replicator.askUpdate(
-                askReplyTo => Update(MaxHeapKey, LWWMap.empty[String, Long], WriteLocal, askReplyTo) { data =>
-                  data.get(node) match {
-                    case Some(`max`) => data // unchanged
-                    case _           => data :+ (node -> max)
-                  }
-                },
+                askReplyTo =>
+                  Update(MaxHeapKey, LWWMap.empty[String, Long], WriteLocal, askReplyTo) { data =>
+                    data.get(node) match {
+                      case Some(`max`) => data // unchanged
+                      case _           => data :+ (node -> max)
+                    }
+                  },
                 InternalUpdateResponse.apply)
 
               Behaviors.same
@@ -97,7 +99,7 @@ object ReplicatedMetrics {
             case InternalSubscribeResponse(c @ Changed(UsedHeapKey)) =>
               val usedHeapPercent = UsedHeap(c.get(UsedHeapKey).entries.collect {
                 case (key, value) if maxHeap.contains(key) =>
-                  (key -> (value.toDouble / maxHeap(key)) * 100.0)
+                  key -> (value.toDouble / maxHeap(key)) * 100.0
               })
               context.log.debug2("Node {} observed:\n{}", node, usedHeapPercent)
               context.system.eventStream ! EventStream.Publish(usedHeapPercent)
@@ -119,7 +121,9 @@ object ReplicatedMetrics {
 
             case Cleanup =>
               def cleanupRemoved(data: LWWMap[String, Long]): LWWMap[String, Long] =
-                (data.entries.keySet -- nodesInCluster).foldLeft(data) { case (d, key) => d.remove(selfUniqueAddress, key) }
+                (data.entries.keySet -- nodesInCluster).foldLeft(data) { case (d, key) =>
+                  d.remove(selfUniqueAddress, key)
+                }
 
               replicator.askUpdate(
                 askReplyTo => Update(UsedHeapKey, LWWMap.empty[String, Long], WriteLocal, askReplyTo)(cleanupRemoved),

@@ -211,7 +211,7 @@ class ClusterClientSpec
       def host2 = second
       def host3 = third
 
-      //#server
+      // #server
       runOn(host1) {
         val serviceA = system.actorOf(Props[Service], "serviceA")
         ClusterClientReceptionist(system).registerService(serviceA)
@@ -221,20 +221,20 @@ class ClusterClientSpec
         val serviceB = system.actorOf(Props[Service], "serviceB")
         ClusterClientReceptionist(system).registerService(serviceB)
       }
-      //#server
+      // #server
 
       runOn(host1, host2, host3, fourth) {
         awaitCount(4)
       }
       enterBarrier("services-replicated")
 
-      //#client
+      // #client
       runOn(client) {
         val c = system.actorOf(ClusterClient.props(ClusterClientSettings(system)), "client")
         c ! ClusterClient.Send("/user/serviceA", "hello", localAffinity = true)
         c ! ClusterClient.SendToAll("/user/serviceB", "hi")
       }
-      //#client
+      // #client
 
       runOn(client) {
         // note that "hi" was sent to 2 "serviceB"

@@ -31,16 +31,16 @@ class ShoppingCartSpec extends ScalaTestWithActorTestKit(s"""
       val cart = testKit.spawn(ShoppingCart(newCartId()))
       val probe = testKit.createTestProbe[StatusReply[ShoppingCart.Summary]]
       cart ! ShoppingCart.AddItem("foo", 42, probe.ref)
-      probe.receiveMessage().isSuccess should === (true)
+      probe.receiveMessage().isSuccess should ===(true)
       cart ! ShoppingCart.AddItem("foo", 13, probe.ref)
-      probe.receiveMessage().isError should === (true)
+      probe.receiveMessage().isError should ===(true)
     }
 
     "remove item" in {
       val cart = testKit.spawn(ShoppingCart(newCartId()))
       val probe = testKit.createTestProbe[StatusReply[ShoppingCart.Summary]]
       cart ! ShoppingCart.AddItem("foo", 42, probe.ref)
-      probe.receiveMessage().isSuccess should === (true)
+      probe.receiveMessage().isSuccess should ===(true)
       cart ! ShoppingCart.RemoveItem("foo", probe.ref)
       probe.expectMessage(StatusReply.Success(ShoppingCart.Summary(Map.empty, checkedOut = false)))
     }
@@ -49,7 +49,7 @@ class ShoppingCartSpec extends ScalaTestWithActorTestKit(s"""
       val cart = testKit.spawn(ShoppingCart(newCartId()))
       val probe = testKit.createTestProbe[StatusReply[ShoppingCart.Summary]]
       cart ! ShoppingCart.AddItem("foo", 42, probe.ref)
-      probe.receiveMessage().isSuccess should === (true)
+      probe.receiveMessage().isSuccess should ===(true)
       cart ! ShoppingCart.AdjustItemQuantity("foo", 43, probe.ref)
       probe.expectMessage(StatusReply.Success(ShoppingCart.Summary(Map("foo" -> 43), checkedOut = false)))
     }
@@ -58,12 +58,12 @@ class ShoppingCartSpec extends ScalaTestWithActorTestKit(s"""
       val cart = testKit.spawn(ShoppingCart(newCartId()))
       val probe = testKit.createTestProbe[StatusReply[ShoppingCart.Summary]]
       cart ! ShoppingCart.AddItem("foo", 42, probe.ref)
-      probe.receiveMessage().isSuccess should === (true)
+      probe.receiveMessage().isSuccess should ===(true)
       cart ! ShoppingCart.Checkout(probe.ref)
       probe.expectMessage(StatusReply.Success(ShoppingCart.Summary(Map("foo" -> 42), checkedOut = true)))
 
       cart ! ShoppingCart.AddItem("bar", 13, probe.ref)
-      probe.receiveMessage().isError should === (true)
+      probe.receiveMessage().isError should ===(true)
     }
 
     "keep its state" in {

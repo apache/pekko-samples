@@ -1,12 +1,12 @@
 package sample.sharding.kafka
 
 import akka.actor.typed.scaladsl.AskPattern._
-import akka.actor.typed.{ActorRef, ActorSystem, Scheduler}
+import akka.actor.typed.{ ActorRef, ActorSystem, Scheduler }
 import akka.util.Timeout
-import sample.sharding.kafka.UserEvents.{GetRunningTotal, Command, RunningTotal}
+import sample.sharding.kafka.UserEvents.{ Command, GetRunningTotal, RunningTotal }
 
 import scala.concurrent.duration._
-import scala.concurrent.{ExecutionContextExecutor, Future}
+import scala.concurrent.{ ExecutionContextExecutor, Future }
 
 class UserGrpcService(system: ActorSystem[_], shardRegion: ActorRef[Command]) extends UserService {
 

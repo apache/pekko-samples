@@ -15,16 +15,16 @@ import scala.util.Random
 import scala.util.Success
 
 /**
-  *  How many weather stations there are? Currently:
-  *    "well over 10,000 manned and automatic surface weather stations,
-  *    1,000 upper-air stations, 7,000 ships, 100 moored and 1,000 drifting buoys,
-  *    hundreds of weather radars and 3,000 specially equipped commercial aircraft
-  *    measure key parameters of the atmosphere, land and ocean surface every day.
-  *    Add to these some 16 meteorological and 50 research satellites to get an idea
-  *    of the size of the global network for meteorological, hydrological and other
-  *    geophysical observations."
-  *  - https://public.wmo.int/en/our-mandate/what-we-do/observations
-  */
+ *  How many weather stations there are? Currently:
+ *    "well over 10,000 manned and automatic surface weather stations,
+ *    1,000 upper-air stations, 7,000 ships, 100 moored and 1,000 drifting buoys,
+ *    hundreds of weather radars and 3,000 specially equipped commercial aircraft
+ *    measure key parameters of the atmosphere, land and ocean surface every day.
+ *    Add to these some 16 meteorological and 50 research satellites to get an idea
+ *    of the size of the global network for meteorological, hydrological and other
+ *    geophysical observations."
+ *  - https://public.wmo.int/en/our-mandate/what-we-do/observations
+ */
 private[fog] object WeatherStation {
 
   type WeatherStationId = String
@@ -37,12 +37,12 @@ private[fog] object WeatherStation {
   /** Starts a device and it's task to initiate reading data at a scheduled rate. */
   def apply(wsid: WeatherStationId, settings: FogSettings, httpPort: Int): Behavior[Command] =
     Behaviors.setup(ctx =>
-      new WeatherStation(ctx, wsid, settings, httpPort).running(httpPort)
-    )
+      new WeatherStation(ctx, wsid, settings, httpPort).running(httpPort))
 }
 
 /** Starts a device and it's task to initiate reading data at a scheduled rate. */
-private class WeatherStation(context: ActorContext[WeatherStation.Command], wsid: WeatherStation.WeatherStationId, settings: FogSettings, httpPort: Int) {
+private class WeatherStation(context: ActorContext[WeatherStation.Command], wsid: WeatherStation.WeatherStationId,
+    settings: FogSettings, httpPort: Int) {
   import WeatherStation._
 
   private val random = new Random()
@@ -95,16 +95,13 @@ private class WeatherStation(context: ActorContext[WeatherStation.Command], wsid
     val json = JsObject(
       "eventTime" -> JsNumber(eventTime),
       "dataType" -> JsString("temperature"),
-      "value" -> JsNumber(temperature)
-    )
+      "value" -> JsNumber(temperature))
 
     val futureResponseBody: Future[String] = http.singleRequest(Post(stationUrl, json))
-      .flatMap (res =>
+      .flatMap(res =>
         Unmarshal(res).to[String].map(body =>
           if (res.status.isSuccess()) body
-          else throw new RuntimeException(s"Failed to register data: $body")
-        )
-      )
+          else throw new RuntimeException(s"Failed to register data: $body")))
     context.pipeToSelf(futureResponseBody) {
       case Success(s) => ProcessSuccess(s)
       case Failure(e) => ProcessFailure(e)

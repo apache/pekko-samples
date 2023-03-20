@@ -1,17 +1,14 @@
-
 val AkkaVersion = "2.6.20"
 val AkkaHttpVersion = "10.2.10"
 val LogbackVersion = "1.2.11"
 
 lazy val buildSettings = Seq(
   organization := "com.lightbend.akka.samples",
-  scalaVersion := "2.13.8"
-)
+  scalaVersion := "2.13.8")
 
 lazy val commonJavacOptions = Seq(
   "-Xlint:unchecked",
-  "-Xlint:deprecation"
-)
+  "-Xlint:deprecation")
 
 lazy val commonSettings = Seq(
   Compile / javacOptions ++= commonJavacOptions,
@@ -19,9 +16,7 @@ lazy val commonSettings = Seq(
   run / fork := false,
   Global / cancelable := false,
   licenses := Seq(
-    ("CC0", url("http://creativecommons.org/publicdomain/zero/1.0"))
-  )
-)
+    ("CC0", url("http://creativecommons.org/publicdomain/zero/1.0"))))
 
 lazy val killrweather = project
   .in(file("killrweather"))
@@ -35,8 +30,7 @@ lazy val killrweather = project
       "com.typesafe.akka" %% "akka-slf4j" % AkkaVersion,
       "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
       "com.typesafe.akka" %% "akka-http-jackson" % AkkaHttpVersion,
-      "ch.qos.logback" % "logback-classic" % LogbackVersion)
-  )
+      "ch.qos.logback" % "logback-classic" % LogbackVersion))
 
 lazy val `killrweather-fog` = project
   .in(file("killrweather-fog"))
@@ -49,9 +43,7 @@ lazy val `killrweather-fog` = project
       "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
       "com.typesafe.akka" %% "akka-serialization-jackson" % AkkaVersion,
       "com.typesafe.akka" %% "akka-slf4j" % AkkaVersion,
-      "ch.qos.logback" % "logback-classic" % LogbackVersion
-    )
-  )
+      "ch.qos.logback" % "logback-classic" % LogbackVersion))
 
 // Startup aliases for the first two seed nodes and a third, more can be started.
 addCommandAlias("sharding1", "runMain sample.killrweather.KillrWeather 2551")

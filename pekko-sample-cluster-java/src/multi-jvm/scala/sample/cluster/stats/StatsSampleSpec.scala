@@ -11,7 +11,6 @@ import com.typesafe.config.ConfigFactory
 
 import scala.concurrent.duration._
 
-
 object StatsSampleSpecConfig extends MultiNodeConfig {
   // register the named roles (nodes) of the test
   // note that this is not the same thing as cluster node roles
@@ -39,8 +38,8 @@ import org.scalatest.Matchers
 import org.scalatest.WordSpecLike
 
 abstract class StatsSampleSpec extends MultiNodeSpec(StatsSampleSpecConfig)
-  with WordSpecLike with Matchers with BeforeAndAfterAll
-  with ImplicitSender {
+    with WordSpecLike with Matchers with BeforeAndAfterAll
+    with ImplicitSender {
 
   import StatsSampleSpecConfig._
 
@@ -63,7 +62,6 @@ abstract class StatsSampleSpec extends MultiNodeSpec(StatsSampleSpecConfig)
       val thirdAddress = node(third).address
 
       Cluster(system).join(firstAddress)
-
 
       receiveN(3).collect { case MemberUp(m) => m.address }.toSet should be(
         Set(firstAddress, secondAddress, thirdAddress))

@@ -136,4 +136,3 @@ class ReplicatedCacheSpec extends MultiNodeSpec(ReplicatedCacheSpec) with STMult
   }
 
 }
-

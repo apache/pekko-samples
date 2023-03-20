@@ -46,8 +46,8 @@ import org.scalatest.Matchers
 import org.scalatest.WordSpecLike
 
 abstract class StatsSampleSpec extends MultiNodeSpec(StatsSampleSpecConfig)
-  with WordSpecLike with Matchers with BeforeAndAfterAll
-  with ImplicitSender {
+    with WordSpecLike with Matchers with BeforeAndAfterAll
+    with ImplicitSender {
 
   import StatsSampleSpecConfig._
 
@@ -70,7 +70,6 @@ abstract class StatsSampleSpec extends MultiNodeSpec(StatsSampleSpecConfig)
       val thirdAddress = node(third).address
 
       Cluster(system).join(firstAddress)
-
 
       receiveN(3).collect { case MemberUp(m) => m.address }.toSet should be(
         Set(firstAddress, secondAddress, thirdAddress))

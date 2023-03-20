@@ -10,7 +10,7 @@ import org.apache.pekko.cluster.ddata.ReplicatedData
 import org.apache.pekko.cluster.ddata.Replicator._
 import org.apache.pekko.cluster.ddata.SelfUniqueAddress
 import org.apache.pekko.cluster.ddata.typed.scaladsl.DistributedData
-import org.apache.pekko.cluster.ddata.typed.scaladsl.Replicator.{ Update, Get }
+import org.apache.pekko.cluster.ddata.typed.scaladsl.Replicator.{ Get, Update }
 
 object ShoppingCart {
   sealed trait Command
@@ -22,9 +22,11 @@ object ShoppingCart {
   final case class LineItem(productId: String, title: String, quantity: Int)
 
   private sealed trait InternalCommand extends Command
-  private case class InternalGetResponse(replyTo: ActorRef[Cart], rsp: GetResponse[LWWMap[String, LineItem]]) extends InternalCommand
+  private case class InternalGetResponse(replyTo: ActorRef[Cart], rsp: GetResponse[LWWMap[String, LineItem]])
+      extends InternalCommand
   private case class InternalUpdateResponse[A <: ReplicatedData](rsp: UpdateResponse[A]) extends InternalCommand
-  private case class InternalRemoveItem(productId: String, getResponse: GetResponse[LWWMap[String, LineItem]]) extends InternalCommand
+  private case class InternalRemoveItem(productId: String, getResponse: GetResponse[LWWMap[String, LineItem]])
+      extends InternalCommand
 
   private val timeout = 3.seconds
   private val readMajority = ReadMajority(timeout)
@@ -38,10 +40,9 @@ object ShoppingCart {
 
       def behavior = Behaviors.receiveMessagePartial(
         receiveGetCart
-            .orElse(receiveAddItem)
-            .orElse(receiveRemoveItem)
-            .orElse(receiveOther)
-      )
+          .orElse(receiveAddItem)
+          .orElse(receiveRemoveItem)
+          .orElse(receiveOther))
 
       def receiveGetCart: PartialFunction[Command, Behavior[Command]] = {
         case GetCart(replyTo) =>
@@ -73,9 +74,10 @@ object ShoppingCart {
       def receiveAddItem: PartialFunction[Command, Behavior[Command]] = {
         case AddItem(item) =>
           replicator.askUpdate(
-            askReplyTo => Update(DataKey, LWWMap.empty[String, LineItem], writeMajority, askReplyTo) {
-              cart => updateCart(cart, item)
-            },
+            askReplyTo =>
+              Update(DataKey, LWWMap.empty[String, LineItem], writeMajority, askReplyTo) {
+                cart => updateCart(cart, item)
+              },
             InternalUpdateResponse.apply)
 
           Behaviors.same
@@ -115,9 +117,10 @@ object ShoppingCart {
 
       def removeItem(productId: String): Unit = {
         replicator.askUpdate(
-          askReplyTo => Update(DataKey, LWWMap.empty[String, LineItem], writeMajority, askReplyTo) {
-            _.remove(node, productId)
-          },
+          askReplyTo =>
+            Update(DataKey, LWWMap.empty[String, LineItem], writeMajority, askReplyTo) {
+              _.remove(node, productId)
+            },
           InternalUpdateResponse.apply)
       }
 

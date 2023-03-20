@@ -182,7 +182,6 @@ object Auction {
    * When the responsible replicas has seen all `AuctionFinished` events from other DCs
    * all other events have also been propagated and it can persist `WinnerDecided` and
    * the auction is finally `Closed`.
-   *
    */
   private sealed trait AuctionPhase
 

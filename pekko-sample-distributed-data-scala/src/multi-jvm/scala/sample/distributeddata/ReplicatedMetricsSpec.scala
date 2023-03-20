@@ -94,4 +94,3 @@ class ReplicatedMetricsSpec extends MultiNodeSpec(ReplicatedMetricsSpec) with ST
   }
 
 }
-

@@ -27,18 +27,22 @@ private[killrweather] final class WeatherRoutes(system: ActorSystem[_]) {
     ref.ask(WeatherStation.Record(data, System.currentTimeMillis, _))
   }
 
-  private def query(wsid: Long, dataType: WeatherStation.DataType, function: WeatherStation.Function): Future[WeatherStation.QueryResult] = {
+  private def query(wsid: Long, dataType: WeatherStation.DataType, function: WeatherStation.Function)
+      : Future[WeatherStation.QueryResult] = {
     val ref = sharding.entityRefFor(WeatherStation.TypeKey, wsid.toString)
     ref.ask(WeatherStation.Query(dataType, function, _))
   }
 
   // unmarshallers for the query parameters
-  private val funcsFromName = WeatherStation.Function.All.map(function => function.toString.toLowerCase -> function).toMap
-  private implicit val functionTypeUnmarshaller = Unmarshaller.strict[String, WeatherStation.Function](text => funcsFromName(text.toLowerCase))
+  private val funcsFromName =
+    WeatherStation.Function.All.map(function => function.toString.toLowerCase -> function).toMap
+  private implicit val functionTypeUnmarshaller =
+    Unmarshaller.strict[String, WeatherStation.Function](text => funcsFromName(text.toLowerCase))
 
-  private val dataTypesFromNames = WeatherStation.DataType.All.map(dataType => dataType.toString.toLowerCase -> dataType).toMap
-  private implicit val dataTypeUnmarshaller = Unmarshaller.strict[String, WeatherStation.DataType](text => dataTypesFromNames(text.toLowerCase))
-
+  private val dataTypesFromNames =
+    WeatherStation.DataType.All.map(dataType => dataType.toString.toLowerCase -> dataType).toMap
+  private implicit val dataTypeUnmarshaller =
+    Unmarshaller.strict[String, WeatherStation.DataType](text => dataTypesFromNames(text.toLowerCase))
 
   // imports needed for the routes and entity json marshalling
   import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
@@ -49,8 +53,9 @@ private[killrweather] final class WeatherRoutes(system: ActorSystem[_]) {
     path("weather" / LongNumber) { wsid =>
       concat(
         get {
-          parameters(("type".as[WeatherStation.DataType], "function".as[WeatherStation.Function])) { (dataType, function) =>
-            complete(query(wsid, dataType, function))
+          parameters(("type".as[WeatherStation.DataType], "function".as[WeatherStation.Function])) {
+            (dataType, function) =>
+              complete(query(wsid, dataType, function))
           }
         },
         post {
@@ -59,8 +64,7 @@ private[killrweather] final class WeatherRoutes(system: ActorSystem[_]) {
               complete(StatusCodes.Accepted -> s"$performed from event time: ${data.eventTime}")
             }
           }
-        }
-      )
+        })
     }
 
 }
