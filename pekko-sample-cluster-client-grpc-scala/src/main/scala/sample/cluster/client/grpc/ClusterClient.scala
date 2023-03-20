@@ -17,7 +17,7 @@ object ClusterClient {
     */
   def props(
     settings: ClusterClientSettings
-  )(implicit materializer: Materializer, sys: ActorSystem): Props =
+  )(implicit materializer: Materializer): Props =
     Props(new ClusterClient(settings))
 
   sealed trait Command
@@ -49,8 +49,7 @@ object ClusterClient {
 
   private def createClientStub(
     settings: ClusterClientSettings
-  )(implicit mat: Materializer, sys: ActorSystem): ClusterClientReceptionistServiceClient = {
-    implicit val ec: ExecutionContext = mat.executionContext
+  )(implicit sys: ActorSystem): ClusterClientReceptionistServiceClient = {
     ClusterClientReceptionistServiceClient(settings.grpcClientSettings)
   }
 
@@ -162,8 +161,7 @@ object ClusterClient {
   * nature of the actors involved.
   */
 final class ClusterClient(settings: ClusterClientSettings)(
-  implicit materializer: Materializer,
-  sys: ActorSystem
+  implicit materializer: Materializer
 ) extends Actor
     with ActorLogging {
 
@@ -172,7 +170,7 @@ final class ClusterClient(settings: ClusterClientSettings)(
   val serialization = new ClusterClientSerialization(context.system)
 
   private val receptionistServiceClient
-    : ClusterClientReceptionistServiceClient = createClientStub(settings)
+    : ClusterClientReceptionistServiceClient = createClientStub(settings)(context.system)
 
   // Original sender -> stream Source.actorRef of the session
   private var sessionRef: Map[ActorRef, Future[ActorRef]] = Map.empty
