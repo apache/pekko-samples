@@ -7,7 +7,7 @@ import org.apache.pekko.actor.typed.ActorSystem
 import org.apache.pekko.actor.typed.scaladsl.Behaviors
 import org.apache.pekko.cluster.typed.Cluster
 import org.apache.pekko.persistence.cassandra.testkit.CassandraLauncher
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.{ Config, ConfigFactory }
 import org.apache.pekko.cluster.typed.SelfUp
 import org.apache.pekko.cluster.typed.Subscribe
 
@@ -74,8 +74,7 @@ object Main {
         }
       }),
       "ClusterSystem",
-      config(port, role)
-    )
+      config(port, role))
   }
 
   def config(port: Int, role: String): Config =
@@ -85,18 +84,17 @@ object Main {
     """).withFallback(ConfigFactory.load())
 
   /**
-    * To make the sample easier to run we kickstart a Apache Cassandra instance to
-    * act as the journal. Apache Cassandra is a great choice of backend for Apache Pekko Persistence but
-    * in a real application a pre-existing Apache Cassandra cluster should be used.
-    */
+   * To make the sample easier to run we kickstart a Apache Cassandra instance to
+   * act as the journal. Apache Cassandra is a great choice of backend for Apache Pekko Persistence but
+   * in a real application a pre-existing Apache Cassandra cluster should be used.
+   */
   def startCassandraDatabase(): Unit = {
     val databaseDirectory = new File("target/cassandra-db")
     CassandraLauncher.start(
       databaseDirectory,
       CassandraLauncher.DefaultTestConfigResource,
       clean = false,
-      port = 9042
-    )
+      port = 9042)
 
     // shut the cassandra instance down when the JVM stops
     sys.addShutdownHook {

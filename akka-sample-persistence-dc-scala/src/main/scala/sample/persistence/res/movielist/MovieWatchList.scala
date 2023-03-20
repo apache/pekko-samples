@@ -1,10 +1,10 @@
 package sample.persistence.res.movielist
 
-import akka.actor.typed.{ActorRef, Behavior}
+import akka.actor.typed.{ ActorRef, Behavior }
 import akka.persistence.cassandra.query.javadsl.CassandraReadJournal
-import akka.persistence.typed.{PersistenceId, ReplicaId, ReplicationId}
+import akka.persistence.typed.{ PersistenceId, ReplicaId, ReplicationId }
 import akka.persistence.typed.crdt.ORSet
-import akka.persistence.typed.scaladsl.{Effect, EventSourcedBehavior, ReplicatedEventSourcing}
+import akka.persistence.typed.scaladsl.{ Effect, EventSourcedBehavior, ReplicatedEventSourcing }
 import sample.persistence.res.MainApp
 
 /**
@@ -25,11 +25,12 @@ object MovieWatchList {
     ReplicatedEventSourcing.commonJournalConfig(
       ReplicationId("movies", entityId, replicaId),
       MainApp.AllReplicas,
-      CassandraReadJournal.Identifier
-    )(replicationContext => eventSourcedBehavior(replicaId, replicationContext.persistenceId))
+      CassandraReadJournal.Identifier)(replicationContext =>
+      eventSourcedBehavior(replicaId, replicationContext.persistenceId))
   }
 
-  private def eventSourcedBehavior(replicaId: ReplicaId, persistenceId: PersistenceId): EventSourcedBehavior[Command, ORSet.DeltaOp, ORSet[String]] =
+  private def eventSourcedBehavior(
+      replicaId: ReplicaId, persistenceId: PersistenceId): EventSourcedBehavior[Command, ORSet.DeltaOp, ORSet[String]] =
     EventSourcedBehavior[Command, ORSet.DeltaOp, ORSet[String]](
       persistenceId,
       ORSet.empty(replicaId),
@@ -51,14 +52,3 @@ object MovieWatchList {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-

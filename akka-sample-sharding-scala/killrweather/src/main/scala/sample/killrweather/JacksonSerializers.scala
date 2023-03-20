@@ -16,9 +16,9 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer
 class DataTypeJsonSerializer extends StdSerializer[WeatherStation.DataType](classOf[WeatherStation.DataType]) {
   override def serialize(value: WeatherStation.DataType, gen: JsonGenerator, provider: SerializerProvider): Unit = {
     val strValue = value match {
-      case WeatherStation.DataType.Dewpoint => "d"
+      case WeatherStation.DataType.Dewpoint    => "d"
       case WeatherStation.DataType.Temperature => "t"
-      case WeatherStation.DataType.Pressure => "p"
+      case WeatherStation.DataType.Pressure    => "p"
     }
     gen.writeString(strValue)
   }
@@ -52,4 +52,3 @@ class FunctionJsonDeserializer extends StdDeserializer[WeatherStation.Function](
       case "h" => WeatherStation.Function.HighLow
     }
 }
-

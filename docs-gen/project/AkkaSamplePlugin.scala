@@ -39,10 +39,8 @@ object AkkaSamplePlugin extends sbt.AutoPlugin {
       r.replaceAllIn(body,
         _ match {
           case r(lbl, uri) if !uri.contains("http") => s"""[$lbl](${baseUrl.value}/${baseProject.value}/$uri)"""
-          case r(lbl, uri) => s"[$lbl]($uri)"
-        }
-      )
+          case r(lbl, uri)                          => s"[$lbl]($uri)"
+        })
     },
-    templateName := baseProject.value.replaceAll("-sample-", "-samples-")
-  )
+    templateName := baseProject.value.replaceAll("-sample-", "-samples-"))
 }

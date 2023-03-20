@@ -1,6 +1,6 @@
 package sample.sharding.embeddedkafka
 
-import net.manub.embeddedkafka.{EmbeddedKafka, EmbeddedKafkaConfig}
+import net.manub.embeddedkafka.{ EmbeddedKafka, EmbeddedKafkaConfig }
 import org.slf4j.LoggerFactory
 
 object KafkaBroker extends App with EmbeddedKafka {

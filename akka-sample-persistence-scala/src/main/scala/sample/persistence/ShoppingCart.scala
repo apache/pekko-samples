@@ -83,7 +83,8 @@ object ShoppingCart {
   /**
    * A command to adjust the quantity of an item in the cart.
    */
-  final case class AdjustItemQuantity(itemId: String, quantity: Int, replyTo: ActorRef[StatusReply[Summary]]) extends Command
+  final case class AdjustItemQuantity(itemId: String, quantity: Int, replyTo: ActorRef[StatusReply[Summary]])
+      extends Command
 
   /**
    * A command to checkout the shopping cart.
@@ -120,7 +121,7 @@ object ShoppingCart {
       PersistenceId("ShoppingCart", cartId),
       State.empty,
       (state, command) =>
-        //The shopping cart behavior changes if it's checked out or not.
+        // The shopping cart behavior changes if it's checked out or not.
         // The commands are handled differently for each case.
         if (state.isCheckedOut) checkedOutShoppingCart(cartId, state, command)
         else openShoppingCart(cartId, state, command),
@@ -146,7 +147,8 @@ object ShoppingCart {
 
       case RemoveItem(itemId, replyTo) =>
         if (state.hasItem(itemId)) {
-          Effect.persist(ItemRemoved(cartId, itemId)).thenRun(updatedCart => replyTo ! StatusReply.Success(updatedCart.toSummary))
+          Effect.persist(ItemRemoved(cartId, itemId)).thenRun(updatedCart =>
+            replyTo ! StatusReply.Success(updatedCart.toSummary))
         } else {
           replyTo ! StatusReply.Success(state.toSummary) // removing an item is idempotent
           Effect.none

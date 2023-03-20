@@ -19,8 +19,7 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
       "-feature",
       "-unchecked",
       "-Xlog-reflective-calls",
-      "-Xlint"
-    ),
+      "-Xlint"),
     Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
     // javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.9" % "runtime",
     libraryDependencies ++= Seq(
@@ -29,7 +28,5 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
       "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
       "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
       "org.apache.pekko" %% "pekko-multi-node-testkit" % pekkoVersion % Test,
-      "org.scalatest" %% "scalatest" % "3.1.1" % Test
-    )
-  )
+      "org.scalatest" %% "scalatest" % "3.1.1" % Test))
   .configs(MultiJvm)

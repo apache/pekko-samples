@@ -105,4 +105,3 @@ class ShoppingCartSpec extends MultiNodeSpec(ShoppingCartSpec) with STMultiNodeS
   }
 
 }
-

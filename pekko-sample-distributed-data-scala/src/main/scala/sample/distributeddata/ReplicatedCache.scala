@@ -8,7 +8,7 @@ import org.apache.pekko.cluster.ddata.LWWMapKey
 import org.apache.pekko.cluster.ddata.Replicator._
 import org.apache.pekko.cluster.ddata.SelfUniqueAddress
 import org.apache.pekko.cluster.ddata.typed.scaladsl.DistributedData
-import org.apache.pekko.cluster.ddata.typed.scaladsl.Replicator.{ Update, Get }
+import org.apache.pekko.cluster.ddata.typed.scaladsl.Replicator.{ Get, Update }
 
 object ReplicatedCache {
   sealed trait Command
@@ -17,7 +17,8 @@ object ReplicatedCache {
   final case class Cached(key: String, value: Option[String])
   final case class Evict(key: String) extends Command
   private sealed trait InternalCommand extends Command
-  private case class InternalGetResponse(key: String, replyTo: ActorRef[Cached], rsp: GetResponse[LWWMap[String, String]])
+  private case class InternalGetResponse(key: String, replyTo: ActorRef[Cached],
+      rsp: GetResponse[LWWMap[String, String]])
       extends InternalCommand
   private case class InternalUpdateResponse(rsp: UpdateResponse[LWWMap[String, String]]) extends InternalCommand
 
@@ -31,14 +32,16 @@ object ReplicatedCache {
       Behaviors.receiveMessage[Command] {
         case PutInCache(key, value) =>
           replicator.askUpdate(
-            askReplyTo => Update(dataKey(key), LWWMap.empty[String, String], WriteLocal, askReplyTo)(_ :+ (key -> value)),
+            askReplyTo =>
+              Update(dataKey(key), LWWMap.empty[String, String], WriteLocal, askReplyTo)(_ :+ (key -> value)),
             InternalUpdateResponse.apply)
 
           Behaviors.same
 
         case Evict(key) =>
           replicator.askUpdate(
-            askReplyTo => Update(dataKey(key), LWWMap.empty[String, String], WriteLocal, askReplyTo)(_.remove(node, key)),
+            askReplyTo =>
+              Update(dataKey(key), LWWMap.empty[String, String], WriteLocal, askReplyTo)(_.remove(node, key)),
             InternalUpdateResponse.apply)
 
           Behaviors.same

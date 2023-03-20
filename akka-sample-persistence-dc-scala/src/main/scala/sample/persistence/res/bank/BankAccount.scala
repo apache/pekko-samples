@@ -1,15 +1,15 @@
 package sample.persistence.res.bank
 
 import akka.Done
-import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
-import akka.actor.typed.{ActorRef, Behavior}
+import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
+import akka.actor.typed.{ ActorRef, Behavior }
 import akka.cluster.sharding.typed.ReplicatedEntityProvider
 import akka.pattern.StatusReply
 import akka.persistence.cassandra.query.scaladsl.CassandraReadJournal
 import akka.persistence.typed.scaladsl.ReplicationContext
-import akka.persistence.typed.{ReplicaId, ReplicationId}
-import akka.persistence.typed.scaladsl.{Effect, EventSourcedBehavior, ReplicatedEventSourcing}
-import sample.persistence.res.{CborSerializable, MainApp}
+import akka.persistence.typed.{ ReplicaId, ReplicationId }
+import akka.persistence.typed.scaladsl.{ Effect, EventSourcedBehavior, ReplicatedEventSourcing }
+import sample.persistence.res.{ CborSerializable, MainApp }
 
 object BankAccount {
 
@@ -33,14 +33,12 @@ object BankAccount {
     }
   }
 
-
   def apply(replicationId: ReplicationId): Behavior[Command] = {
     Behaviors.setup[Command] { context =>
       ReplicatedEventSourcing.commonJournalConfig(
         replicationId,
         MainApp.AllReplicas,
-        CassandraReadJournal.Identifier,
-      )(replicationContext => eventSourcedBehavior(replicationContext, context))
+        CassandraReadJournal.Identifier)(replicationContext => eventSourcedBehavior(replicationContext, context))
     }
   }
 
@@ -48,7 +46,8 @@ object BankAccount {
   val Provider: ReplicatedEntityProvider[Command] = ReplicatedEntityProvider
     .perDataCenter("account", MainApp.AllReplicas) { replicationId => BankAccount(replicationId) }
 
-  private def eventSourcedBehavior(replicationContext: ReplicationContext, context: ActorContext[Command]): EventSourcedBehavior[Command, Event, State] =
+  private def eventSourcedBehavior(replicationContext: ReplicationContext, context: ActorContext[Command])
+      : EventSourcedBehavior[Command, Event, State] =
     EventSourcedBehavior[Command, Event, State](
       replicationContext.persistenceId,
       State(0),
@@ -57,20 +56,19 @@ object BankAccount {
         val newState = state.applyOperation(event)
         detectOverdrawn(newState, replicationContext, context)
         newState
-      }
-    )
+      })
 
   private def commandHandler(state: State, command: Command): Effect[Event, State] = command match {
     case Deposit(amount, ack) =>
       Effect.persist(Deposited(amount)).thenRun(_ => ack ! StatusReply.ack())
     case Withdraw(amount, ack) =>
       if (state.balance - amount >= 0) {
-       Effect.persist(Withdrawn(amount)).thenRun(_ => ack ! StatusReply.ack())
+        Effect.persist(Withdrawn(amount)).thenRun(_ => ack ! StatusReply.ack())
       } else {
         Effect.none.thenRun(_ => ack ! StatusReply.error("insufficient funds"))
       }
     case GetBalance(replyTo) =>
-      Effect.none.thenRun(_ =>replyTo ! state.balance)
+      Effect.none.thenRun(_ => replyTo ! state.balance)
     case AlertOverdrawn(amount) =>
       Effect.persist(Overdrawn(amount))
   }
@@ -78,9 +76,9 @@ object BankAccount {
   /**
    * Here we trigger events based on replicated events
    */
-  def detectOverdrawn(state: BankAccount.State, replicationContext: ReplicationContext, context: ActorContext[Command]): Unit = {
-    if (
-      replicationContext.concurrent // this event happened concurrently with other events already processed
+  def detectOverdrawn(
+      state: BankAccount.State, replicationContext: ReplicationContext, context: ActorContext[Command]): Unit = {
+    if (replicationContext.concurrent // this event happened concurrently with other events already processed
       && replicationContext.replicaId == ReplicaId("eu-central") // if we only want to do the side effect in a single DC
       && !replicationContext.recoveryRunning // probably want to avoid re-execution of side effects during recovery
     ) {
@@ -93,24 +91,3 @@ object BankAccount {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -31,13 +31,11 @@ object AppOneMaster {
                 .group(WorkerServiceKey)
                 // the worker has a per word cache, so send the same word to the same worker
                 .withConsistentHashingRouting(1, _.word),
-              "WorkersRouter"
-            )
+              "WorkersRouter")
 
           StatsService(workersRouter)
         },
-        "StatsService"
-      ).withStopMessage(StatsService.Stop)
+        "StatsService").withStopMessage(StatsService.Stop)
         .withSettings(singletonSettings)
       val serviceProxy = ClusterSingleton(ctx.system).init(serviceSingleton)
 

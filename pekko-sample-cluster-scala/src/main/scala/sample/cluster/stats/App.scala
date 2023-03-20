@@ -26,15 +26,14 @@ object App {
               .pool(numberOfWorkers)(StatsWorker().narrow[StatsWorker.Process])
               // the worker has a per word cache, so send the same word to the same local worker child
               .withConsistentHashingRouting(1, _.word),
-            "WorkerRouter"
-          )
+            "WorkerRouter")
         val service = ctx.spawn(StatsService(workers), "StatsService")
 
         // published through the receptionist to the other nodes in the cluster
         ctx.system.receptionist ! Receptionist
           .Register(StatsServiceKey, service)
       }
-      if (cluster.selfMember.hasRole(("client"))) {
+      if (cluster.selfMember.hasRole("client")) {
         val serviceRouter =
           ctx.spawn(Routers.group(App.StatsServiceKey), "ServiceRouter")
         ctx.spawn(StatsClient(serviceRouter), "Client")

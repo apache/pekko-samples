@@ -25,7 +25,7 @@ object JsonFormats {
       case JsString(text) =>
         stringToValue.get(text.toLowerCase) match {
           case Some(t) => t
-          case None => deserializationError(s"Possible values are ${stringToValue.keySet}, [$text] is not among them")
+          case None    => deserializationError(s"Possible values are ${stringToValue.keySet}, [$text] is not among them")
         }
       case surprise =>
         deserializationError(s"Expected a string value, got $surprise")
@@ -39,7 +39,8 @@ object JsonFormats {
   implicit val dataTypeFormat: JsonFormat[WeatherStation.DataType] = SimpleEnumFormat(WeatherStation.DataType.All)
   implicit val dataFormat: RootJsonFormat[WeatherStation.Data] = jsonFormat3(WeatherStation.Data)
 
-  implicit val dataIngestedFormat: RootJsonFormat[WeatherStation.DataRecorded] = jsonFormat1(WeatherStation.DataRecorded)
+  implicit val dataIngestedFormat: RootJsonFormat[WeatherStation.DataRecorded] =
+    jsonFormat1(WeatherStation.DataRecorded)
 
   implicit val queryWindowFormat: RootJsonFormat[WeatherStation.TimeWindow] = jsonFormat3(WeatherStation.TimeWindow)
   implicit val queryStatusFormat: RootJsonFormat[WeatherStation.QueryResult] = jsonFormat5(WeatherStation.QueryResult)

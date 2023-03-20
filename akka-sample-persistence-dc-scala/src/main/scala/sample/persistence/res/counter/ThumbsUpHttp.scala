@@ -3,20 +3,21 @@ package sample.persistence.res.counter
 import akka.actor.typed.ActorSystem
 import akka.cluster.sharding.typed.ReplicatedSharding
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
+import akka.http.scaladsl.model.{ ContentTypes, HttpEntity, HttpResponse, StatusCodes }
 import akka.http.scaladsl.server.Route
 import akka.persistence.typed.ReplicaId
 import akka.stream.scaladsl.Source
-import akka.util.{ByteString, Timeout}
+import akka.util.{ ByteString, Timeout }
 import sample.persistence.res.counter.ThumbsUpCounter.State
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
-import scala.util.{Failure, Success}
+import scala.util.{ Failure, Success }
 
 object ThumbsUpHttp {
 
-  def route(selfReplica: ReplicaId, res: ReplicatedSharding[ThumbsUpCounter.Command])(implicit system: ActorSystem[_]): Route = {
+  def route(selfReplica: ReplicaId, res: ReplicatedSharding[ThumbsUpCounter.Command])(
+      implicit system: ActorSystem[_]): Route = {
 
     import akka.http.scaladsl.server.Directives._
 
@@ -28,7 +29,8 @@ object ThumbsUpHttp {
         // example: curl http://127.0.0.1:22551/thumbs-up/a
         get {
           path(Segment) { resourceId =>
-            onComplete(res.entityRefsFor(resourceId)(selfReplica).ask[State](replyTo => ThumbsUpCounter.GetUsers(resourceId, replyTo))) {
+            onComplete(res.entityRefsFor(resourceId)(selfReplica).ask[State](replyTo =>
+              ThumbsUpCounter.GetUsers(resourceId, replyTo))) {
               case Success(state) =>
                 val s = Source.fromIterator(() => state.users.iterator)
                   .intersperse("\n")
@@ -41,15 +43,14 @@ object ThumbsUpHttp {
         // example: curl -X POST http://127.0.0.1:22551/thumbs-up/a/u1
         post {
           path(Segment / Segment) { (resourceId, userId) =>
-            onComplete(res.entityRefsFor(resourceId)(selfReplica).ask[Long](replyTo => ThumbsUpCounter.GiveThumbsUp(resourceId, userId, replyTo))) {
-              case Success(i) => complete(i.toString)
+            onComplete(res.entityRefsFor(resourceId)(selfReplica).ask[Long](replyTo =>
+              ThumbsUpCounter.GiveThumbsUp(resourceId, userId, replyTo))) {
+              case Success(i)  => complete(i.toString)
               case Failure(ex) => complete(StatusCodes.BadRequest, ex.toString)
             }
           }
-        }
-      )
+        })
     }
-
 
   }
 }

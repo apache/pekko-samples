@@ -30,6 +30,5 @@ val `pekko-sample-distributed-data-scala` = project
     // show full stack traces and test case durations
     Test / testOptions += Tests.Argument("-oDF"),
     Test / logBuffered := false,
-    licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0")))
-  )
-  .configs (MultiJvm)
+    licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0"))))
+  .configs(MultiJvm)

@@ -1,6 +1,6 @@
 package sample.cluster.transformation
 
-import org.apache.pekko.actor.typed.{ActorSystem, Behavior}
+import org.apache.pekko.actor.typed.{ ActorSystem, Behavior }
 import org.apache.pekko.actor.typed.scaladsl.Behaviors
 import org.apache.pekko.cluster.typed.Cluster
 import com.typesafe.config.ConfigFactory

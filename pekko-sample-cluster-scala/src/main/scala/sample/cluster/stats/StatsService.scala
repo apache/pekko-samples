@@ -44,12 +44,12 @@ object StatsAggregator {
   private case object Timeout extends Event
   private case class CalculationComplete(length: Int) extends Event
 
-  def apply(words: Seq[String], workers: ActorRef[StatsWorker.Process], replyTo: ActorRef[StatsService.Response]): Behavior[Event] =
+  def apply(words: Seq[String], workers: ActorRef[StatsWorker.Process], replyTo: ActorRef[StatsService.Response])
+      : Behavior[Event] =
     Behaviors.setup { ctx =>
       ctx.setReceiveTimeout(3.seconds, Timeout)
       val responseAdapter = ctx.messageAdapter[StatsWorker.Processed](processed =>
-        CalculationComplete(processed.length)
-      )
+        CalculationComplete(processed.length))
 
       words.foreach { word =>
         workers ! StatsWorker.Process(word, responseAdapter)
@@ -57,7 +57,8 @@ object StatsAggregator {
       waiting(replyTo, words.size, Nil)
     }
 
-  private def waiting(replyTo: ActorRef[StatsService.Response], expectedResponses: Int, results: List[Int]): Behavior[Event] =
+  private def waiting(
+      replyTo: ActorRef[StatsService.Response], expectedResponses: Int, results: List[Int]): Behavior[Event] =
     Behaviors.receiveMessage {
       case CalculationComplete(length) =>
         val newResults = results :+ length

@@ -9,10 +9,10 @@ import com.typesafe.config.Config
 import scala.concurrent.duration._
 
 /**
-  * In another terminal start the `Fog` (see Fog computing https://en.wikipedia.org/wiki/Fog_computing).
-  * Starts the fog network, simulating devices and stations.
-  * In the wild, each station would run its own system and be location-aware.
-  */
+ * In another terminal start the `Fog` (see Fog computing https://en.wikipedia.org/wiki/Fog_computing).
+ * Starts the fog network, simulating devices and stations.
+ * In the wild, each station would run its own system and be location-aware.
+ */
 object Fog {
 
   def main(args: Array[String]): Unit = {
@@ -34,9 +34,9 @@ object Guardian {
 
         context.spawn(
           Behaviors.supervise(
-            WeatherStation(wsid, settings, weatherPort)
-          ).onFailure[RuntimeException](SupervisorStrategy.restartWithBackoff(1.second, 5.seconds, 0.5)),
-            s"weather-station-$wsid")
+            WeatherStation(wsid, settings, weatherPort)).onFailure[RuntimeException](
+            SupervisorStrategy.restartWithBackoff(1.second, 5.seconds, 0.5)),
+          s"weather-station-$wsid")
       }
       Behaviors.empty
     }
@@ -57,10 +57,9 @@ object FogSettings {
         .requiring(_ > Duration.Zero, s"'$durationKey' must be > 0")
 
     FogSettings(
-      weatherStations =  config.getInt("initial-weather-stations"),
+      weatherStations = config.getInt("initial-weather-stations"),
       host = config.getString("weather-station.hostname"),
-      sampleInterval = millis("weather-station.sample-interval")
-    )
+      sampleInterval = millis("weather-station.sample-interval"))
   }
 }
 

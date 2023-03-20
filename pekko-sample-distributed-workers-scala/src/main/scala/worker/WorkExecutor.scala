@@ -10,8 +10,8 @@ import worker.Worker.WorkComplete
 import scala.concurrent.duration._
 
 /**
-  * Work executor is the actor actually performing the work.
-  */
+ * Work executor is the actor actually performing the work.
+ */
 object WorkExecutor {
   case class ExecuteWork(n: Int, replyTo: ActorRef[WorkComplete])
 
@@ -29,8 +29,7 @@ object WorkExecutor {
         ctx.scheduleOnce(
           randomProcessingTime,
           doWork.replyTo,
-          WorkComplete(result)
-        )
+          WorkComplete(result))
 
         Behaviors.same
       }

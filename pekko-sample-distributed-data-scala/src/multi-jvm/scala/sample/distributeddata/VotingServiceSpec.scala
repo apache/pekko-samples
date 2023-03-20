@@ -99,4 +99,3 @@ class VotingServiceSpec extends MultiNodeSpec(VotingServiceSpec) with STMultiNod
   }
 
 }
-

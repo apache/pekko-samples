@@ -12,7 +12,7 @@ import org.apache.pekko.cluster.ddata.ReplicatedData
 import org.apache.pekko.cluster.ddata.Replicator._
 import org.apache.pekko.cluster.ddata.SelfUniqueAddress
 import org.apache.pekko.cluster.ddata.typed.scaladsl.DistributedData
-import org.apache.pekko.cluster.ddata.typed.scaladsl.Replicator.{ Update, Get }
+import org.apache.pekko.cluster.ddata.typed.scaladsl.Replicator.{ Get, Update }
 
 object VotingService {
   sealed trait Command
@@ -26,12 +26,12 @@ object VotingService {
   private sealed trait InternalCommand extends Command
   private case class InternalSubscribeResponse(chg: SubscribeResponse[Flag]) extends InternalCommand
   private case class InternalUpdateResponse[A <: ReplicatedData](rsp: UpdateResponse[A]) extends InternalCommand
-  private case class InternalGetResponse(replyTo: ActorRef[Votes], rsp: GetResponse[PNCounterMap[String]]) extends InternalCommand
+  private case class InternalGetResponse(replyTo: ActorRef[Votes], rsp: GetResponse[PNCounterMap[String]])
+      extends InternalCommand
 
   def apply(): Behavior[Command] = Behaviors.setup { context =>
     DistributedData.withReplicatorMessageAdapter[Command, Flag] { replicatorFlag =>
       DistributedData.withReplicatorMessageAdapter[Command, PNCounterMap[String]] { replicatorCounters =>
-
         implicit val node: SelfUniqueAddress = DistributedData(context.system).selfUniqueAddress
 
         val OpenedKey = FlagKey("contestOpened")
@@ -59,13 +59,14 @@ object VotingService {
         def becomeOpen() = {
           replicatorFlag.unsubscribe(OpenedKey)
           replicatorFlag.subscribe(ClosedKey, InternalSubscribeResponse.apply)
-          Behaviors.receiveMessagePartial(open orElse getVotes(open = true))
+          Behaviors.receiveMessagePartial(open.orElse(getVotes(open = true)))
         }
 
         def open: PartialFunction[Command, Behavior[Command]] = {
           case Vote(participant) =>
             replicatorCounters.askUpdate(
-              askReplyTo => Update(CountersKey, PNCounterMap[String](), WriteLocal, askReplyTo)(_.incrementBy(participant, 1)),
+              askReplyTo =>
+                Update(CountersKey, PNCounterMap[String](), WriteLocal, askReplyTo)(_.incrementBy(participant, 1)),
               InternalUpdateResponse.apply)
 
             Behaviors.same
