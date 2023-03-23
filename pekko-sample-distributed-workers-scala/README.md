@@ -1,7 +1,5 @@
 # Apache Pekko Distributed Workers with Scala Guide
 
-**Currently broken, awaiting fix as part of issue https://github.com/apache/incubator-pekko-samples/issues/8**
-
 To be reactive, distributed applications must deal gracefully with temporary and prolonged outages as well as have
 the ability to scale up and down to make the best use of resources.
 Apache Pekko Cluster provides these capabilities so that you don't have to implement them yourself.
@@ -81,7 +79,7 @@ The cluster contains one `WorkManager` actor. The `FrontEnd` actor does not need
 The 'WorkManager' actor can accept or deny a work request and we need to deal with unexpected errors:
 
 * If the 'WorkManager' accepts the request, the actor schedules a new tick to itself and toggles back to the idle behavior.
-* To deal with failures, the message uses the [ask pattern](http://pekko.apache.org/docs/pekko/current//scala/actors.html#ask-send-and-receive-future) to add a timeout to wait for a reply. If the timeout expires before the master responds, the returned 'Future' fails with a pekko.pattern.AskTimeoutException.
+* To deal with failures, the message uses the [ask pattern](https://pekko.apache.org/docs/pekko/current/scala/actors.html#ask-send-and-receive-future) to add a timeout to wait for a reply. If the timeout expires before the master responds, the returned 'Future' fails with a pekko.pattern.AskTimeoutException.
 * We transform timeouts or denials from the 'WorkManager' into a 'Failed' value that is automatically piped back to `self` and a `Retry` is scheduled.
 
 When a workload has been acknowledged by the master, the actor goes back to the  `idle` behavior which schedules
@@ -102,11 +100,11 @@ In an actual application you would probably want a way for clients to poll or st
 
 The back-end nodes host the `WorkManager` actor, which manages work, keeps track of available workers,
 and notifies registered workers when new work is available. The single `WorkManager` actor is the heart of the solution,
-with built-in resilience provided by the [Apache Pekko Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton).
+with built-in resilience provided by the [Apache Pekko Cluster Singleton](https://pekko.apache.org/docs/pekko/current/scala/guide/modules.html#cluster-singleton).
 
 ### The WorkManager singleton
 
-The [Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton) tool in Apache Pekko makes sure an
+The [Cluster Singleton](https://pekko.apache.org/docs/pekko/current/scala/guide/modules.html#cluster-singleton) tool in Apache Pekko makes sure an
 actor only runs concurrently on one node within the subset of nodes marked with the role `back-end` at any given time.
 It will run on the oldest back-end node. If the node on which the 'WorkManager' is running is removed from the cluster, Pekkostarts a new
 `WorkManager` on the next oldest node. Other nodes in the cluster interact with the `WorkManager` through the `ClusterSingletonProxy` without
@@ -132,18 +130,18 @@ Let's now explore the implementation of the `WorkManager` actor in depth.
 The `WorkManager` actor is without question the most involved component in this example.
 This is because it is designed to deal with failures. While the Apache Pekko Cluster takes care of restarting the `WorkManager` in case of a failure, we also want to make sure that the new `WorkManager` can arrive at the same state as the failed `WorkManager`. We use event sourcing and PekkoPersistence to achieve this.
 
-If the `back-end` node hosting the `WorkManager` actor would crash the Apache Pekko Cluster Singleton makes sure it starts up on a different node, but we would also want it to reach the exact same state as the crashed node `WorkManager`. This is achieved through use of event sourcing and [PekkoPersistence](http://pekko.apache.org/docs/pekko/current//scala/persistence.html).
+If the `back-end` node hosting the `WorkManager` actor would crash the Apache Pekko Cluster Singleton makes sure it starts up on a different node, but we would also want it to reach the exact same state as the crashed node `WorkManager`. This is achieved through use of event sourcing and [PekkoPersistence](https://pekko.apache.org/docs/pekko/current/scala/persistence.html).
 
 ### Tracking current work items
 
 The current set of work item is modelled in the `WorkState` class. It keeps track of the current set of work that is pending, has been accepted by a worker, has completed etc. Every change to the `WorkState` is modelled as a domain event.
 
 This allows us to capture and store each such event that happens, we can later replay all of them on an empty model and
-arrive at the exact same state. This is how event sourcing and [PekkoPersistence](http://pekko.apache.org/docs/pekko/current//scala/persistence.html) allows the actor to start on any node and reach the same state as a previous instance.
+arrive at the exact same state. This is how event sourcing and [PekkoPersistence](https://pekko.apache.org/docs/pekko/current/scala/persistence.html) allows the actor to start on any node and reach the same state as a previous instance.
 
 If the `WorkManager` fails and is restarted, the replacement `WorkManager` replays events from the log to retrieve the current state. This means that when the WorkState is modified, the `WorkManager` must persist the event before acting on it. When the event is successfully stored, we can modify the state. Otherwise, if a failure occurs before the event is persisted, the replacement `WorkManager` will not be able to attain the same state as the failed `WorkManager`.
 
-Let's look at how a command to process a work item from the front-end comes in. The first thing you might notice is the comment saying _idempotent_, this means that the same work message may arrive multiple times, but regardless how many times the same work arrives, it should only be executed once. This is needed since the `FrontEnd` actor re-sends work in case of the `Work` or `Ack` messages getting lost (Pekkodoes not provide any guarantee of delivery, [see details in the docs](http://pekko.apache.org/docs/pekko/current//scala/general/message-delivery-reliability.html#discussion-why-no-guaranteed-delivery-)).
+Let's look at how a command to process a work item from the front-end comes in. The first thing you might notice is the comment saying _idempotent_, this means that the same work message may arrive multiple times, but regardless how many times the same work arrives, it should only be executed once. This is needed since the `FrontEnd` actor re-sends work in case of the `Work` or `Ack` messages getting lost (Pekkodoes not provide any guarantee of delivery, [see details in the docs](https://pekko.apache.org/docs/pekko/current/scala/general/message-delivery-reliability.html#discussion-why-no-guaranteed-delivery-)).
 
 To make the logic idempotent we simple check if the work id is already known, and if it is we simply `Ack` it without further logic. If the work is previously unknown, we start by transforming it into a `WorkAccepted` event, which we persist,  and only in the `EventHandler` that is called after the event has been persisted do we actually update the `workState`, and send an `Ack` back to the `FrontEnd` and trigger a search for available workers. In this case the event handler delegates the logic to the `WorkState` domain class.
 
@@ -251,7 +249,7 @@ sbt "runMain worker.Main 7355"
 
 The nodes with port 7345 to 2554 are configured to be used as "seed nodes" in this sample, if you shutdown all or start none of these the other nodes will not know how to join the cluster. If all four are shut down and 7345 is started it will join itself and form a new cluster.
 
-As long as one of the four nodes is alive the cluster will keep working. You can read more about this in the [Pekkodocumentation section on seed nodes](http://pekko.apache.org/docs/pekko/current//scala/cluster-usage.html).
+As long as one of the four nodes is alive the cluster will keep working. You can read more about this in the [Pekkodocumentation section on seed nodes](https://pekko.apache.org/docs/pekko/current/scala/cluster-usage.html).
 
 You can start more cluster front-end nodes using port numbers between 3000-3999:
 
@@ -283,15 +281,15 @@ The `FrontEnd` in this sample is a dummy that automatically generates work. A re
 
 ### Scaling better with many masters
 
-If the singleton master becomes a bottleneck we could start several master actors and shard the jobs among them. This could be achieved by using [Apache Pekko Cluster Sharding](http://pekko.apache.org/docs/pekko/current//scala/cluster-sharding.html) with many `WorkManager` actors as entities and a hash of some sort on the payload deciding which master it should go to.
+If the singleton master becomes a bottleneck we could start several master actors and shard the jobs among them. This could be achieved by using [Apache Pekko Cluster Sharding](https://pekko.apache.org/docs/pekko/current/scala/cluster-sharding.html) with many `WorkManager` actors as entities and a hash of some sort on the payload deciding which master it should go to.
 
 ### More tools for building distributed systems
 
 In this example we have used
-[Cluster Singleton](http://pekko.apache.org/docs/pekko/current//scala/cluster-singleton.html#cluster-singleton)
+[Cluster Singleton](https://pekko.apache.org/docs/pekko/current/scala/cluster-singleton.html#cluster-singleton)
 and
-[Distributed Publish Subscribe](http://pekko.apache.org/docs/pekko/current//scala/distributed-pub-sub.html)
+[Distributed Publish Subscribe](https://pekko.apache.org/docs/pekko/current/scala/distributed-pub-sub.html)
  but those are not the only tools in Apache Pekko Cluster.
 
  You can also find a good overview of the various modules that make up Pekkoin
- [this section of the official documentation](http://pekko.apache.org/docs/pekko/current//scala/guide/modules.html#cluster-singleton)
+ [this section of the official documentation](https://pekko.apache.org/docs/pekko/current/scala/guide/modules.html#cluster-singleton)
