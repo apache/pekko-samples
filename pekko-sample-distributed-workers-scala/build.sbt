@@ -8,7 +8,7 @@ val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
 // allow access to snapshots
 resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
 
-val cassandraPluginVersion = "1.0.6"
+val cassandraPluginVersion = "0.0.0-1068-9a5c7580-SNAPSHOT"
 
 Global / cancelable := false
 
@@ -24,4 +24,4 @@ libraryDependencies ++= Seq(
   // test dependencies
   "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
   "org.scalatest" %% "scalatest" % "3.0.8" % Test,
-  "commons-io" % "commons-io" % "2.4" % Test)
+  "commons-io" % "commons-io" % "2.11.0" % Test)
