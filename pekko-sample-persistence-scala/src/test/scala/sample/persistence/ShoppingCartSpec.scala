@@ -2,14 +2,14 @@ package sample.persistence
 
 import java.util.UUID
 
-import akka.actor.testkit.typed.scaladsl.ScalaTestWithActorTestKit
-import akka.pattern.StatusReply
+import org.apache.pekko.actor.testkit.typed.scaladsl.ScalaTestWithActorTestKit
+import org.apache.pekko.pattern.StatusReply
 import org.scalatest.wordspec.AnyWordSpecLike
 
 class ShoppingCartSpec extends ScalaTestWithActorTestKit(s"""
-      akka.persistence.journal.plugin = "akka.persistence.journal.inmem"
-      akka.persistence.snapshot-store.plugin = "akka.persistence.snapshot-store.local"
-      akka.persistence.snapshot-store.local.dir = "target/snapshot-${UUID.randomUUID().toString}"
+      pekko.persistence.journal.plugin = "pekko.persistence.journal.inmem"
+      pekko.persistence.snapshot-store.plugin = "pekko.persistence.snapshot-store.local"
+      pekko.persistence.snapshot-store.local.dir = "target/snapshot-${UUID.randomUUID().toString}"
     """) with AnyWordSpecLike {
 
   private var counter = 0

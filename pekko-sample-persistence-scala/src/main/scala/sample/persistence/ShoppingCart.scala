@@ -3,14 +3,14 @@ package sample.persistence
 import java.time.Instant
 
 import scala.concurrent.duration._
-import akka.actor.typed.ActorRef
-import akka.actor.typed.Behavior
-import akka.actor.typed.SupervisorStrategy
-import akka.pattern.StatusReply
-import akka.persistence.typed.PersistenceId
-import akka.persistence.typed.scaladsl.RetentionCriteria
-import akka.persistence.typed.scaladsl.Effect
-import akka.persistence.typed.scaladsl.EventSourcedBehavior
+import org.apache.pekko.actor.typed.ActorRef
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.SupervisorStrategy
+import org.apache.pekko.pattern.StatusReply
+import org.apache.pekko.persistence.typed.PersistenceId
+import org.apache.pekko.persistence.typed.scaladsl.RetentionCriteria
+import org.apache.pekko.persistence.typed.scaladsl.Effect
+import org.apache.pekko.persistence.typed.scaladsl.EventSourcedBehavior
 
 /**
  * This is an event sourced actor. It has a state, [[ShoppingCart.State]], which

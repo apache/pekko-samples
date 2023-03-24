@@ -53,8 +53,8 @@ jobs:
       - name: Test pekko-sample-persistence-java
         run: cd pekko-sample-persistence-java && mvn test
 
-      - name: Test akka-sample-persistence-scala
-        run: cd akka-sample-persistence-scala && sbt test
+      - name: Test pekko-sample-persistence-scala
+        run: cd pekko-sample-persistence-scala && sbt test
 
       - name: Test akka-sample-persistence-dc-java
         run: cd akka-sample-persistence-dc-java && mvn test

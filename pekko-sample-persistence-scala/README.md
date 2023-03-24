@@ -1,4 +1,4 @@
-This example illustrates event sourcing with [Akka Persistence](https://pekko.apache.org/docs/pekko/current/typed/persistence.html).
+This example illustrates event sourcing with [Apache Pekko Persistence](https://pekko.apache.org/docs/pekko/current/typed/persistence.html).
 
 Study the source code of the [ShoppingCart.scala](src/main/scala/sample/persistence/ShoppingCart.scala). A few things
 to note:
@@ -15,7 +15,7 @@ To run the tests, enter:
 
 ```
 sbt
-sbt:akka-sample-persistence-scala> test
+sbt:pekko-sample-persistence-scala> test
 ```
 
-The `ShoppingCart` application is expanded further in the `akka-sample-cqrs-scala` sample. In that sample the events are tagged to be consumed by even processors to build other representations from the events, or publish the events to other services.
+The `ShoppingCart` application is expanded further in the `pekko-sample-cqrs-scala` sample. In that sample the events are tagged to be consumed by even processors to build other representations from the events, or publish the events to other services.

@@ -1,14 +1,17 @@
-organization := "com.lightbend.akka.samples"
-name := "akka-sample-persistence-scala"
+organization := "org.apache.pekko"
+name := "pekko-sample-persistence-scala"
 
 scalaVersion := "2.13.8"
-def akkaVersion = "2.6.20"
+def pekkoVersion = "0.0.0+26626-3e1231c3-SNAPSHOT"
+
+// allow access to snapshots
+resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-persistence-typed" % akkaVersion,
-  "com.typesafe.akka" %% "akka-serialization-jackson" % akkaVersion,
+  "org.apache.pekko" %% "pekko-persistence-typed" % pekkoVersion,
+  "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
   "ch.qos.logback" % "logback-classic" % "1.2.11",
-  "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion % Test,
+  "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
   "org.scalatest" %% "scalatest" % "3.1.0" % Test)
 
 Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint")
