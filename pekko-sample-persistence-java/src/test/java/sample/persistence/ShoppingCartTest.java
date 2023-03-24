@@ -1,9 +1,9 @@
 package sample.persistence;
 
-import akka.actor.testkit.typed.javadsl.TestKitJunitResource;
-import akka.actor.testkit.typed.javadsl.TestProbe;
-import akka.actor.typed.ActorRef;
-import akka.pattern.StatusReply;
+import org.apache.pekko.actor.testkit.typed.javadsl.TestKitJunitResource;
+import org.apache.pekko.actor.testkit.typed.javadsl.TestProbe;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.pattern.StatusReply;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -19,9 +19,9 @@ public class ShoppingCartTest {
 
   @ClassRule
   public static final TestKitJunitResource testKit = new TestKitJunitResource(
-    "akka.persistence.journal.plugin = \"akka.persistence.journal.inmem\" \n" +
-      "akka.persistence.snapshot-store.plugin = \"akka.persistence.snapshot-store.local\"  \n" +
-      "akka.persistence.snapshot-store.local.dir = \"target/snapshot-" + UUID.randomUUID().toString() + "\"  \n"
+    "pekko.persistence.journal.plugin = \"pekko.persistence.journal.inmem\" \n" +
+      "pekko.persistence.snapshot-store.plugin = \"pekko.persistence.snapshot-store.local\"  \n" +
+      "pekko.persistence.snapshot-store.local.dir = \"target/snapshot-" + UUID.randomUUID().toString() + "\"  \n"
   );
 
   private static AtomicInteger counter = new AtomicInteger();
