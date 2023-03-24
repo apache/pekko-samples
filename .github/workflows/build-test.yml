@@ -50,11 +50,11 @@ jobs:
       - name: Test akka-sample-fsm-scala
         run: cd akka-sample-fsm-scala && sbt test
 
-      - name: Test akka-sample-persistence-java
-        run: cd akka-sample-persistence-java && mvn test
+      - name: Test pekko-sample-persistence-java
+        run: cd pekko-sample-persistence-java && mvn test
 
-      - name: Test akka-sample-persistence-scala
-        run: cd akka-sample-persistence-scala && sbt test
+      - name: Test pekko-sample-persistence-scala
+        run: cd pekko-sample-persistence-scala && sbt test
 
       - name: Test akka-sample-persistence-dc-java
         run: cd akka-sample-persistence-dc-java && mvn test
