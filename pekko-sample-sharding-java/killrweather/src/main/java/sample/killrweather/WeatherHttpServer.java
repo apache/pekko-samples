@@ -1,23 +1,23 @@
 package sample.killrweather;
 
-import akka.actor.CoordinatedShutdown;
-import akka.actor.typed.ActorSystem;
-import akka.actor.typed.javadsl.Adapter;
-import akka.http.javadsl.ConnectHttp;
-import akka.http.javadsl.Http;
-import akka.http.javadsl.server.Route;
-import akka.stream.Materializer;
-import akka.stream.SystemMaterializer;
+import org.apache.pekko.actor.CoordinatedShutdown;
+import org.apache.pekko.actor.typed.ActorSystem;
+import org.apache.pekko.actor.typed.javadsl.Adapter;
+import org.apache.pekko.http.javadsl.ConnectHttp;
+import org.apache.pekko.http.javadsl.Http;
+import org.apache.pekko.http.javadsl.server.Route;
+import org.apache.pekko.stream.Materializer;
+import org.apache.pekko.stream.SystemMaterializer;
 
 import java.net.InetSocketAddress;
 import java.time.Duration;
 
-import static akka.Done.done;
+import static org.apache.pekko.Done.done;
 
 final class WeatherHttpServer {
 
   public static void start(Route routes, int port, ActorSystem<?> system) {
-    akka.actor.ActorSystem classicActorSystem = Adapter.toClassic(system);
+    org.apache.pekko.actor.ActorSystem classicActorSystem = Adapter.toClassic(system);
 
     Materializer materializer = SystemMaterializer.get(system).materializer();
 

@@ -1,19 +1,19 @@
 package sample.killrweather;
 
-import akka.actor.typed.ActorSystem;
-import akka.cluster.sharding.typed.javadsl.ClusterSharding;
-import akka.cluster.sharding.typed.javadsl.EntityRef;
-import akka.http.javadsl.marshallers.jackson.Jackson;
-import akka.http.javadsl.model.HttpEntity;
-import akka.http.javadsl.model.StatusCodes;
-import akka.http.javadsl.server.ExceptionHandler;
-import akka.http.javadsl.server.Route;
-import akka.http.javadsl.unmarshalling.Unmarshaller;
-import akka.serialization.jackson.JacksonObjectMapperProvider;
+import org.apache.pekko.actor.typed.ActorSystem;
+import org.apache.pekko.cluster.sharding.typed.javadsl.ClusterSharding;
+import org.apache.pekko.cluster.sharding.typed.javadsl.EntityRef;
+import org.apache.pekko.http.javadsl.marshallers.jackson.Jackson;
+import org.apache.pekko.http.javadsl.model.HttpEntity;
+import org.apache.pekko.http.javadsl.model.StatusCodes;
+import org.apache.pekko.http.javadsl.server.ExceptionHandler;
+import org.apache.pekko.http.javadsl.server.Route;
+import org.apache.pekko.http.javadsl.unmarshalling.Unmarshaller;
+import org.apache.pekko.serialization.jackson.JacksonObjectMapperProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static akka.http.javadsl.server.Directives.*;
-import static akka.http.javadsl.server.PathMatchers.*;
+import static org.apache.pekko.http.javadsl.server.Directives.*;
+import static org.apache.pekko.http.javadsl.server.PathMatchers.*;
 
 
 import java.time.Duration;
@@ -30,7 +30,7 @@ public class WeatherRoutes {
   public WeatherRoutes(ActorSystem<?> system) {
     sharding = ClusterSharding.get(system);
     timeout = system.settings().config().getDuration("killrweather.routes.ask-timeout");
-    // use a pre-configured object mapper from akka-jackson also for HTTP JSON
+    // use a pre-configured object mapper from pekko-jackson also for HTTP JSON
     // this lets us use the -parameters compiler argument to skip annotating field names on immutable classes
     objectMapper = JacksonObjectMapperProvider.get(system).getOrCreate("jackson-json", Optional.empty());
     dataUnmarshaller = Jackson.unmarshaller(objectMapper, WeatherStation.Data.class);

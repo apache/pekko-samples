@@ -1,16 +1,16 @@
 package sample.killrweather;
 
-import akka.actor.typed.ActorRef;
-import akka.actor.typed.ActorSystem;
-import akka.actor.typed.Behavior;
-import akka.actor.typed.PostStop;
-import akka.actor.typed.javadsl.AbstractBehavior;
-import akka.actor.typed.javadsl.ActorContext;
-import akka.actor.typed.javadsl.Behaviors;
-import akka.actor.typed.javadsl.Receive;
-import akka.cluster.sharding.typed.javadsl.ClusterSharding;
-import akka.cluster.sharding.typed.javadsl.Entity;
-import akka.cluster.sharding.typed.javadsl.EntityTypeKey;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.typed.ActorSystem;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.PostStop;
+import org.apache.pekko.actor.typed.javadsl.AbstractBehavior;
+import org.apache.pekko.actor.typed.javadsl.ActorContext;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.actor.typed.javadsl.Receive;
+import org.apache.pekko.cluster.sharding.typed.javadsl.ClusterSharding;
+import org.apache.pekko.cluster.sharding.typed.javadsl.Entity;
+import org.apache.pekko.cluster.sharding.typed.javadsl.EntityTypeKey;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,14 +22,14 @@ import java.util.stream.Collectors;
  * For each weather station common cumulative computations can be run:
  * aggregate, averages, high/low, topK (e.g. the top N highest temperatures).
  *
- * Note that since this station is not storing its state anywhere else than in JVM memory, if Akka Cluster Sharding
+ * Note that since this station is not storing its state anywhere else than in JVM memory, if Apache Pekko Cluster Sharding
  * rebalances it - moves it to another node because of cluster nodes added removed etc - it will lose all its state.
  * For a sharded entity to have state that survives being stopped and started again it needs to be persistent,
  * for example by being an EventSourcedBehavior.
  */
 final class WeatherStation extends AbstractBehavior<WeatherStation.Command> {
 
-  // setup for using WeatherStations through Akka Cluster Sharding
+  // setup for using WeatherStations through Apache Pekko Cluster Sharding
   // these could also live elsewhere and the WeatherStation class be completely
   // oblivious to being used in sharding
   public static final EntityTypeKey<Command> TypeKey =

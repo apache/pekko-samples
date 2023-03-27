@@ -1,7 +1,7 @@
 package sample.killrweather;
 
-import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
 
 /**
  * Root actor bootstrapping the application

@@ -1,7 +1,7 @@
 package sample.killrweather;
 
-import akka.actor.AddressFromURIString;
-import akka.actor.typed.ActorSystem;
+import org.apache.pekko.actor.AddressFromURIString;
+import org.apache.pekko.actor.typed.ActorSystem;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -19,10 +19,10 @@ public class KillrWeather {
 
   public static void main(String[] args) throws Exception {
     List<Integer> seedNodePorts =
-        ConfigFactory.load().getStringList("akka.cluster.seed-nodes")
+        ConfigFactory.load().getStringList("pekko.cluster.seed-nodes")
           .stream()
           .map(AddressFromURIString::parse)
-          .map(addr -> (Integer) addr.port().get()) // Missing Java getter for port, fixed in Akka 2.6.2
+          .map(addr -> (Integer) addr.port().get()) // Missing Java getter for port
           .collect(Collectors.toList());
 
     // Either use a single port provided by the user
@@ -40,7 +40,7 @@ public class KillrWeather {
 
     for (int port : ports) {
       final int httpPort;
-      if (port > 0) httpPort = 10000 + port;  // offset from akka port
+      if (port > 0) httpPort = 10000 + port;  // offset from pekko port
       else httpPort = 0; // let OS decide
 
       Config config = configWithPort(port);
@@ -50,7 +50,7 @@ public class KillrWeather {
 
   private static Config configWithPort(int port) {
     return ConfigFactory.parseMap(
-        Collections.singletonMap("akka.remote.artery.canonical.port", Integer.toString(port))
+        Collections.singletonMap("pekko.remote.artery.canonical.port", Integer.toString(port))
     ).withFallback(ConfigFactory.load());
   }
 
