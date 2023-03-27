@@ -1,9 +1,12 @@
-val AkkaVersion = "2.6.20"
-val AkkaHttpVersion = "10.2.10"
+val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
+val pekkoHttpVersion = "0.0.0+4335-81a9800e-SNAPSHOT"
 val LogbackVersion = "1.2.11"
 
+// allow access to snapshots
+resolvers += "Apache Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
+
 lazy val buildSettings = Seq(
-  organization := "com.lightbend.akka.samples",
+  organization := "org.apache.pekko",
   scalaVersion := "2.13.8")
 
 lazy val commonJavacOptions = Seq(
@@ -24,12 +27,12 @@ lazy val killrweather = project
   .settings(
     Compile / run / mainClass := Some("sample.killrweather.KillrWeather"),
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-cluster-sharding-typed" % AkkaVersion,
-      "com.typesafe.akka" %% "akka-serialization-jackson" % AkkaVersion,
-      "com.typesafe.akka" %% "akka-distributed-data" % AkkaVersion,
-      "com.typesafe.akka" %% "akka-slf4j" % AkkaVersion,
-      "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
-      "com.typesafe.akka" %% "akka-http-jackson" % AkkaHttpVersion,
+      "org.apache.pekko" %% "pekko-cluster-sharding-typed" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-distributed-data" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
+      "org.apache.pekko" %% "pekko-http-jackson" % pekkoHttpVersion,
       "ch.qos.logback" % "logback-classic" % LogbackVersion))
 
 lazy val `killrweather-fog` = project
@@ -38,14 +41,14 @@ lazy val `killrweather-fog` = project
   .settings(
     Compile / run / mainClass := Some("sample.killrweather.fog.Fog"),
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
-      "com.typesafe.akka" %% "akka-stream-typed" % AkkaVersion,
-      "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
-      "com.typesafe.akka" %% "akka-serialization-jackson" % AkkaVersion,
-      "com.typesafe.akka" %% "akka-slf4j" % AkkaVersion,
+      "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-stream-typed" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
+      "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "ch.qos.logback" % "logback-classic" % LogbackVersion))
 
 // Startup aliases for the first two seed nodes and a third, more can be started.
-addCommandAlias("sharding1", "runMain sample.killrweather.KillrWeather 2551")
-addCommandAlias("sharding2", "runMain sample.killrweather.KillrWeather 2552")
+addCommandAlias("sharding1", "runMain sample.killrweather.KillrWeather 7345")
+addCommandAlias("sharding2", "runMain sample.killrweather.KillrWeather 7355")
 addCommandAlias("sharding3", "runMain sample.killrweather.KillrWeather 0")
