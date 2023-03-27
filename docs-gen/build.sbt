@@ -64,8 +64,8 @@ lazy val `akka-sample-sharding-scala` = project
     name := "Akka Cluster Sharding with Scala",
     baseProject := "akka-sample-sharding-scala")
 
-lazy val `akka-sample-kafka-to-sharding-scala` = project
+lazy val `pekko-sample-kafka-to-sharding-scala` = project
   .enablePlugins(AkkaSamplePlugin)
   .settings(
     name := "Akka Kafka to Sharding with Scala",
-    baseProject := "akka-sample-kafka-to-sharding-scala")
+    baseProject := "pekko-sample-kafka-to-sharding-scala")
