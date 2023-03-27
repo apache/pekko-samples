@@ -48,7 +48,7 @@ to receive and unmarshall data from remote devices by station ID to allow
 querying. To interact with the sharded entities it uses the [`EntityRef` API](killrweather/src/main/java/sample/killrweather/WeatherRoutes.java#L40).
 
 The HTTP port of each node is chosen from the port used for Apache Pekko Remoting plus 10000, so for a node running 
-on port 2525 the HTTP port will be 12525.
+on port 7355 the HTTP port will be 17355.
 
 ### Configuration
 
@@ -109,9 +109,9 @@ In the log snippet below, note the dynamic weather ports opened by each KillrWea
 The number of ports are by default three, for the minimum three node cluster. You can start more cluster nodes, so these are dynamic to avoid bind errors. 
 
 ```
-[2020-01-16 13:44:58,842] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-3] [] - WeatherServer online at http://127.0.0.1:12553/
+[2020-01-16 13:44:58,842] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-3] [] - WeatherServer online at http://127.0.0.1:17345/
 [2020-01-16 13:44:58,842] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-19] [] - WeatherServer online at http://127.0.0.1:53937/
-[2020-01-16 13:44:58,843] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-15] [] - WeatherServer online at http://127.0.0.1:12554/
+[2020-01-16 13:44:58,843] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-15] [] - WeatherServer online at http://127.0.0.1:17355/
 ```
 
 #### A three node cluster in separate JVMs
@@ -119,19 +119,19 @@ The number of ports are by default three, for the minimum three node cluster. Yo
 It is more interesting to run them in separate processes. Stop the application and then open three terminal windows.
 In the first terminal window, start the first seed node with the following command:
 
-    mvn -pl killrweather exec:java -Dexec.args="2553"
+    mvn -pl killrweather exec:java -Dexec.args="7345"
 
-2553 corresponds to the port of the first seed-nodes element in the configuration. In the log output you see that the cluster node has been started and changed status to 'Up'.
+7345 corresponds to the port of the first seed-nodes element in the configuration. In the log output you see that the cluster node has been started and changed status to 'Up'.
 
 You'll see a log message when a `WeatherStation` sends a message to record the current temperature, and for each of those you'll see a log message from the `WeatherRoutes` showing the action taken and the new average temperature.
 
 In the second terminal window, start the second seed node with the following command:
 
-    mvn -pl killrweather exec:java -Dexec.args="2554"
+    mvn -pl killrweather exec:java -Dexec.args="7355"
 
-2554 corresponds to the port of the second seed-nodes element in the configuration. In the log output you see that the cluster node has been started and joins the other seed node and becomes a member of the cluster. Its status changed to 'Up'. Switch over to the first terminal window and see in the log output that the member joined.
+7355 corresponds to the port of the second seed-nodes element in the configuration. In the log output you see that the cluster node has been started and joins the other seed node and becomes a member of the cluster. Its status changed to 'Up'. Switch over to the first terminal window and see in the log output that the member joined.
 
-Some of the temperature aggregators that were originally on the `ActorSystem` on port 2553 will be migrated to the newly joined `ActorSystem` on port 2554. The migration is straightforward: the old actor is stopped and a fresh actor is started on the newly created `ActorSystem`. Notice this means the average is reset: if you want your state to be persisted you'll need to take care of this yourself. For this reason Cluster Sharding and Apache Pekko Persistence are such a popular combination.
+Some of the temperature aggregators that were originally on the `ActorSystem` on port 7345 will be migrated to the newly joined `ActorSystem` on port 7355. The migration is straightforward: the old actor is stopped and a fresh actor is started on the newly created `ActorSystem`. Notice this means the average is reset: if you want your state to be persisted you'll need to take care of this yourself. For this reason Cluster Sharding and Apache Pekko Persistence are such a popular combination.
 
 Start another node in the third terminal window with the following command:
 
@@ -146,7 +146,7 @@ Start even more nodes in the same way, if you like.
 
 Each node's log will show its dynamic weather port opened for weather stations to connect to. 
 ```
-[2020-01-16 13:44:58,842] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-3] [] - WeatherServer online at http://127.0.0.1:12553/
+[2020-01-16 13:44:58,842] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-3] [] - WeatherServer online at http://127.0.0.1:17345/
 ```
 
 
@@ -157,13 +157,13 @@ With the cluster running you can interact with the HTTP endpoint using raw HTTP,
 Record data for station 62:
 
 ```
-curl -XPOST http://localhost:12553/weather/62 -H "Content-Type: application/json" --data '{"eventTime": 1579106781, "dataType": "temperature", "value": 10.3}'
+curl -XPOST http://localhost:17345/weather/62 -H "Content-Type: application/json" --data '{"eventTime": 1579106781, "dataType": "temperature", "value": 10.3}'
 ```
 
 Query average temperature for station 62:
 
 ```
-curl "http://localhost:12553/weather/62?type=temperature&function=average"
+curl "http://localhost:17345/weather/62?type=temperature&function=average"
 ```
 
 ### The Fog Network
@@ -177,7 +177,7 @@ If you have started cluster nodes manually providing port numbers you will have 
 
 For example:
  
-    mvn -pl killrweather exec:java -Dexec.args="2553"
+    mvn -pl killrweather exec:java -Dexec.args="7345"
     sbt "killrweather-fog/runMain sample.killrweather.fog.Fog 8081 8033 8056"
      
 ### Shutting down
