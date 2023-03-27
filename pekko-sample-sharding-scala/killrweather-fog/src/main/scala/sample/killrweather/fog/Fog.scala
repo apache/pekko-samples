@@ -1,9 +1,9 @@
 package sample.killrweather.fog
 
-import akka.actor.typed.SupervisorStrategy
-import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.Behavior
+import org.apache.pekko.actor.typed.SupervisorStrategy
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.actor.typed.Behavior
 import com.typesafe.config.Config
 
 import scala.concurrent.duration._
@@ -50,7 +50,7 @@ object FogSettings {
   }
 
   def apply(config: Config): FogSettings = {
-    import akka.util.Helpers.Requiring
+    import org.apache.pekko.util.Helpers.Requiring
 
     val millis = (durationKey: String) =>
       config.getDuration(durationKey).toMillis.millis

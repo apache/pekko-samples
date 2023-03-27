@@ -2,12 +2,12 @@ package sample.killrweather
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import akka.actor.typed.ActorSystem
-import akka.cluster.sharding.typed.scaladsl.ClusterSharding
-import akka.http.scaladsl.model.StatusCodes
-import akka.http.scaladsl.server.Route
-import akka.http.scaladsl.unmarshalling.Unmarshaller
-import akka.util.Timeout
+import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.cluster.sharding.typed.scaladsl.ClusterSharding
+import org.apache.pekko.http.scaladsl.model.StatusCodes
+import org.apache.pekko.http.scaladsl.server.Route
+import org.apache.pekko.http.scaladsl.unmarshalling.Unmarshaller
+import org.apache.pekko.util.Timeout
 
 /**
  * HTTP API for
@@ -45,8 +45,8 @@ private[killrweather] final class WeatherRoutes(system: ActorSystem[_]) {
     Unmarshaller.strict[String, WeatherStation.DataType](text => dataTypesFromNames(text.toLowerCase))
 
   // imports needed for the routes and entity json marshalling
-  import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
-  import akka.http.scaladsl.server.Directives._
+  import org.apache.pekko.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+  import org.apache.pekko.http.scaladsl.server.Directives._
   import JsonFormats._
 
   val weather: Route =

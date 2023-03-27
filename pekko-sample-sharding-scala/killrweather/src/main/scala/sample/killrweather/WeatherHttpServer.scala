@@ -3,11 +3,11 @@ package sample.killrweather
 import scala.util.{ Failure, Success }
 import scala.concurrent.duration._
 
-import akka.actor.typed.ActorSystem
-import akka.actor.CoordinatedShutdown
-import akka.{ actor => classic, Done }
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.server.Route
+import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.actor.CoordinatedShutdown
+import org.apache.pekko.{ actor => classic, Done }
+import org.apache.pekko.http.scaladsl.Http
+import org.apache.pekko.http.scaladsl.server.Route
 
 private[killrweather] object WeatherHttpServer {
 
@@ -15,7 +15,7 @@ private[killrweather] object WeatherHttpServer {
    * Logic to bind the given routes to a HTTP port and add some logging around it
    */
   def start(routes: Route, port: Int, system: ActorSystem[_]): Unit = {
-    import akka.actor.typed.scaladsl.adapter._
+    import org.apache.pekko.actor.typed.scaladsl.adapter._
     implicit val classicSystem: classic.ActorSystem = system.toClassic
     val shutdown = CoordinatedShutdown(classicSystem)
 

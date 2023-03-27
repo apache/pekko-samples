@@ -1,7 +1,7 @@
 package sample.killrweather
 
-import akka.actor.AddressFromURIString
-import akka.actor.typed.ActorSystem
+import org.apache.pekko.actor.AddressFromURIString
+import org.apache.pekko.actor.typed.ActorSystem
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
 import scala.collection.JavaConverters._
@@ -13,7 +13,7 @@ import scala.collection.JavaConverters._
 object KillrWeather {
 
   def main(args: Array[String]): Unit = {
-    val seedNodePorts = ConfigFactory.load().getStringList("akka.cluster.seed-nodes")
+    val seedNodePorts = ConfigFactory.load().getStringList("pekko.cluster.seed-nodes")
       .asScala
       .flatMap { case AddressFromURIString(s) => s.port }
 
@@ -29,7 +29,7 @@ object KillrWeather {
 
     ports.foreach { port =>
       val httpPort =
-        if (port > 0) 10000 + port // offset from akka port
+        if (port > 0) 10000 + port // offset from pekko port
         else 0 // let OS decide
 
       val config = configWithPort(port)
@@ -39,7 +39,7 @@ object KillrWeather {
 
   private def configWithPort(port: Int): Config =
     ConfigFactory.parseString(s"""
-       akka.remote.artery.canonical.port = $port
+       pekko.remote.artery.canonical.port = $port
         """).withFallback(ConfigFactory.load())
 
 }

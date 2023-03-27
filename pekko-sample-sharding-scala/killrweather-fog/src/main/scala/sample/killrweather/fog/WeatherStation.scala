@@ -1,13 +1,13 @@
 package sample.killrweather.fog
 
-import akka.actor.typed.Behavior
-import akka.actor.typed.scaladsl.ActorContext
-import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.scaladsl.LoggerOps
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.client.RequestBuilding.Post
-import akka.http.scaladsl.unmarshalling.Unmarshal
-import akka.stream.SystemMaterializer
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.scaladsl.ActorContext
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.scaladsl.LoggerOps
+import org.apache.pekko.http.scaladsl.Http
+import org.apache.pekko.http.scaladsl.client.RequestBuilding.Post
+import org.apache.pekko.http.scaladsl.unmarshalling.Unmarshal
+import org.apache.pekko.stream.SystemMaterializer
 
 import scala.concurrent.Future
 import scala.util.Failure
@@ -48,7 +48,7 @@ private class WeatherStation(context: ActorContext[WeatherStation.Command], wsid
   private val random = new Random()
 
   private val http = {
-    import akka.actor.typed.scaladsl.adapter._
+    import org.apache.pekko.actor.typed.scaladsl.adapter._
     Http(context.system.toClassic)
   }
   private val stationUrl = s"http://${settings.host}:${httpPort}/weather/$wsid"
@@ -91,7 +91,7 @@ private class WeatherStation(context: ActorContext[WeatherStation.Command], wsid
     // we could also use a class and a Json formatter like in the server
     // but since this is the only json we send this is a bit more concise
     import spray.json._
-    import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+    import org.apache.pekko.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
     val json = JsObject(
       "eventTime" -> JsNumber(eventTime),
       "dataType" -> JsString("temperature"),
