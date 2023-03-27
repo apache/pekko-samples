@@ -1,8 +1,8 @@
 package sample.killrweather.fog;
 
-import akka.actor.typed.Behavior;
-import akka.actor.typed.SupervisorStrategy;
-import akka.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.SupervisorStrategy;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
 
 import java.time.Duration;
 import java.util.List;

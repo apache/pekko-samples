@@ -1,15 +1,15 @@
 package sample.killrweather.fog;
 
-import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.*;
-import akka.http.javadsl.Http;
-import akka.http.javadsl.model.ContentTypes;
-import akka.http.javadsl.model.HttpRequest;
-import akka.http.javadsl.model.StatusCode;
-import akka.http.javadsl.model.StatusCodes;
-import akka.http.javadsl.unmarshalling.Unmarshaller;
-import akka.serialization.jackson.JacksonObjectMapperProvider;
-import akka.stream.SystemMaterializer;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.javadsl.*;
+import org.apache.pekko.http.javadsl.Http;
+import org.apache.pekko.http.javadsl.model.ContentTypes;
+import org.apache.pekko.http.javadsl.model.HttpRequest;
+import org.apache.pekko.http.javadsl.model.StatusCode;
+import org.apache.pekko.http.javadsl.model.StatusCodes;
+import org.apache.pekko.http.javadsl.unmarshalling.Unmarshaller;
+import org.apache.pekko.serialization.jackson.JacksonObjectMapperProvider;
+import org.apache.pekko.stream.SystemMaterializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Optional;
@@ -93,7 +93,7 @@ public class WeatherStation extends AbstractBehavior<WeatherStation.Command> {
   private void recordTemperature(long eventTime, double value) throws Exception {
     Data data = new Data(eventTime, "temperature", value);
 
-    // FIXME no Java API in Akka HTTP to do this using the marshalling infra, see akka-http#2128
+    // FIXME no Java API in Apache Pekko HTTP to do this using the marshalling infra, see pekko-http#2128
     String json = objectMapper.writeValueAsString(data);
     CompletionStage<String> futureResponseBody =
         http.singleRequest(HttpRequest.POST(stationUrl).withEntity(ContentTypes.APPLICATION_JSON, json))
