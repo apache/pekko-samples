@@ -1,8 +1,9 @@
 import sbt._
 import Keys._
 import com.lightbend.paradox.sbt.ParadoxPlugin
+import org.apache.pekko.PekkoParadoxPlugin
 
-object AkkaSamplePlugin extends sbt.AutoPlugin {
+object PekkoSamplePlugin extends sbt.AutoPlugin {
   override def requires = ParadoxPlugin
   override def trigger = allRequirements
   object autoImport {
@@ -15,7 +16,7 @@ object AkkaSamplePlugin extends sbt.AutoPlugin {
   import autoImport._
   import ParadoxPlugin.autoImport._
   override def projectSettings: Seq[Setting[_]] = Seq(
-    baseUrl := "https://github.com/akka/akka-samples/blob/2.6",
+    baseUrl := "https://github.com/apache/incubator-pekko-samples/tree/main",
     crossPaths := false,
     // Copy README.md file
     Compile / paradox / sourceDirectory := {
