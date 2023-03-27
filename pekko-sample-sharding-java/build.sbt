@@ -2,12 +2,13 @@ val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
 val pekkoHttpVersion = "0.0.0+4335-81a9800e-SNAPSHOT"
 val LogbackVersion = "1.2.11"
 
-// allow access to snapshots
-resolvers += "Apache Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
-
 lazy val buildSettings = Seq(
   organization := "org.apache.pekko",
-  scalaVersion := "2.13.8")
+  scalaVersion := "2.13.8",
+  // allow access to snapshots
+  resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
+)
+
 
 lazy val commonJavacOptions = Seq(
   "-Xlint:unchecked",
@@ -23,6 +24,7 @@ lazy val commonSettings = Seq(
 
 lazy val killrweather = project
   .in(file("killrweather"))
+  .settings(buildSettings)
   .settings(commonSettings)
   .settings(
     Compile / run / mainClass := Some("sample.killrweather.KillrWeather"),
@@ -37,6 +39,7 @@ lazy val killrweather = project
 
 lazy val `killrweather-fog` = project
   .in(file("killrweather-fog"))
+  .settings(buildSettings)
   .settings(commonSettings)
   .settings(
     Compile / run / mainClass := Some("sample.killrweather.fog.Fog"),
