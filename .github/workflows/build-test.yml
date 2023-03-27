@@ -47,8 +47,8 @@ jobs:
       - name: Test pekko-sample-fsm-java
         run: cd pekko-sample-fsm-java && mvn test
 
-      - name: Test akka-sample-fsm-scala
-        run: cd akka-sample-fsm-scala && sbt test
+      - name: Test pekko-sample-fsm-scala
+        run: cd pekko-sample-fsm-scala && sbt test
 
       - name: Test pekko-sample-persistence-java
         run: cd pekko-sample-persistence-java && mvn test

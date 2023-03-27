@@ -34,11 +34,11 @@ lazy val `pekko-sample-fsm-java` = project
     name := "Akka FSM with Java",
     baseProject := "pekko-sample-fsm-java")
 
-lazy val `akka-sample-fsm-scala` = project
+lazy val `pekko-sample-fsm-scala` = project
   .enablePlugins(AkkaSamplePlugin)
   .settings(
     name := "Akka FSM with Scala",
-    baseProject := "akka-sample-fsm-scala")
+    baseProject := "pekko-sample-fsm-scala")
 
 lazy val `pekko-sample-persistence-java` = project
   .enablePlugins(AkkaSamplePlugin)
