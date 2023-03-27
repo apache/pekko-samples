@@ -1,11 +1,11 @@
 package sample
 
-import akka.NotUsed
-import akka.actor.typed.ActorRef
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.Behavior
-import akka.actor.typed.scaladsl.ActorContext
-import akka.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.NotUsed
+import org.apache.pekko.actor.typed.ActorRef
+import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.scaladsl.ActorContext
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
 import sample.Chopstick.Busy
 import sample.Chopstick.ChopstickAnswer
 import sample.Chopstick.ChopstickMessage
@@ -16,7 +16,7 @@ import sample.Hakker.Command
 
 import scala.concurrent.duration._
 
-// Akka adaptation of
+// Apache Pekko adaptation of
 // http://www.dalnefre.com/wp/2010/08/dining-philosophers-in-humus/
 
 /*

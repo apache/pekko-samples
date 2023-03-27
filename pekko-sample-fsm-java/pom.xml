@@ -5,20 +5,32 @@
   <modelVersion>4.0.0</modelVersion>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <akka.version>2.6.20</akka.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <pekko.version>0.0.0+26626-3e1231c3-SNAPSHOT</pekko.version>
   </properties>
 
-  <groupId>com.lightbend.akka.samples</groupId>
-  <artifactId>akka-sample-fsm-java</artifactId>
+  <groupId>org.apache.pekko</groupId>
+  <artifactId>pekko-sample-fsm-java</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
 
+  <repositories>
+      <repository>
+      <id>apache-pekko-snapshots</id>
+      <name>Apache Snapshots Repository</name>
+      <url>https://repository.apache.org/content/repositories/snapshots/</url>
+      <layout>default</layout>
+      <snapshots>
+          <enabled>true</enabled>
+      </snapshots>
+      </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-actor-typed_2.13</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-actor-typed_2.13</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
