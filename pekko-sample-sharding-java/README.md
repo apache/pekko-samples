@@ -1,11 +1,11 @@
 # Cluster Sharding sample
 
-The KillrWeather sample illustrates how to use [Akka Cluster Sharding](https://pekko.apache.org/docs/pekko/current//java/typed/cluster-sharding.html) in Java, for the same sample in Scala see [Cluster Sharding Sample Scala](https://github.com/akka/akka-samples/tree/2.6/akka-sample-sharding-scala)
-It also shows the basic usage of [Akka HTTP](https://doc.akka.io/docs/akka-http/current/index.html).
+The KillrWeather sample illustrates how to use [Apache Pekko Cluster Sharding](https://pekko.apache.org/docs/pekko/current//java/typed/cluster-sharding.html) in Java, for the same sample in Scala see [Cluster Sharding Sample Scala](https://github.com/akka/akka-samples/tree/2.6/akka-sample-sharding-scala)
+It also shows the basic usage of [Apache Pekko HTTP](https://doc.akka.io/docs/akka-http/current/index.html).
 
 The sample consists of two applications, each a separate maven submodule:
  
- * *killrweather* - A distributed Akka cluster that shards weather stations, each keeping a set of recorded 
+ * *killrweather* - A distributed Apache Pekko cluster that shards weather stations, each keeping a set of recorded 
    data points and allowing for local querying of the records. The cluster app has a HTTP endpoint for recording
    and querying the data per weather station. 
  
@@ -47,13 +47,13 @@ The [WeatherHttpServer](killrweather/src/main/java/sample/killrweather/WeatherHt
 to receive and unmarshall data from remote devices by station ID to allow 
 querying. To interact with the sharded entities it uses the [`EntityRef` API](killrweather/src/main/java/sample/killrweather/WeatherRoutes.java#L40).
 
-The HTTP port of each node is chosen from the port used for Akka Remoting plus 10000, so for a node running 
+The HTTP port of each node is chosen from the port used for Apache Pekko Remoting plus 10000, so for a node running 
 on port 2525 the HTTP port will be 12525.
 
 ### Configuration
 
 This application is configured in [killrweather/src/main/resources/application.conf](killrweather/src/main/resources/application.conf)
-Before running, first make sure the correct settings are set for your system, as described in the akka-sample-cluster tutorial.
+Before running, first make sure the correct settings are set for your system, as described in the pekko-sample-cluster tutorial.
 
 ## Fog Network
 
@@ -71,9 +71,9 @@ upon boot.
 ### Weather stations and devices
 
 Each [WeatherStation](killrweather-fog/src/main/java/sample/killrweather/fog/WeatherStation.java) is run on a task to trigger scheduled data sampling.
-These samples are timestamped and sent to the cluster over HTTP using [Akka HTTP](https://doc.akka.io/docs/akka-http/current/index.html). 
+These samples are timestamped and sent to the cluster over HTTP using [Apache Pekko HTTP](https://doc.akka.io/docs/akka-http/current/index.html). 
 
-## Akka HTTP example
+## Apache Pekko HTTP example
 
 Within KillrWeather are two simple sides to an HTTP equation.
 
@@ -109,9 +109,9 @@ In the log snippet below, note the dynamic weather ports opened by each KillrWea
 The number of ports are by default three, for the minimum three node cluster. You can start more cluster nodes, so these are dynamic to avoid bind errors. 
 
 ```
-[2020-01-16 13:44:58,842] [INFO] [] [akka.actor.typed.ActorSystem] [KillrWeather-akka.actor.default-dispatcher-3] [] - WeatherServer online at http://127.0.0.1:12553/
-[2020-01-16 13:44:58,842] [INFO] [] [akka.actor.typed.ActorSystem] [KillrWeather-akka.actor.default-dispatcher-19] [] - WeatherServer online at http://127.0.0.1:53937/
-[2020-01-16 13:44:58,843] [INFO] [] [akka.actor.typed.ActorSystem] [KillrWeather-akka.actor.default-dispatcher-15] [] - WeatherServer online at http://127.0.0.1:12554/
+[2020-01-16 13:44:58,842] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-3] [] - WeatherServer online at http://127.0.0.1:12553/
+[2020-01-16 13:44:58,842] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-19] [] - WeatherServer online at http://127.0.0.1:53937/
+[2020-01-16 13:44:58,843] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-15] [] - WeatherServer online at http://127.0.0.1:12554/
 ```
 
 #### A three node cluster in separate JVMs
@@ -131,7 +131,7 @@ In the second terminal window, start the second seed node with the following com
 
 2554 corresponds to the port of the second seed-nodes element in the configuration. In the log output you see that the cluster node has been started and joins the other seed node and becomes a member of the cluster. Its status changed to 'Up'. Switch over to the first terminal window and see in the log output that the member joined.
 
-Some of the temperature aggregators that were originally on the `ActorSystem` on port 2553 will be migrated to the newly joined `ActorSystem` on port 2554. The migration is straightforward: the old actor is stopped and a fresh actor is started on the newly created `ActorSystem`. Notice this means the average is reset: if you want your state to be persisted you'll need to take care of this yourself. For this reason Cluster Sharding and Akka Persistence are such a popular combination.
+Some of the temperature aggregators that were originally on the `ActorSystem` on port 2553 will be migrated to the newly joined `ActorSystem` on port 2554. The migration is straightforward: the old actor is stopped and a fresh actor is started on the newly created `ActorSystem`. Notice this means the average is reset: if you want your state to be persisted you'll need to take care of this yourself. For this reason Cluster Sharding and Apache Pekko Persistence are such a popular combination.
 
 Start another node in the third terminal window with the following command:
 
@@ -146,7 +146,7 @@ Start even more nodes in the same way, if you like.
 
 Each node's log will show its dynamic weather port opened for weather stations to connect to. 
 ```
-[2020-01-16 13:44:58,842] [INFO] [] [akka.actor.typed.ActorSystem] [KillrWeather-akka.actor.default-dispatcher-3] [] - WeatherServer online at http://127.0.0.1:12553/
+[2020-01-16 13:44:58,842] [INFO] [] [pekko.actor.typed.ActorSystem] [KillrWeather-pekko.actor.default-dispatcher-3] [] - WeatherServer online at http://127.0.0.1:12553/
 ```
 
 
