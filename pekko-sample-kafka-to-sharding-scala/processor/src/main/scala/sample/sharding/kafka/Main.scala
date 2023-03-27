@@ -98,7 +98,7 @@ object Main {
         system: ActorSystem[_], frontEndPort: Int, region: ActorRef[UserEvents.Command]): Future[Http.ServerBinding] = {
       val mat = Materializer.createMaterializer(system.toClassic)
       val service: HttpRequest => Future[HttpResponse] =
-        UserServiceHandler(new UserGrpcService(system, region))(mat, system.toClassic)
+        UserServiceHandler(new UserGrpcService(system, region))(system.toClassic)
       Http()(system.toClassic).bindAndHandleAsync(
         service,
         interface = "127.0.0.1",
