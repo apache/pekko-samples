@@ -1,4 +1,4 @@
-val pekkoVersion = "0.0.0+26628-198d0eb0-SNAPSHOT"
+val pekkoVersion = "0.0.0+26623-85c2a469-SNAPSHOT"
 val pekkoHttpVersion = "0.0.0+4335-81a9800e-SNAPSHOT"
 
 val pekkoConnectorsKafkaVersion = "0.0.0+1717-267012de-SNAPSHOT"

@@ -9,7 +9,7 @@
 
     <logger name="org.apache.kafka" level="WARN" />
 
-    <logger name="pekko.cluster.sharding" level="DEBUG" />
+    <logger name="org.apache.pekko.cluster.sharding" level="DEBUG" />
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
