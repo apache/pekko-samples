@@ -6,8 +6,7 @@ lazy val buildSettings = Seq(
   organization := "org.apache.pekko",
   scalaVersion := "2.13.8",
   // allow access to snapshots
-  resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
-)
+  resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/"))
 
 lazy val commonScalacOptions = Seq(
   "-deprecation",
