@@ -9,7 +9,7 @@
 
     <version>1.0-SNAPSHOT</version>
 
-    <name>Akka Sample Sharding</name>
+    <name>Apache Pekko Sample Sharding</name>
 
     <modules>
         <module>killrweather</module>
