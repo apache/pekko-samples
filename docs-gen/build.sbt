@@ -52,17 +52,17 @@ lazy val `pekko-sample-persistence-scala` = project
     name := "Akka Persistence with Scala",
     baseProject := "pekko-sample-persistence-scala")
 
-lazy val `akka-sample-sharding-java` = project
+lazy val `pekko-sample-sharding-java` = project
   .enablePlugins(AkkaSamplePlugin)
   .settings(
     name := "Akka Cluster Sharding with Java",
-    baseProject := "akka-sample-sharding-java")
+    baseProject := "pekko-sample-sharding-java")
 
-lazy val `akka-sample-sharding-scala` = project
+lazy val `pekko-sample-sharding-scala` = project
   .enablePlugins(AkkaSamplePlugin)
   .settings(
     name := "Akka Cluster Sharding with Scala",
-    baseProject := "akka-sample-sharding-scala")
+    baseProject := "pekko-sample-sharding-scala")
 
 lazy val `pekko-sample-kafka-to-sharding-scala` = project
   .enablePlugins(AkkaSamplePlugin)

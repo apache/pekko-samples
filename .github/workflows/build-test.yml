@@ -62,11 +62,11 @@ jobs:
       - name: Test pekko-sample-persistence-dc-scala
         run: cd pekko-sample-persistence-dc-scala && sbt test
 
-      - name: Test akka-sample-sharding-java
-        run: cd akka-sample-sharding-java && mvn test
+      - name: Test pekko-sample-sharding-java
+        run: cd pekko-sample-sharding-java && mvn test
 
-      - name: Test akka-sample-sharding-scala
-        run: cd akka-sample-sharding-scala && sbt test
+      - name: Test pekko-sample-sharding-scala
+        run: cd pekko-sample-sharding-scala && sbt test
 
       - name: Test pekko-sample-kafka-to-sharding-scala
         run: cd pekko-sample-kafka-to-sharding-scala && sbt test
