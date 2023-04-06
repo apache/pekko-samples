@@ -12,7 +12,7 @@ val `pekko-sample-distributed-data-scala` = project
   .settings(
     organization := "org.apache.pekko",
     version := "1.0",
-    scalaVersion := "2.13.8",
+    scalaVersion := "2.13.10",
     Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint"),
     Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
     run / javaOptions ++= Seq("-Xms128m", "-Xmx1024m"),
