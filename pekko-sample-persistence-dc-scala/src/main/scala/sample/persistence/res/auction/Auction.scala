@@ -6,7 +6,12 @@ import org.apache.pekko.actor.typed.{ ActorRef, Behavior }
 import org.apache.pekko.actor.typed.scaladsl.{ ActorContext, Behaviors, LoggerOps, TimerScheduler }
 import org.apache.pekko.persistence.cassandra.query.javadsl.CassandraReadJournal
 import org.apache.pekko.persistence.typed.{ RecoveryCompleted, ReplicaId, ReplicationId }
-import org.apache.pekko.persistence.typed.scaladsl.{ Effect, EventSourcedBehavior, ReplicatedEventSourcing, ReplicationContext }
+import org.apache.pekko.persistence.typed.scaladsl.{
+  Effect,
+  EventSourcedBehavior,
+  ReplicatedEventSourcing,
+  ReplicationContext
+}
 import sample.persistence.res.{ CborSerializable, MainApp }
 
 import scala.concurrent.duration._

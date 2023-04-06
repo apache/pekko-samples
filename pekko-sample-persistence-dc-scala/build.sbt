@@ -12,7 +12,6 @@ val pekkoClusterManagementVersion = "0.0.0+710-b49055bd-SNAPSHOT"
 // allow access to snapshots
 resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
 
-
 libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-cluster-sharding-typed" % pekkoVersion,
   "org.apache.pekko" %% "pekko-persistence-typed" % pekkoVersion,
