@@ -2,7 +2,7 @@ name := "pekko-distributed-workers"
 
 version := "1.0"
 
-scalaVersion := "2.13.8"
+scalaVersion := "2.13.10"
 val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
 
 // allow access to snapshots

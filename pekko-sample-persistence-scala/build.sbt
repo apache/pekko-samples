@@ -1,7 +1,7 @@
 organization := "org.apache.pekko"
 name := "pekko-sample-persistence-scala"
 
-scalaVersion := "2.13.8"
+scalaVersion := "2.13.10"
 def pekkoVersion = "0.0.0+26626-3e1231c3-SNAPSHOT"
 
 // allow access to snapshots

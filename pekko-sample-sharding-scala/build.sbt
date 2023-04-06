@@ -4,7 +4,7 @@ val LogbackVersion = "1.2.11"
 
 lazy val buildSettings = Seq(
   organization := "org.apache.pekko",
-  scalaVersion := "2.13.8",
+  scalaVersion := "2.13.10",
   // allow access to snapshots
   resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/"))
 
