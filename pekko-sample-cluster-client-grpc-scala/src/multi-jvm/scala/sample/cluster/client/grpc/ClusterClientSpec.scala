@@ -16,8 +16,8 @@ import org.apache.pekko.testkit._
 import org.apache.pekko.util.Timeout
 import com.typesafe.config.ConfigFactory
 import org.scalatest.BeforeAndAfterAll
-import org.scalatest.Matchers
-import org.scalatest.WordSpecLike
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
 object ClusterClientSpec extends MultiNodeConfig {
   val client = role("client")
@@ -84,7 +84,7 @@ class ClusterClientMultiJvmNode5 extends ClusterClientSpec
 
 class ClusterClientSpec
     extends MultiNodeSpec(ClusterClientSpec)
-    with WordSpecLike
+    with AnyWordSpecLike
     with Matchers
     with BeforeAndAfterAll
     with ImplicitSender {

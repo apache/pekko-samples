@@ -21,8 +21,8 @@ import org.apache.pekko.testkit.ImplicitSender
 import org.apache.pekko.util.Timeout
 import com.typesafe.config.ConfigFactory
 import org.scalatest.BeforeAndAfterAll
-import org.scalatest.Matchers
-import org.scalatest.WordSpecLike
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
 import scala.concurrent.duration._
 import scala.concurrent.Await
@@ -51,7 +51,7 @@ class StatsSampleSingleMasterSpecMultiJvmNode2 extends StatsSampleSingleMasterSp
 class StatsSampleSingleMasterSpecMultiJvmNode3 extends StatsSampleSingleMasterSpec
 
 abstract class StatsSampleSingleMasterSpec extends MultiNodeSpec(StatsSampleSingleMasterSpecConfig)
-    with WordSpecLike with Matchers with BeforeAndAfterAll with ImplicitSender {
+    with AnyWordSpecLike with Matchers with BeforeAndAfterAll with ImplicitSender {
 
   import StatsSampleSingleMasterSpecConfig._
 

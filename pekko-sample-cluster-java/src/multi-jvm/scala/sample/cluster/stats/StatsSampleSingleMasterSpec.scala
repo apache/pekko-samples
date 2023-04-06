@@ -15,8 +15,8 @@ import org.apache.pekko.remote.testkit.MultiNodeConfig
 import org.apache.pekko.remote.testkit.MultiNodeSpec
 import com.typesafe.config.ConfigFactory
 import org.scalatest.BeforeAndAfterAll
-import org.scalatest.Matchers
-import org.scalatest.WordSpecLike
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
 import scala.concurrent.duration._
 
@@ -43,7 +43,7 @@ class StatsSampleSingleMasterSpecMultiJvmNode2 extends StatsSampleSingleMasterSp
 class StatsSampleSingleMasterSpecMultiJvmNode3 extends StatsSampleSingleMasterSpec
 
 abstract class StatsSampleSingleMasterSpec extends MultiNodeSpec(StatsSampleSingleMasterSpecConfig)
-    with WordSpecLike with Matchers with BeforeAndAfterAll {
+    with AnyWordSpecLike with Matchers with BeforeAndAfterAll {
 
   import StatsSampleSingleMasterSpecConfig._
 
