@@ -23,5 +23,5 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % "1.2.11",
   // test dependencies
   "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
-  "org.scalatest" %% "scalatest" % "3.0.8" % Test,
+  "org.scalatest" %% "scalatest" % "3.2.15" % Test,
   "commons-io" % "commons-io" % "2.11.0" % Test)

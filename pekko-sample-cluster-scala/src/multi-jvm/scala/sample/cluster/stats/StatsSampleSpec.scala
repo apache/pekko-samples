@@ -42,11 +42,11 @@ class StatsSampleSpecMultiJvmNode3 extends StatsSampleSpec
 import org.apache.pekko.remote.testkit.MultiNodeSpec
 import org.apache.pekko.testkit.ImplicitSender
 import org.scalatest.BeforeAndAfterAll
-import org.scalatest.Matchers
-import org.scalatest.WordSpecLike
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
 abstract class StatsSampleSpec extends MultiNodeSpec(StatsSampleSpecConfig)
-    with WordSpecLike with Matchers with BeforeAndAfterAll
+    with AnyWordSpecLike with Matchers with BeforeAndAfterAll
     with ImplicitSender {
 
   import StatsSampleSpecConfig._
