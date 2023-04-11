@@ -18,14 +18,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
  * For each weather station common cumulative computations can be run:
  * aggregate, averages, high/low, topK (e.g. the top N highest temperatures).
  *
- * Note that since this station is not storing its state anywhere else than in JVM memory, if Akka Cluster Sharding
+ * Note that since this station is not storing its state anywhere else than in JVM memory, if Apache Pekko Cluster Sharding
  * rebalances it - moves it to another node because of cluster nodes added removed etc - it will lose all its state.
  * For a sharded entity to have state that survives being stopped and started again it needs to be persistent,
  * for example by being an EventSourcedBehavior.
  */
 private[killrweather] object WeatherStation {
 
-  // setup for using WeatherStations through Akka Cluster Sharding
+  // setup for using WeatherStations through Apache Pekko Cluster Sharding
   // these could also live elsewhere and the WeatherStation class be completely
   // oblivious to being used in sharding
   val TypeKey: EntityTypeKey[WeatherStation.Command] =

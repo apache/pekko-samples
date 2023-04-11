@@ -1,71 +1,71 @@
-lazy val `akka-sample-cluster-java` = project
-  .enablePlugins(AkkaSamplePlugin)
+lazy val `pekko-sample-cluster-java` = project
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka Cluster with Java",
+    name := "Apache Pekko Cluster with Java",
     baseProject := "pekko-sample-cluster-java")
 
-lazy val `akka-sample-cluster-scala` = project
-  .enablePlugins(AkkaSamplePlugin)
+lazy val `pekko-sample-cluster-scala` = project
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka Cluster with Scala",
+    name := "Apache Pekko Cluster with Scala",
     baseProject := "pekko-sample-cluster-scala")
 
 lazy val `pekko-sample-distributed-data-java` = project
-  .enablePlugins(AkkaSamplePlugin)
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka Distributed Data with Java",
+    name := "Apache Pekko Distributed Data with Java",
     baseProject := "pekko-sample-distributed-data-java")
 
 lazy val `pekko-sample-distributed-data-scala` = project
-  .enablePlugins(AkkaSamplePlugin)
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka Distributed Data with Scala",
+    name := "Apache Pekko Distributed Data with Scala",
     baseProject := "pekko-sample-distributed-data-scala")
 
 lazy val `pekko-sample-distributed-workers-scala` = project
-  .enablePlugins(AkkaSamplePlugin)
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka Distributed Workers with Scala",
+    name := "Apache Pekko Distributed Workers with Scala",
     baseProject := "pekko-sample-distributed-workers-scala")
 
 lazy val `pekko-sample-fsm-java` = project
-  .enablePlugins(AkkaSamplePlugin)
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka FSM with Java",
+    name := "Apache Pekko FSM with Java",
     baseProject := "pekko-sample-fsm-java")
 
 lazy val `pekko-sample-fsm-scala` = project
-  .enablePlugins(AkkaSamplePlugin)
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka FSM with Scala",
+    name := "Apache Pekko FSM with Scala",
     baseProject := "pekko-sample-fsm-scala")
 
 lazy val `pekko-sample-persistence-java` = project
-  .enablePlugins(AkkaSamplePlugin)
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka Persistence with Java",
+    name := "Apache Pekko Persistence with Java",
     baseProject := "pekko-sample-persistence-java")
 
 lazy val `pekko-sample-persistence-scala` = project
-  .enablePlugins(AkkaSamplePlugin)
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka Persistence with Scala",
+    name := "Apache Pekko Persistence with Scala",
     baseProject := "pekko-sample-persistence-scala")
 
 lazy val `pekko-sample-sharding-java` = project
-  .enablePlugins(AkkaSamplePlugin)
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka Cluster Sharding with Java",
+    name := "Apache Pekko Cluster Sharding with Java",
     baseProject := "pekko-sample-sharding-java")
 
 lazy val `pekko-sample-sharding-scala` = project
-  .enablePlugins(AkkaSamplePlugin)
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka Cluster Sharding with Scala",
+    name := "Apache Pekko Cluster Sharding with Scala",
     baseProject := "pekko-sample-sharding-scala")
 
 lazy val `pekko-sample-kafka-to-sharding-scala` = project
-  .enablePlugins(AkkaSamplePlugin)
+  .enablePlugins(PekkoSamplePlugin)
   .settings(
-    name := "Akka Kafka to Sharding with Scala",
+    name := "Apache Pekko Kafka to Sharding with Scala",
     baseProject := "pekko-sample-kafka-to-sharding-scala")
