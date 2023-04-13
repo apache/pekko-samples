@@ -93,7 +93,7 @@ Let's take a look at a few samples that make use of cluster aware routers.
 
 Let's take a look at two different ways to distribute work across a cluster using routers. 
 
-Note that the samples just shows off various parts of Apache Pekko Cluster and does not provide a complete structure to build a resilient distributed application with. The [Distributed Workers With Akka](https://developer.lightbend.com/guides/akka-distributed-workers-scala/) sample covers  more of the problems you would have to solve to build a resilient distributed processing application.
+Note that the samples just shows off various parts of Apache Pekko Cluster and does not provide a complete structure to build a resilient distributed application with. The [Distributed Workers With Pekko](https://pekko.apache.org/docs/pekko-samples/current/pekko-sample-distributed-workers-scala/) sample covers  more of the problems you would have to solve to build a resilient distributed processing application.
 
 ### Example with Group of routees
 
