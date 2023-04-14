@@ -1,7 +1,7 @@
 Apache Pekko Replicated Event Sourcing Multi DC Sample
 =====================================
 
-This is an example project demonstrating [Apache Pekko Replicated Event Sourcing](https://pekko.apache.org/docs/pekko/current//typed/replicated-eventsourcing.html)
+This is an example project demonstrating [Apache Pekko Replicated Event Sourcing](https://pekko.apache.org/docs/pekko/current/typed/replicated-eventsourcing.html)
 to run a replica per datacenter.
 
 ## How to run
