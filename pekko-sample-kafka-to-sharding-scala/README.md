@@ -23,7 +23,7 @@ Then we can enforce that the kafka partition == the Apache Pekko cluster shard i
 sharding allocation strategy to move shards to the node that is consuming that partition, resulting
 in no cross node traffic.
 
-Read the following documentation to learn more about [Apache Pekko Cluster External Shard Allocation](https://pekko.apache.org/docs/pekko/current//typed/cluster-sharding.html#external-shard-allocation) 
+Read the following documentation to learn more about [Apache Pekko Cluster External Shard Allocation](https://pekko.apache.org/docs/pekko/current/typed/cluster-sharding.html#external-shard-allocation) 
 and its support for Kafka in [Apache Pekko Connectors Kafka Cluster Sharding](https://pekko.apache.org/docs/pekko-connectors-kafka/current/cluster-sharding.html) .
 
 # Running the sample 
