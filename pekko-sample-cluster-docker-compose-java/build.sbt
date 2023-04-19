@@ -1,7 +1,7 @@
-organization := "com.mlh"
+organization := "org.apache.pekko"
 
 /* scala versions and options */
-scalaVersion := "2.13.1"
+scalaVersion := "2.13.8"
 
 // These options will be used for *all* versions.
 scalacOptions ++= Seq(
@@ -11,15 +11,17 @@ scalacOptions ++= Seq(
   "-Xlint",
 )
 
-val akka = "2.6.11"
+val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
+// allow access to snapshots
+resolvers += "Apache Snapshots".at("https://repository.apache.org/content/repositories/snapshots/")
 
 /* dependencies */
 libraryDependencies ++= Seq (
   // -- Logging --
   "ch.qos.logback"    % "logback-classic"           % "1.2.3",
   // -- Akka --
-  "com.typesafe.akka" %% "akka-actor-typed"         % akka,
-  "com.typesafe.akka" %% "akka-cluster-typed"       % akka
+  "org.apache.pekko" %% "pekko-actor-typed"         % pekkoVersion,
+  "org.apache.pekko" %% "pekko-cluster-typed"       % pekkoVersion
 )
 
 version in Docker := "latest"

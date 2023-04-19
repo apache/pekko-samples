@@ -1,13 +1,13 @@
 package com.example;
 
-import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.AbstractBehavior;
-import akka.actor.typed.javadsl.ActorContext;
-import akka.actor.typed.javadsl.Behaviors;
-import akka.actor.typed.javadsl.Receive;
-import akka.cluster.ClusterEvent;
-import akka.cluster.typed.Cluster;
-import akka.cluster.typed.Subscribe;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.javadsl.AbstractBehavior;
+import org.apache.pekko.actor.typed.javadsl.ActorContext;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.actor.typed.javadsl.Receive;
+import org.apache.pekko.cluster.ClusterEvent;
+import org.apache.pekko.cluster.typed.Cluster;
+import org.apache.pekko.cluster.typed.Subscribe;
 
 public final class ClusterListener extends AbstractBehavior<ClusterEvent.ClusterDomainEvent> {
 
