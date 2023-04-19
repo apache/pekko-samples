@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.lightbend</groupId>
-  <artifactId>akka-sample-cluster-kubernetes</artifactId>
+  <groupId>org.apache.pekko</groupId>
+  <artifactId>pekko-sample-cluster-kubernetes</artifactId>
   <version>${version.number}</version>
   <name>${project.artifactId}</name>
-  <description>Akka Sample for forming a Cluster in Kubernetes</description>
-  <inceptionYear>2018</inceptionYear>
+  <description>Apache Pekko Sample for forming a Cluster in Kubernetes</description>
+  <inceptionYear>2023</inceptionYear>
   <licenses>
     <license>
       <name>Apache2.0</name>
@@ -14,52 +14,53 @@
     </license>
   </licenses>
 
+
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <encoding>UTF-8</encoding>
-    <akka.version>2.6.6</akka.version>
-    <akka-management.version>1.0.7</akka-management.version>
-    <akka-http.version>10.1.12</akka-http.version>
+    <pekko.version>0.0.0+26617-325e2156-SNAPSHOT</pekko.version>
+    <pekko-http.version>0.0.0+4335-81a9800e-SNAPSHOT</pekko-http.version>
+    <pekko-management.version>0.0.0+710-b49055bd-SNAPSHOT</pekko-management.version>
     <scala.binary.version>2.13</scala.binary.version>
     <version.number>${git.commit.time}-${git.commit.id.abbrev}</version.number>
   </properties>
 
   <dependencies>
     <dependency>
-        <groupId>com.typesafe.akka</groupId>
-        <artifactId>akka-http_${scala.binary.version}</artifactId>
-        <version>${akka-http.version}</version>
+        <groupId>org.apache.pekko</groupId>
+        <artifactId>pekko-http_${scala.binary.version}</artifactId>
+        <version>${pekko-http.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-http-spray-json_${scala.binary.version}</artifactId>
-      <version>${akka-http.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-http-spray-json_${scala.binary.version}</artifactId>
+      <version>${pekko-http.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-cluster-typed_${scala.binary.version}</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-cluster-typed_${scala.binary.version}</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-cluster-sharding-typed_${scala.binary.version}</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-cluster-sharding-typed_${scala.binary.version}</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-slf4j_${scala.binary.version}</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-slf4j_${scala.binary.version}</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-stream-typed_${scala.binary.version}</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-stream-typed_${scala.binary.version}</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-discovery_${scala.binary.version}</artifactId>
-      <version>${akka.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-discovery_${scala.binary.version}</artifactId>
+      <version>${pekko.version}</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -67,19 +68,19 @@
       <version>1.2.3</version>
     </dependency>
     <dependency>
-      <groupId>com.lightbend.akka.management</groupId>
-      <artifactId>akka-management-cluster-bootstrap_${scala.binary.version}</artifactId>
-      <version>${akka-management.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-management-cluster-bootstrap_${scala.binary.version}</artifactId>
+      <version>${pekko-management.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.lightbend.akka.discovery</groupId>
-      <artifactId>akka-discovery-kubernetes-api_${scala.binary.version}</artifactId>
-      <version>${akka-management.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-discovery-kubernetes-api_${scala.binary.version}</artifactId>
+      <version>${pekko-management.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.lightbend.akka.management</groupId>
-      <artifactId>akka-management-cluster-http_${scala.binary.version}</artifactId>
-      <version>${akka-management.version}</version>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-management-cluster-http_${scala.binary.version}</artifactId>
+      <version>${pekko-management.version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -103,7 +104,7 @@
                   <port>8558</port>
                 </ports>
                 <entryPoint>
-                  java $JAVA_OPTS -cp '/maven/*' akka.cluster.bootstrap.demo.DemoApp
+                  java $JAVA_OPTS -cp '/maven/*' pekko.cluster.bootstrap.demo.DemoApp
                 </entryPoint>
                 <assembly>
                   <descriptorRef>artifact-with-dependencies</descriptorRef>
