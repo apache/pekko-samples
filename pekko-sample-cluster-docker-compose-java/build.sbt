@@ -22,15 +22,13 @@ libraryDependencies ++= Seq (
   "com.typesafe.akka" %% "akka-cluster-typed"       % akka
 )
 
-maintainer := "Michael Hamrah <m@hamrah.com>"
-
 version in Docker := "latest"
 
 dockerExposedPorts in Docker := Seq(1600)
 
 dockerEntrypoint in Docker := Seq("sh", "-c", "bin/clustering $*")
 
-dockerRepository := Some("lightbend")
+dockerRepository := Some("pekko")
 
 dockerBaseImage := "java"
 enablePlugins(JavaAppPackaging)
