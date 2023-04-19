@@ -1,6 +1,6 @@
-package akka.cluster.bootstrap.demo;
+package pekko.cluster.bootstrap.demo;
 
-import akka.actor.ActorSystem;
+import pekko.actor.ActorSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
