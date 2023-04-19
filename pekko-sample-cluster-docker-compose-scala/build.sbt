@@ -1,7 +1,8 @@
-name := "akka-sample-cluster-docker-compose-scala"
+organization := "org.apache.pekko"
+name := "pekko-sample-cluster-docker-compose-scala"
 
 /* scala versions and options */
-scalaVersion := "2.13.1"
+scalaVersion := "2.13.8"
 
 // These options will be used for *all* versions.
 scalacOptions ++= Seq(
@@ -11,19 +12,21 @@ scalacOptions ++= Seq(
   "-Xlint",
 )
 
-val akka = "2.6.12"
+val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
+// allow access to snapshots
+resolvers += "Apache Snapshots".at("https://repository.apache.org/content/repositories/snapshots/")
 
 /* dependencies */
 libraryDependencies ++= Seq (
   // -- Logging --
   "ch.qos.logback" % "logback-classic" % "1.2.3",
-  // -- Akka --
-  "com.typesafe.akka" %% "akka-actor-typed"   % akka,
-  "com.typesafe.akka" %% "akka-cluster-typed" % akka,
+  // -- Pekko --
+  "org.apache.pekko" %% "pekko-actor-typed"   % pekkoVersion,
+  "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
 )
 
 version in Docker := "latest"
 dockerExposedPorts in Docker := Seq(1600)
 dockerRepository := Some("pekko")
-dockerBaseImage := "java"
+dockerBaseImage := "eclipse-temurin:11"
 enablePlugins(JavaAppPackaging)
