@@ -1,18 +1,18 @@
 <configuration>
 
-  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <!-- See http://logback.qos.ch/manual/layouts.html -->
-      <!-- https://doc.akka.io/docs/akka/current/typed/logging.html -->
-      <pattern>[%date{ISO8601}] [%X{akkaAddress}] [%level] [%logger] - %msg%n</pattern>
-    </encoder>
+  <!-- This is a development logging configuration that logs to standard out, for an example of a production
+        logging config, see the Apache Pekko docs: https://pekko.apache.org/docs/pekko/current/typed/logging.html#logback -->
+  <appender name="STDOUT" target="System.out" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+          <pattern>[%date{ISO8601}] [%level] [%X{pekkoAddress}] [%logger] [%thread] [%X{pekkoSource}] - %msg%n</pattern>
+      </encoder>
   </appender>
 
   <logger name="com.example" level="debug" additivity="false">
     <appender-ref ref="console" />
   </logger>
 
-  <logger name="akka" level="info" additivity="false">
+  <logger name="pekko" level="info" additivity="false">
     <appender-ref ref="console" />
   </logger>
 
