@@ -8,21 +8,19 @@ scalacOptions ++= Seq(
   "-deprecation",
   "-unchecked",
   "-encoding", "UTF-8",
-  "-Xlint",
-)
+  "-Xlint")
 
 val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
 // allow access to snapshots
 resolvers += "Apache Snapshots".at("https://repository.apache.org/content/repositories/snapshots/")
 
 /* dependencies */
-libraryDependencies ++= Seq (
+libraryDependencies ++= Seq(
   // -- Logging --
-  "ch.qos.logback"    % "logback-classic"           % "1.2.3",
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
   // -- Akka --
-  "org.apache.pekko" %% "pekko-actor-typed"         % pekkoVersion,
-  "org.apache.pekko" %% "pekko-cluster-typed"       % pekkoVersion
-)
+  "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion,
+  "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion)
 
 version in Docker := "latest"
 
