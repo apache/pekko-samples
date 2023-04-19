@@ -1,6 +1,6 @@
-package pekko.cluster.bootstrap.demo;
+package org.apache.pekko.cluster.bootstrap.demo;
 
-import pekko.actor.ActorSystem;
+import org.apache.pekko.actor.ActorSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

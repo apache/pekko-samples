@@ -42,7 +42,7 @@ public class DemoApp {
   static class Guardian {
     public static Behavior<Void> create() {
       return Behaviors.setup(context -> {
-        final pekko.actor.ActorSystem classicSystem = Adapter.toClassic(context.getSystem());
+        final org.apache.pekko.actor.ActorSystem classicSystem = Adapter.toClassic(context.getSystem());
         Materializer mat = Materializer.matFromSystem(classicSystem);
 
         Http.get(classicSystem).bindAndHandle(complete("Hello world")

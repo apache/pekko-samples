@@ -25,6 +25,18 @@
     <version.number>${git.commit.time}-${git.commit.id.abbrev}</version.number>
   </properties>
 
+  <repositories>
+      <repository>
+      <id>apache-pekko-snapshots</id>
+      <name>Apache Snapshots Repository</name>
+      <url>https://repository.apache.org/content/repositories/snapshots/</url>
+      <layout>default</layout>
+      <snapshots>
+          <enabled>true</enabled>
+      </snapshots>
+      </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
         <groupId>org.apache.pekko</groupId>
@@ -103,7 +115,7 @@
                   <port>8558</port>
                 </ports>
                 <entryPoint>
-                  java $JAVA_OPTS -cp '/maven/*' pekko.cluster.bootstrap.demo.DemoApp
+                  java $JAVA_OPTS -cp '/maven/*' org.apache.pekko.cluster.bootstrap.demo.DemoApp
                 </entryPoint>
                 <assembly>
                   <descriptorRef>artifact-with-dependencies</descriptorRef>
