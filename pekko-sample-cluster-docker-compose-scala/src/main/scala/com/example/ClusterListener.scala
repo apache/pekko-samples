@@ -1,11 +1,11 @@
 package com.example
 
-import akka.actor.typed.Behavior
-import akka.actor.typed.scaladsl.Behaviors
-import akka.cluster.ClusterEvent
-import akka.cluster.ClusterEvent._
-import akka.cluster.typed.Cluster
-import akka.cluster.typed.Subscribe
+import org.apache.pekko.actor.typed.Behavior
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.cluster.ClusterEvent
+import org.apache.pekko.cluster.ClusterEvent._
+import org.apache.pekko.cluster.typed.Cluster
+import org.apache.pekko.cluster.typed.Subscribe
 
 object ClusterListener {
   def apply(): Behavior[ClusterEvent.ClusterDomainEvent] =

@@ -1,6 +1,6 @@
 package com.example
 
-import akka.actor.typed.ActorSystem
+import org.apache.pekko.actor.typed.ActorSystem
 import com.typesafe.config.ConfigFactory
 
 object ClusteringApp extends App {
