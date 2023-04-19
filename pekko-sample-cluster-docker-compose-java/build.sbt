@@ -32,5 +32,5 @@ dockerEntrypoint in Docker := Seq("sh", "-c", "bin/clustering $*")
 
 dockerRepository := Some("pekko")
 
-dockerBaseImage := "java"
+dockerBaseImage := "eclipse-temurin:11"
 enablePlugins(JavaAppPackaging)
