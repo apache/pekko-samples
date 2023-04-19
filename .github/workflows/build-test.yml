@@ -73,6 +73,9 @@ jobs:
 
       - name: Test pekko-sample-cluster-docker-compose-java
         run: cd pekko-sample-cluster-docker-compose-java && ./scripts/test.sh
+        
+      - name: Test pekko-sample-cluster-docker-compose-scala &&
+        run: cd pekko-sample-cluster-docker-compose-scala && ./scripts/test.sh
 
       - name: Test docs gen
         run: cd docs-gen && sbt paradox
