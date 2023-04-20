@@ -1,19 +1,19 @@
-package akka.sample.cluster.kubernetes
+package org.apache.pekko.sample.cluster.kubernetes
 
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.scaladsl.Behaviors
-import akka.cluster.ClusterEvent
-import akka.cluster.typed.{ Cluster, Subscribe }
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.server.Directives._
-import akka.management.cluster.bootstrap.ClusterBootstrap
-import akka.management.javadsl.AkkaManagement
-import akka.{ actor => classic }
+import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.cluster.ClusterEvent
+import org.apache.pekko.cluster.typed.{ Cluster, Subscribe }
+import org.apache.pekko.http.scaladsl.Http
+import org.apache.pekko.http.scaladsl.server.Directives._
+import org.apache.pekko.management.cluster.bootstrap.ClusterBootstrap
+import org.apache.pekko.management.javadsl.PekkoManagement
+import org.apache.pekko.{ actor => classic }
 
 object DemoApp extends App {
 
   ActorSystem[Nothing](Behaviors.setup[Nothing] { context =>
-    import akka.actor.typed.scaladsl.adapter._
+    import org.apache.pekko.actor.typed.scaladsl.adapter._
     implicit val classicSystem: classic.ActorSystem = context.system.toClassic
     implicit val ec = context.system.executionContext
 
@@ -30,7 +30,7 @@ object DemoApp extends App {
 
     Cluster(context.system).subscriptions ! Subscribe(listener, classOf[ClusterEvent.MemberEvent])
 
-    AkkaManagement.get(classicSystem).start()
+    PekkoManagement.get(classicSystem).start()
     ClusterBootstrap.get(classicSystem).start()
     Behaviors.empty
   }, "appka")
