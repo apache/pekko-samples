@@ -1,16 +1,16 @@
-# akka-sample-cluster-kubernetes-scala
-akka sample cluster with kubernetes discovery in scala
+# pekko-sample-cluster-kubernetes-scala
+pekko sample cluster with kubernetes discovery in scala
 
-This is an example SBT project showing how to create an Akka Cluster on
+This is an example SBT project showing how to create an Apache Pekko Cluster on
 Kubernetes.
 
-It is not always necessary to use Akka Cluster when deploying an Akka
+It is not always necessary to use Apache Pekko Cluster when deploying an Apache Pekko
 application to Kubernetes: if your application can be designed as independent
 stateless services that do not need coordination, deploying them on Kubernetes
-as individual Akka application without Akka Cluster can be a good fit. When
+as individual Apache Pekko application without Apache Pekko Cluster can be a good fit. When
 state or coordination between nodes is necessary, this is where the
-[Akka Cluster features](https://doc.akka.io/docs/akka/current/typed/cluster.html)
-become interesting and it is worth consider making the nodes form an Akka
+[Apache Pekko Cluster features](https://doc.akka.io/docs/akka/current/typed/cluster.html)
+become interesting and it is worth consider making the nodes form an Apache Pekko
 Cluster.
 
 ## Kubernetes Instructions
@@ -24,7 +24,7 @@ If you use Kubernetes on Docker Desktop, after turning it on, you should first i
     
 A script that comprises all steps involved is `scripts/test_docker_desktop.sh`. To run it, do:
 
-    cd akka-sample-cluster-kubernetes-scala
+    cd pekko-sample-cluster-kubernetes-scala
     scripts/test_docker_desktop.sh
 
 ### Minikube
@@ -36,19 +36,19 @@ First, package the application and make it available locally as a docker image:
 
     sbt docker:publishLocal
 
-Then `akka-cluster.yml` should be sufficient to deploy a 2-node Akka Cluster, after
+Then `pekko-cluster.yml` should be sufficient to deploy a 2-node Apache Pekko Cluster, after
 creating a namespace for it:
 
     kubectl apply -f kubernetes/namespace.json
     kubectl config set-context --current --namespace=appka-1
-    kubectl apply -f kubernetes/akka-cluster.yml
+    kubectl apply -f kubernetes/pekko-cluster.yml
     
 Finally, create a service so that you can then test [http://127.0.0.1:8080](http://127.0.0.1:8080)
 for 'hello world':
 
     kubectl expose deployment appka --type=LoadBalancer --name=appka-service
 
-You can inspect the Akka Cluster membership status with the [Cluster HTTP Management](https://doc.akka.io/docs/akka-management/current/cluster-http-management.html).
+You can inspect the Apache Pekko Cluster membership status with the [Cluster HTTP Management](https://doc.akka.io/docs/akka-management/current/cluster-http-management.html).
 
     curl http://127.0.0.1:8558/cluster/members/
 
@@ -82,6 +82,6 @@ as described in the [Starting](#starting) section.
 
 ## How it works
 
-This example uses [Akka Cluster Bootstrap](https://doc.akka.io/docs/akka-management/current/bootstrap/index.html)
+This example uses [Apache Pekko Cluster Bootstrap](https://doc.akka.io/docs/akka-management/current/bootstrap/index.html)
 to initialize the cluster, using the [Kubernetes API discovery mechanism](https://doc.akka.io/docs/akka-management/current/discovery/index.html#discovery-method-kubernetes-api) 
 to find peer nodes.

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: appka
-        image: akka-sample-cluster-kubernetes:latest
+        image: pekko-sample-cluster-kubernetes:latest
         # remove for real clusters, useful for minikube
         imagePullPolicy: Never
         readinessProbe:
@@ -36,7 +36,7 @@ spec:
           failureThreshold: 5
           initialDelaySeconds: 20
         ports:
-        # akka-management and bootstrap
+        # pekko-management and bootstrap
         - name: management
           containerPort: 8558
           protocol: TCP
