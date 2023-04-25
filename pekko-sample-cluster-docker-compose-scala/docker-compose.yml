@@ -4,25 +4,25 @@ services:
     container_name: pekko-sample-cluster-docker-compose-scala_seed_1
     image: pekko/pekko-sample-cluster-docker-compose-scala:latest
     ports:
-      - '1600:1600'
+      - '7345:7345'
     environment:
-      CLUSTER_PORT: 1600
+      CLUSTER_PORT: 7345
       CLUSTER_IP: seed
-      SEED_PORT_1600_TCP_ADDR: seed
+      SEED_PORT_7345_TCP_ADDR: seed
   c1:
     image: pekko/pekko-sample-cluster-docker-compose-scala:latest
     ports:
-      - '1601:1601'
+      - '7346:7346'
     environment:
-      CLUSTER_PORT: 1601
+      CLUSTER_PORT: 7346
       CLUSTER_IP: c1
-      SEED_PORT_1600_TCP_ADDR: seed
+      SEED_PORT_7345_TCP_ADDR: seed
   c2:
     image: pekko/pekko-sample-cluster-docker-compose-scala:latest
     ports:
-      - '1602:1602'
+      - '7347:7347'
     environment:
-      CLUSTER_PORT: 1602
+      CLUSTER_PORT: 7347
       CLUSTER_IP: c2
-      SEED_PORT_1600_TCP_ADDR: seed
+      SEED_PORT_7345_TCP_ADDR: seed
 
