@@ -9,7 +9,7 @@ stateless services that do not need coordination, deploying them on Kubernetes
 as individual Apache Pekko application without Apache Pekko Cluster can be a good fit. When
 state or coordination between nodes is necessary, this is where the
 [Apache Pekko Cluster features](https://pekko.apache.org/docs/pekko/current/typed/cluster.html)
-become interesting and it is worth consider making the nodes form an Akka
+become interesting and it is worth consider making the nodes form an Apache Pekko
 Cluster.
 
 ## Kubernetes Instructions
@@ -48,7 +48,7 @@ for 'hello world':
 
     kubectl expose deployment appka --type=LoadBalancer --name=appka-service
 
-You can inspect the Apache Pekko Cluster membership status with the [Cluster HTTP Management](https://doc.akka.io/docs/akka-management/current/cluster-http-management.html).
+You can inspect the Apache Pekko Cluster membership status with the [Cluster HTTP Management](https://pekko.apache.org/docs/pekko-management/current/cluster-http-management.html).
 
     curl http://127.0.0.1:8558/cluster/members/
 
@@ -80,6 +80,6 @@ as described in the [Starting](#starting) section.
 
 ## How it works
 
-This example uses [Apache Pekko Cluster Bootstrap](https://doc.akka.io/docs/akka-management/current/bootstrap/index.html)
-to initialize the cluster, using the [Kubernetes API discovery mechanism](https://doc.akka.io/docs/akka-management/current/discovery/index.html#discovery-method-kubernetes-api)
+This example uses [Apache Pekko Cluster Bootstrap](https://pekko.apache.org/docs/pekko-management/current/bootstrap/index.html)
+to initialize the cluster, using the [Kubernetes API discovery mechanism](https://pekko.apache.org/docs/pekko-management/current/discovery/index.html#discovery-method-kubernetes-api)
 to find peer nodes.
