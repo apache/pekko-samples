@@ -73,6 +73,9 @@ jobs:
 
       - name: Test pekko-sample-cluster-docker-compose-java
         run: cd pekko-sample-cluster-docker-compose-java && ./scripts/test.sh
+        
+      - name: Test pekko-sample-cluster-kubernetes-scala
+        run: cd pekko-sample-cluster-kubernetes-scala && ./scripts/setup-minikube-for-linux.sh && ./scripts/test.sh
 
       - name: Test docs gen
         run: cd docs-gen && sbt paradox
