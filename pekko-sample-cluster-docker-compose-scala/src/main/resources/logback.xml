@@ -2,7 +2,7 @@
 
   <!-- This is a development logging configuration that logs to standard out, for an example of a production
         logging config, see the Apache Pekko docs: https://pekko.apache.org/docs/pekko/current/typed/logging.html#logback -->
-  <appender name="STDOUT" target="System.out" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="console" target="System.out" class="ch.qos.logback.core.ConsoleAppender">
       <encoder>
           <pattern>[%date{ISO8601}] [%level] [%X{pekkoAddress}] [%logger] [%thread] [%X{pekkoSource}] - %msg%n</pattern>
       </encoder>
