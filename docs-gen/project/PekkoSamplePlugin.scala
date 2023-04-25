@@ -1,10 +1,11 @@
 import sbt._
 import Keys._
-import com.lightbend.paradox.sbt.ParadoxPlugin
+import com.lightbend.paradox.sbt.ParadoxPlugin.autoImport._
 import org.apache.pekko.PekkoParadoxPlugin
+import org.apache.pekko.PekkoParadoxPlugin.autoImport._
 
 object PekkoSamplePlugin extends sbt.AutoPlugin {
-  override def requires = ParadoxPlugin
+  override def requires = PekkoParadoxPlugin
   override def trigger = allRequirements
   object autoImport {
     val baseUrl = settingKey[String]("")
@@ -14,7 +15,6 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
     val bodyTransformation = settingKey[String => String]("")
   }
   import autoImport._
-  import ParadoxPlugin.autoImport._
   override def projectSettings: Seq[Setting[_]] = Seq(
     baseUrl := "https://github.com/apache/incubator-pekko-samples/tree/main",
     crossPaths := false,
