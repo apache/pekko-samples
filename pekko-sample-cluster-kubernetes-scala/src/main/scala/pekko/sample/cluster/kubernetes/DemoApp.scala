@@ -13,25 +13,25 @@ import org.apache.pekko.{ actor => classic }
 object DemoApp extends App {
 
   ActorSystem[Nothing](Behaviors.setup[Nothing] { context =>
-    import org.apache.pekko.actor.typed.scaladsl.adapter._
-    implicit val classicSystem: classic.ActorSystem = context.system.toClassic
-    implicit val ec = context.system.executionContext
+      import org.apache.pekko.actor.typed.scaladsl.adapter._
+      implicit val classicSystem: classic.ActorSystem = context.system.toClassic
+      implicit val ec = context.system.executionContext
 
-    val cluster = Cluster(context.system)
-    context.log.info("Started [" + context.system + "], cluster.selfAddress = " + cluster.selfMember.address + ")")
+      val cluster = Cluster(context.system)
+      context.log.info("Started [" + context.system + "], cluster.selfAddress = " + cluster.selfMember.address + ")")
 
-    Http().newServerAt("0.0.0.0", 8080).bind(complete("Hello world"))
+      Http().newServerAt("0.0.0.0", 8080).bind(complete("Hello world"))
 
-    // Create an actor that handles cluster domain events
-    val listener = context.spawn(Behaviors.receive[ClusterEvent.MemberEvent]((ctx, event) => {
-      ctx.log.info("MemberEvent: {}", event)
-      Behaviors.same
-    }), "listener")
+      // Create an actor that handles cluster domain events
+      val listener = context.spawn(Behaviors.receive[ClusterEvent.MemberEvent]((ctx, event) => {
+          ctx.log.info("MemberEvent: {}", event)
+          Behaviors.same
+        }), "listener")
 
-    Cluster(context.system).subscriptions ! Subscribe(listener, classOf[ClusterEvent.MemberEvent])
+      Cluster(context.system).subscriptions ! Subscribe(listener, classOf[ClusterEvent.MemberEvent])
 
-    PekkoManagement.get(classicSystem).start()
-    ClusterBootstrap.get(classicSystem).start()
-    Behaviors.empty
-  }, "appka")
+      PekkoManagement.get(classicSystem).start()
+      ClusterBootstrap.get(classicSystem).start()
+      Behaviors.empty
+    }, "appka")
 }
