@@ -15,9 +15,27 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
     val bodyTransformation = settingKey[String => String]("")
   }
   import autoImport._
-  override def projectSettings: Seq[Setting[_]] = Seq(
-    baseUrl := "https://github.com/apache/incubator-pekko-samples/tree/main",
-    crossPaths := false,
+
+  val propertiesSettings = Seq(
+    Compile / paradoxProperties ++= Map(
+      "download_url" -> s"https://example.lightbend.com/v1/download/${templateName.value}"
+    )
+  )
+
+  val sourceDirectorySettings = Seq(
+    bodyPrefix := s"""${name.value}
+                     |=======================
+                     |
+                     |""".stripMargin,
+    // Transform local paths to URL
+    bodyTransformation := { case body =>
+      val r = """\[([^]]+)\]\(([^)]+)\)""".r
+      r.replaceAllIn(body,
+        _ match {
+          case r(lbl, uri) if !uri.contains("http") => s"""[$lbl](${baseUrl.value}/${baseProject.value}/$uri)"""
+          case r(lbl, uri)                          => s"[$lbl]($uri)"
+        })
+    },
     // Copy README.md file
     Compile / paradox / sourceDirectory := {
       val outDir = (Compile / managedSourceDirectories).value.head / "paradox"
@@ -29,19 +47,14 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
         IO.copyDirectory(inDir / "tutorial", outDir / "tutorial")
       }
       outDir
-    },
-    paradoxProperties += ("download_url" -> s"https://example.lightbend.com/v1/download/${templateName.value}"),
-    bodyPrefix := s"""${name.value}
-                     |=======================
-                     |
-                     |""".stripMargin,
-    bodyTransformation := { case body =>
-      val r = """\[([^]]+)\]\(([^)]+)\)""".r
-      r.replaceAllIn(body,
-        _ match {
-          case r(lbl, uri) if !uri.contains("http") => s"""[$lbl](${baseUrl.value}/${baseProject.value}/$uri)"""
-          case r(lbl, uri)                          => s"[$lbl]($uri)"
-        })
-    },
+    }
+  )
+
+  override def projectSettings: Seq[Setting[_]] =
+   propertiesSettings ++
+   sourceDirectorySettings ++
+   Seq(
+    baseUrl := "https://github.com/apache/incubator-pekko-samples/current",
+    crossPaths := false,
     templateName := baseProject.value.replaceAll("-sample-", "-samples-"))
 }
