@@ -31,7 +31,7 @@ do
   echo "Checking for MemberUp logging..."
   kubectl logs $POD | grep MemberUp || true
   [ `kubectl logs $POD | grep MemberUp | wc -l` -eq 3 ] && break
-  sleep 3
+  sleep 6
 done
 
 kubectl get pods
