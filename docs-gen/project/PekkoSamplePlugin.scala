@@ -16,6 +16,11 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
   }
   import autoImport._
 
+  val themeSettings = Seq(
+    // allow access to snapshots for pekko-sbt-paradox
+    resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/repositories/snapshots/"),
+    pekkoParadoxGithub := Some("https://github.com/apache/incubator-pekko"))
+
   val propertiesSettings = Seq(
     Compile / paradoxProperties ++= Map(
       "download_url" -> s"https://example.lightbend.com/v1/download/${templateName.value}"
@@ -51,6 +56,7 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
   )
 
   override def projectSettings: Seq[Setting[_]] =
+   themeSettings ++
    propertiesSettings ++
    sourceDirectorySettings ++
    Seq(
