@@ -3,7 +3,7 @@ organization in ThisBuild := "org.apache.pekko"
 name := "pekko-sample-cluster-kubernetes-scala"
 
 scalaVersion := "2.13.8"
-lazy val pekkoHttpVersion = "0.0.0+4335-81a9800e-SNAPSHOT"
+lazy val pekkoHttpVersion = "0.0.0+4334-7826b8b0-SNAPSHOT"
 lazy val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
 lazy val pekkoManagementVersion = "0.0.0+710-b49055bd-SNAPSHOT"
 
