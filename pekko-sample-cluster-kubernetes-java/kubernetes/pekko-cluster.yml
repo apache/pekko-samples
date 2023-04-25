@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: appka
-          image: pekko-sample-cluster-kubernetes:latest
+          image: pekko-sample-cluster-kubernetes-java:latest
           # remove for real clusters, useful for minikube
           imagePullPolicy: Never
           readinessProbe:
