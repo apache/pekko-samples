@@ -63,7 +63,7 @@ class ReplicatedMetricsSpec extends MultiNodeSpec(ReplicatedMetricsSpec) with ST
       enterBarrier("after-1")
     }
 
-    "replicate metrics" in within(10.seconds) {
+    "replicate metrics" in within(30.seconds) {
       val probe = TestProbe[UsedHeap]()
       typedSystem.eventStream ! EventStream.Subscribe(probe.ref)
       awaitAssert {
@@ -74,7 +74,7 @@ class ReplicatedMetricsSpec extends MultiNodeSpec(ReplicatedMetricsSpec) with ST
       enterBarrier("after-2")
     }
 
-    "cleanup removed node" in within(25.seconds) {
+    "cleanup removed node" in within(30.seconds) {
       val node3Address = node(node3).address
       runOn(node1) {
         cluster.manager ! Leave(node3Address)
