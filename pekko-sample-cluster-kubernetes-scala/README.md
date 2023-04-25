@@ -66,7 +66,7 @@ To wipe everything clean and start over, do:
 
 ## Running in a real Kubernetes cluster
 
-#### Publish to a registry the cluster can access e.g. Dockerhub with the kubakka user
+#### Publish to a registry the cluster can access e.g. Dockerhub with a custom user
 
 The app image must be in a registry the cluster can see. The build.sbt uses DockerHub by default.
 Start with `sbt -Ddocker.registry=your-registry` if your cluster can't access DockerHub.
