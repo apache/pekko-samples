@@ -23,9 +23,7 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
 
   val propertiesSettings = Seq(
     Compile / paradoxProperties ++= Map(
-      "download_url" -> s"https://example.lightbend.com/v1/download/${templateName.value}"
-    )
-  )
+      "download_url" -> s"https://example.lightbend.com/v1/download/${templateName.value}"))
 
   val sourceDirectorySettings = Seq(
     bodyPrefix := s"""${name.value}
@@ -52,15 +50,14 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
         IO.copyDirectory(inDir / "tutorial", outDir / "tutorial")
       }
       outDir
-    }
-  )
+    })
 
   override def projectSettings: Seq[Setting[_]] =
-   themeSettings ++
-   propertiesSettings ++
-   sourceDirectorySettings ++
-   Seq(
-    baseUrl := "https://github.com/apache/incubator-pekko-samples/current",
-    crossPaths := false,
-    templateName := baseProject.value.replaceAll("-sample-", "-samples-"))
+    themeSettings ++
+    propertiesSettings ++
+    sourceDirectorySettings ++
+    Seq(
+      baseUrl := "https://github.com/apache/incubator-pekko-samples/current",
+      crossPaths := false,
+      templateName := baseProject.value.replaceAll("-sample-", "-samples-"))
 }
