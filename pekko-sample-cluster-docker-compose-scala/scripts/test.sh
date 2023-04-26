@@ -2,6 +2,11 @@
 
 set -x
 
+clean_up () {
+    echo "cleaning up test docker containers"
+    docker-compose down
+} 
+
 sbt docker:publishLocal
 
 docker-compose up -d
@@ -20,5 +25,8 @@ if [ $i -eq 10 ]
 then
   echo "No 3 MemberUp log events found:"
   docker logs pekko-sample-cluster-docker-compose-scala_seed_1
+  clean_up
   exit -1
 fi
+
+clean_up
