@@ -1,7 +1,8 @@
-pekko-docker-cluster-example
-===========================
+# pekko-sample-cluster-docker-compose-java
 
 An example pekko-cluster project with docker support. See [the blog post](http://blog.michaelhamrah.com/2014/11/clustering-akka-applications-with-docker-version-3/). Uses [SBT Native Packager](https://github.com/sbt/sbt-native-packager).
+
+This sample is based on [akka-sample-cluster-docker-compose-java](https://github.com/akka/akka-sample-cluster-docker-compose-java).
 
 ### How to Run
 

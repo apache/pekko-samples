@@ -1,7 +1,7 @@
 organization := "org.apache.pekko"
 
 /* scala versions and options */
-scalaVersion := "2.13.8"
+scalaVersion := "2.13.10"
 
 // These options will be used for *all* versions.
 scalacOptions ++= Seq(
@@ -17,7 +17,7 @@ resolvers += "Apache Snapshots".at("https://repository.apache.org/content/reposi
 /* dependencies */
 libraryDependencies ++= Seq(
   // -- Logging --
-  "ch.qos.logback" % "logback-classic" % "1.2.3",
+  "ch.qos.logback" % "logback-classic" % "1.2.11",
   // -- Akka --
   "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion,
   "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion)
