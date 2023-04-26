@@ -2,6 +2,11 @@
 
 set -exu
 
+clean_up () {
+    echo "Cleaning up test kubernetes instance and minikube container"
+    minikube delete
+} 
+
 eval $(minikube -p minikube docker-env)
 mvn clean package docker:build
 
@@ -21,6 +26,7 @@ done
 if [ $i -eq 10 ]
 then
   echo "Pods did not get ready"
+  clean_up
   exit -1
 fi
 
@@ -48,6 +54,8 @@ if [ $i -eq 10 ]
 then
   echo "No 3 MemberUp log events found"
   echo "=============================="
-
+  clean_up
   exit -1
 fi
+
+clean_up

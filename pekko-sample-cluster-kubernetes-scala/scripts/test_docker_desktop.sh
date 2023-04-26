@@ -3,10 +3,8 @@
 set -exu
 
 clean_up () {
-    echo "cleaning up test kubernetes instance and minikube container"
-    kubectl delete -f kubernetes/namespace.json
-    docker container kill minikube
-    docker container rm minikube
+    echo "Cleaning up test kubernetes instance and minikube container"
+    minikube delete
 } 
 
 eval $(minikube -p minikube docker-env)
