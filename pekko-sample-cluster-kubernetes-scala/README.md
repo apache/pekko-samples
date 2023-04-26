@@ -1,5 +1,6 @@
 # pekko-sample-cluster-kubernetes-scala
-pekko sample cluster with kubernetes discovery in scala
+
+Apache Pekko sample cluster with kubernetes discovery in scala.
 
 This is an example SBT project showing how to create an Apache Pekko Cluster on
 Kubernetes.
@@ -12,6 +13,8 @@ state or coordination between nodes is necessary, this is where the
 [Apache Pekko Cluster features](https://pekko.apache.org/docs/pekko/current/typed/cluster.html)
 become interesting and it is worth consider making the nodes form an Apache Pekko
 Cluster.
+
+This sample is based on [akka-sample-cluster-kubernetes-scala](https://github.com/akka/akka-sample-cluster-kubernetes-scala).
 
 ## Kubernetes Instructions
     

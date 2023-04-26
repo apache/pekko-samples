@@ -2,7 +2,7 @@ organization in ThisBuild := "org.apache.pekko"
 
 name := "pekko-sample-cluster-kubernetes-scala"
 
-scalaVersion := "2.13.8"
+scalaVersion := "2.13.10"
 lazy val pekkoHttpVersion = "0.0.0+4334-7826b8b0-SNAPSHOT"
 lazy val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
 lazy val pekkoManagementVersion = "0.0.0+710-b49055bd-SNAPSHOT"
@@ -36,7 +36,7 @@ libraryDependencies ++= {
     "org.apache.pekko" %% "pekko-cluster-sharding-typed" % pekkoVersion,
     "org.apache.pekko" %% "pekko-stream-typed" % pekkoVersion,
     "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
-    "ch.qos.logback" % "logback-classic" % "1.2.3",
+    "ch.qos.logback" % "logback-classic" % "1.2.11",
     "org.apache.pekko" %% "pekko-discovery-kubernetes-api" % pekkoManagementVersion,
     "org.apache.pekko" %% "pekko-management-cluster-bootstrap" % pekkoManagementVersion,
     "org.apache.pekko" %% "pekko-management-cluster-http" % pekkoManagementVersion,

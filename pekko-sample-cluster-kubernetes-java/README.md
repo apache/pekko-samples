@@ -12,6 +12,8 @@ state or coordination between nodes is necessary, this is where the
 become interesting and it is worth consider making the nodes form an Apache Pekko
 Cluster.
 
+This sample is based on [akka-sample-cluster-kubernetes-java](https://github.com/akka/akka-sample-cluster-kubernetes-java).
+
 ## Kubernetes Instructions
     
 ### Docker Desktop for Kubernetes
