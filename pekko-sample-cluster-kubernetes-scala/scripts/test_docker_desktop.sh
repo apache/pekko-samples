@@ -1,6 +1,14 @@
 #!/bin/bash
 
 set -exu
+
+clean_up () {
+    echo "cleaning up test kubernetes instance and minikube container"
+    kubectl delete -f kubernetes/namespace.json
+    docker container kill minikube
+    docker container rm minikube
+} 
+
 eval $(minikube -p minikube docker-env)
 sbt docker:publishLocal
 
@@ -23,6 +31,7 @@ done
 if [ $i -eq 10 ]
 then
   echo "Pods did not get ready"
+  clean_up
   exit -1
 fi
 
@@ -50,6 +59,8 @@ if [ $i -eq 10 ]
 then
   echo "No 2 MemberUp log events found"
   echo "=============================="
-
+  clean_up
   exit -1
 fi
+
+clean_up
