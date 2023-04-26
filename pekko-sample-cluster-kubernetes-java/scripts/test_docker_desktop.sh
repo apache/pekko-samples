@@ -8,7 +8,7 @@ clean_up () {
 } 
 
 eval $(minikube -p minikube docker-env)
-sbt docker:publishLocal
+mvn clean package docker:build
 
 export KUBECONFIG=~/.kube/config
 kubectl config set-context docker-desktop

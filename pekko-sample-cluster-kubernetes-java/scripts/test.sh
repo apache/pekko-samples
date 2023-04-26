@@ -8,10 +8,7 @@ clean_up () {
 } 
 
 eval $(minikube -p minikube docker-env)
-sbt docker:publishLocal
-
-export KUBECONFIG=~/.kube/config
-kubectl config set-context docker-desktop
+mvn clean package docker:build
 
 kubectl apply -f kubernetes/namespace.json
 kubectl config set-context --current --namespace=appka-1
@@ -22,7 +19,7 @@ for i in {1..10}
 do
   echo "Waiting for pods to get ready..."
   kubectl get pods
-  [ `kubectl get pods | grep Running | wc -l` -eq 2 ] && break
+  [ `kubectl get pods | grep Running | wc -l` -eq 3 ] && break
   sleep 4
 done
 
@@ -39,7 +36,7 @@ for i in {1..10}
 do
   echo "Checking for MemberUp logging..."
   kubectl logs $POD | grep MemberUp || true
-  [ `kubectl logs $POD | grep MemberUp | wc -l` -eq 2 ] && break
+  [ `kubectl logs $POD | grep MemberUp | wc -l` -eq 3 ] && break
   sleep 6
 done
 
@@ -55,7 +52,7 @@ done
 
 if [ $i -eq 10 ]
 then
-  echo "No 2 MemberUp log events found"
+  echo "No 3 MemberUp log events found"
   echo "=============================="
   clean_up
   exit -1
