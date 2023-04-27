@@ -2,6 +2,7 @@ import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
 val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
+val logbackVersion = "1.2.11"
 
 // allow access to snapshots
 resolvers += "Apache Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
@@ -21,7 +22,7 @@ val `pekko-sample-distributed-data-java` = project
       "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
       "org.apache.pekko" %% "pekko-multi-node-testkit" % pekkoVersion % Test,
       "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
-      "ch.qos.logback" % "logback-classic" % "1.2.11" % Test,
+      "ch.qos.logback" % "logback-classic" % logbackVersion % Test,
       "org.scalatest" %% "scalatest" % "3.2.15" % Test),
     run / fork := true,
     Global / cancelable := false, // ctrl-c

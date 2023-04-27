@@ -4,7 +4,7 @@ val pekkoHttpVersion = "0.0.0+4335-81a9800e-SNAPSHOT"
 val pekkoConnectorsKafkaVersion = "0.0.0+1717-267012de-SNAPSHOT"
 val pekkoManagementVersion = "0.0.0+710-b49055bd-SNAPSHOT"
 val EmbeddedKafkaVersion = "2.4.1.1"
-val LogbackVersion = "1.2.11"
+val logbackVersion = "1.2.11"
 
 ThisBuild / scalaVersion := "2.13.10"
 ThisBuild / organization := "org.apache.pekko"
@@ -29,7 +29,7 @@ lazy val kafka = project
   .in(file("kafka"))
   .settings(
     libraryDependencies ++= Seq(
-      "ch.qos.logback" % "logback-classic" % LogbackVersion,
+      "ch.qos.logback" % "logback-classic" % logbackVersion,
       "org.slf4j" % "log4j-over-slf4j" % "1.7.26",
       "io.github.embeddedkafka" %% "embedded-kafka" % EmbeddedKafkaVersion),
     cancelable := false)
@@ -57,7 +57,7 @@ lazy val processor = project
     "org.apache.pekko" %% "pekko-management" % pekkoManagementVersion,
     "org.apache.pekko" %% "pekko-management-cluster-http" % pekkoManagementVersion,
     "org.apache.pekko" %% "pekko-http-spray-json" % pekkoHttpVersion,
-    "ch.qos.logback" % "logback-classic" % LogbackVersion,
+    "ch.qos.logback" % "logback-classic" % logbackVersion,
     "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
     "org.scalatest" %% "scalatest" % "3.2.15" % Test))
 
@@ -67,5 +67,5 @@ lazy val producer = project
   .settings(libraryDependencies ++= Seq(
     "org.apache.pekko" %% "pekko-connectors-kafka" % pekkoConnectorsKafkaVersion,
     "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
-    "ch.qos.logback" % "logback-classic" % "1.2.11",
+    "ch.qos.logback" % "logback-classic" % logbackVersion,
     "org.scalatest" %% "scalatest" % "3.2.15" % Test))
