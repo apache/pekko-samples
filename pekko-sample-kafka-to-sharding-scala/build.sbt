@@ -4,7 +4,8 @@ val pekkoHttpVersion = "0.0.0+4335-81a9800e-SNAPSHOT"
 val pekkoConnectorsKafkaVersion = "0.0.0+1717-267012de-SNAPSHOT"
 val pekkoManagementVersion = "0.0.0+710-b49055bd-SNAPSHOT"
 val EmbeddedKafkaVersion = "2.4.1.1"
-val logbackVersion = "1.2.11"
+val logbackVersion = "1.2.12"
+val slf4jVersion = "1.7.32"
 
 ThisBuild / scalaVersion := "2.13.10"
 ThisBuild / organization := "org.apache.pekko"
@@ -30,7 +31,7 @@ lazy val kafka = project
   .settings(
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % logbackVersion,
-      "org.slf4j" % "log4j-over-slf4j" % "1.7.26",
+      "org.slf4j" % "log4j-over-slf4j" % slf4jVersion,
       "io.github.embeddedkafka" %% "embedded-kafka" % EmbeddedKafkaVersion),
     cancelable := false)
 
