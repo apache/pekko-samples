@@ -1,6 +1,6 @@
 val pekkoVersion = "0.0.0+26623-85c2a469-SNAPSHOT"
 val pekkoHttpVersion = "0.0.0+4335-81a9800e-SNAPSHOT"
-val LogbackVersion = "1.2.11"
+val logbackVersion = "1.2.11"
 
 lazy val buildSettings = Seq(
   organization := "org.apache.pekko",
@@ -33,7 +33,7 @@ lazy val killrweather = project
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
       "org.apache.pekko" %% "pekko-http-jackson" % pekkoHttpVersion,
-      "ch.qos.logback" % "logback-classic" % LogbackVersion))
+      "ch.qos.logback" % "logback-classic" % logbackVersion))
 
 lazy val `killrweather-fog` = project
   .in(file("killrweather-fog"))
@@ -47,7 +47,7 @@ lazy val `killrweather-fog` = project
       "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
       "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
-      "ch.qos.logback" % "logback-classic" % LogbackVersion))
+      "ch.qos.logback" % "logback-classic" % logbackVersion))
 
 // Startup aliases for the first two seed nodes and a third, more can be started.
 addCommandAlias("sharding1", "runMain sample.killrweather.KillrWeather 7345")

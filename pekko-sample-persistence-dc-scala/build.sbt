@@ -9,6 +9,8 @@ val cassandraPluginVersion = "0.0.0-1068-9a5c7580-SNAPSHOT"
 val pekkoHttpVersion = "0.0.0+4335-81a9800e-SNAPSHOT"
 val pekkoClusterManagementVersion = "0.0.0+710-b49055bd-SNAPSHOT"
 
+val logbackVersion = "1.2.11"
+
 // allow access to snapshots
 resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
 
@@ -21,7 +23,7 @@ libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-management" % pekkoClusterManagementVersion,
   "org.apache.pekko" %% "pekko-management-cluster-http" % pekkoClusterManagementVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra" % cassandraPluginVersion,
-  "ch.qos.logback" % "logback-classic" % "1.2.11",
+  "ch.qos.logback" % "logback-classic" % logbackVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra-launcher" % cassandraPluginVersion,
   "org.apache.pekko" %% "pekko-persistence-testkit" % pekkoVersion % Test,
   "org.scalatest" %% "scalatest" % "3.2.15" % Test)
