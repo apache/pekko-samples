@@ -6,7 +6,7 @@ scalaVersion := "2.13.10"
 val pekkoHttpVersion = "0.0.0+4334-7826b8b0-SNAPSHOT"
 val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
 val pekkoManagementVersion = "0.0.0+710-b49055bd-SNAPSHOT"
-val logbackVersion = "1.2.11"
+val logbackVersion = "1.2.12"
 
 // allow access to snapshots
 resolvers += "Apache Snapshots".at("https://repository.apache.org/content/repositories/snapshots/")

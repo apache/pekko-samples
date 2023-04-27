@@ -2,7 +2,7 @@ organization := "org.apache.pekko"
 name := "pekko-sample-fsm-scala"
 
 val pekkoVersion = "0.0.0+26626-3e1231c3-SNAPSHOT"
-val logbackVersion = "1.2.11"
+val logbackVersion = "1.2.12"
 
 // allow access to snapshots
 resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")

@@ -1,6 +1,6 @@
 val pekkoVersion = "0.0.0+26623-85c2a469-SNAPSHOT"
 val pekkoHttpVersion = "0.0.0+4335-81a9800e-SNAPSHOT"
-val logbackVersion = "1.2.11"
+val logbackVersion = "1.2.12"
 
 lazy val buildSettings = Seq(
   organization := "org.apache.pekko",

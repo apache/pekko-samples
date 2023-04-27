@@ -12,7 +12,7 @@ scalacOptions ++= Seq(
   "-Xlint")
 
 val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
-val logbackVersion = "1.2.11"
+val logbackVersion = "1.2.12"
 
 // allow access to snapshots
 resolvers += "Apache Snapshots".at("https://repository.apache.org/content/repositories/snapshots/")
