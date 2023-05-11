@@ -85,3 +85,33 @@ jobs:
 
       - name: Test docs gen
         run: cd docs-gen && sbt paradox
+
+      # Create directory structure upfront since rsync does not create intermediate directories otherwise
+      - name: Create nightly directory structure
+        run: |-
+          mkdir -p target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs
+          mv docs-gen/pekko-sample-fsm-java/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-fsm-java/
+          mv docs-gen/pekko-sample-fsm-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-fsm-scala/
+          mv docs-gen/pekko-sample-sharding-java/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-sharding-java/
+          mv docs-gen/pekko-sample-sharding-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-sharding-scala/
+          mv docs-gen/pekko-sample-persistence-java/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-persistence-java/
+          mv docs-gen/pekko-sample-persistence-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-persistence-scala/
+          mv docs-gen/pekko-sample-cluster-java/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-cluster-java/
+          mv docs-gen/pekko-sample-cluster-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-cluster-scala/
+          mv docs-gen/pekko-sample-distributed-data-java/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-distributed-data-java/
+          mv docs-gen/pekko-sample-distributed-data-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-distributed-data-scala/
+          mv docs-gen/pekko-sample-distributed-workers-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-distributed-workers-scala/
+
+      - name: Upload nightly docs
+        uses: ./.github/actions/sync-nightlies
+        with:
+          upload: true
+          switches: --archive --compress --update --delete --progress --relative
+          local_path: target/nightly-docs/./docs/pekko-samples/ # The intermediate dot is to show `--relative` which paths to operate on
+          remote_path: ${{ secrets.NIGHTLIES_RSYNC_PATH }}/pekko/
+          remote_host: ${{ secrets.NIGHTLIES_RSYNC_HOST }}
+          remote_port: ${{ secrets.NIGHTLIES_RSYNC_PORT }}
+          remote_user: ${{ secrets.NIGHTLIES_RSYNC_USER }}
+          remote_key: ${{ secrets.NIGHTLIES_RSYNC_KEY }}
+
+
