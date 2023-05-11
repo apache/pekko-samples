@@ -25,7 +25,7 @@ jobs:
       - name: Cache Coursier cache
         uses: coursier/cache-action@v6.4
 
-      - name: Test docs gen
+      - name: Run docs gen
         run: cd docs-gen && sbt paradox
 
       # Create directory structure upfront since rsync does not create intermediate directories otherwise
