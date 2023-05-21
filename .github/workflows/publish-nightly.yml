@@ -1,8 +1,6 @@
 name: Build and test
 
 on:
-  pull_request:
-    branches: ['**']
   schedule:
     - cron: "0 2 * * *"
   workflow_dispatch:
@@ -45,7 +43,6 @@ jobs:
           mv docs-gen/pekko-sample-distributed-data-java/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-distributed-data-java/
           mv docs-gen/pekko-sample-distributed-data-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-distributed-data-scala/
           mv docs-gen/pekko-sample-distributed-workers-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-distributed-workers-scala/
-          ls -R target/nightly-docs/docs/pekko-sample
           
       - name: Upload nightly docs
         uses: ./.github/actions/sync-nightlies
