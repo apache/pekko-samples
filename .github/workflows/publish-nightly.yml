@@ -1,4 +1,4 @@
-name: Build and test
+name: Publish Nightly
 
 on:
   schedule:
