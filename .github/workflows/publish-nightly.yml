@@ -1,9 +1,12 @@
-name: Build and test
+name: Publish Nightly
 
 on:
   schedule:
     - cron: "0 2 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   publish-nightly:
