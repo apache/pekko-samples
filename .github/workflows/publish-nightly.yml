@@ -12,6 +12,7 @@ jobs:
   publish-nightly:
     name: Publish docs nightly
     runs-on: ubuntu-20.04
+    if: github.repository == 'apache/incubator-pekko-samples'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
