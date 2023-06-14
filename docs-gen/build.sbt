@@ -40,6 +40,18 @@ lazy val `pekko-sample-fsm-scala` = project
     name := "Apache Pekko FSM with Scala",
     baseProject := "pekko-sample-fsm-scala")
 
+lazy val `pekko-sample-cluster-docker-compose-java` = project
+  .enablePlugins(PekkoSamplePlugin)
+  .settings(
+    name := "Apache Pekko Cluster Docker Compose with Java",
+    baseProject := "pekko-sample-cluster-docker-compose-java")
+
+lazy val `pekko-sample-cluster-docker-compose-scala` = project
+  .enablePlugins(PekkoSamplePlugin)
+  .settings(
+    name := "Apache Pekko Cluster Docker Compose with Scala",
+    baseProject := "pekko-sample-cluster-docker-compose-scala")
+
 lazy val `pekko-sample-persistence-java` = project
   .enablePlugins(PekkoSamplePlugin)
   .settings(
