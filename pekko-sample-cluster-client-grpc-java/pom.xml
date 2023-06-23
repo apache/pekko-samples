@@ -10,7 +10,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <pekko.version>0.0.0+26617-325e2156-SNAPSHOT</pekko.version>
+    <pekko.version>0.0.0+26669-ec5b6764-SNAPSHOT</pekko.version>
     <pekko.grpc.version>0.0.0-15-3d8bff9d-SNAPSHOT</pekko.grpc.version>
   </properties>
 

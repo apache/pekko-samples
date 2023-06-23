@@ -2,10 +2,10 @@ organization in ThisBuild := "org.apache.pekko"
 
 name := "pekko-sample-cluster-kubernetes-scala"
 
-scalaVersion := "2.13.10"
+scalaVersion := "2.13.11"
 val pekkoHttpVersion = "0.0.0+4334-7826b8b0-SNAPSHOT"
-val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
-val pekkoManagementVersion = "0.0.0+710-b49055bd-SNAPSHOT"
+val pekkoVersion = "0.0.0+26669-ec5b6764-SNAPSHOT"
+val pekkoManagementVersion = "0.0.0+741-b7785457-SNAPSHOT"
 val logbackVersion = "1.2.12"
 
 // allow access to snapshots

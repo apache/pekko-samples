@@ -1,7 +1,7 @@
 organization := "org.apache.pekko"
 
 /* scala versions and options */
-scalaVersion := "2.13.10"
+scalaVersion := "2.13.11"
 
 // These options will be used for *all* versions.
 scalacOptions ++= Seq(
@@ -10,7 +10,7 @@ scalacOptions ++= Seq(
   "-encoding", "UTF-8",
   "-Xlint")
 
-val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
+val pekkoVersion = "0.0.0+26669-ec5b6764-SNAPSHOT"
 val logbackVersion = "1.2.12"
 
 // allow access to snapshots

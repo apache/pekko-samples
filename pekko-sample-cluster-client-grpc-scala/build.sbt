@@ -1,7 +1,7 @@
 import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
-val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
+val pekkoVersion = "0.0.0+26669-ec5b6764-SNAPSHOT"
 
 // allow access to snapshots
 resolvers += "Apache Snapshots".at("https://repository.apache.org/content/repositories/snapshots/")
@@ -13,7 +13,7 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
   .settings(multiJvmSettings: _*)
   .settings(
     organization := "org.apache.pekko",
-    scalaVersion := "2.13.10",
+    scalaVersion := "2.13.11",
     Compile / scalacOptions ++= Seq(
       "-deprecation",
       "-feature",

@@ -18,9 +18,9 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <encoding>UTF-8</encoding>
-    <pekko.version>0.0.0+26617-325e2156-SNAPSHOT</pekko.version>
+    <pekko.version>0.0.0+26669-ec5b6764-SNAPSHOT</pekko.version>
     <pekko-http.version>0.0.0+4334-7826b8b0-SNAPSHOT</pekko-http.version>
-    <pekko-management.version>0.0.0+710-b49055bd-SNAPSHOT</pekko-management.version>
+    <pekko-management.version>0.0.0+741-b7785457-SNAPSHOT</pekko-management.version>
     <scala.binary.version>2.13</scala.binary.version>
     <version.number>${git.commit.time}-${git.commit.id.abbrev}</version.number>
   </properties>

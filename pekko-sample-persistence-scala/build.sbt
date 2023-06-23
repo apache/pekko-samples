@@ -1,8 +1,8 @@
 organization := "org.apache.pekko"
 name := "pekko-sample-persistence-scala"
 
-scalaVersion := "2.13.10"
-val pekkoVersion = "0.0.0+26626-3e1231c3-SNAPSHOT"
+scalaVersion := "2.13.11"
+val pekkoVersion = "0.0.0+26669-ec5b6764-SNAPSHOT"
 val logbackVersion = "1.2.12"
 
 // allow access to snapshots
