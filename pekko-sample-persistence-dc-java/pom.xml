@@ -33,7 +33,7 @@
     <pekko.version>0.0.0+26669-ec5b6764-SNAPSHOT</pekko.version>
     <pekko-persistence-cassandra.version>0.0.0-1095-5ca43b58-SNAPSHOT</pekko-persistence-cassandra.version>
     <pekko-http.version>0.0.0+4411-6fe04045-SNAPSHOT</pekko-http.version>
-    <pekko-management.version>0.0.0+741-b7785457-SNAPSHOT</pekko-management.version>
+    <pekko-management.version>0.0.0+752-95cdd415-SNAPSHOT</pekko-management.version>
   </properties>
 
    <dependencies>

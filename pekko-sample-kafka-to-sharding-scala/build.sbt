@@ -2,7 +2,7 @@ val pekkoVersion = "0.0.0+26669-ec5b6764-SNAPSHOT"
 val pekkoHttpVersion = "0.0.0+4411-6fe04045-SNAPSHOT"
 
 val pekkoConnectorsKafkaVersion = "0.0.0+1738-07a19b8e-SNAPSHOT"
-val pekkoManagementVersion = "0.0.0+741-b7785457-SNAPSHOT"
+val pekkoManagementVersion = "0.0.0+752-95cdd415-SNAPSHOT"
 val EmbeddedKafkaVersion = "2.4.1.1"
 val logbackVersion = "1.2.12"
 val slf4jVersion = "1.7.32"
