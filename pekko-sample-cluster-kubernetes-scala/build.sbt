@@ -1,11 +1,11 @@
-organization in ThisBuild := "org.apache.pekko"
+ThisBuild / organization := "org.apache.pekko"
 
 name := "pekko-sample-cluster-kubernetes-scala"
 
-scalaVersion := "2.13.10"
-val pekkoHttpVersion = "0.0.0+4334-7826b8b0-SNAPSHOT"
-val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
-val pekkoManagementVersion = "0.0.0+710-b49055bd-SNAPSHOT"
+scalaVersion := "2.13.11"
+val pekkoHttpVersion = "0.0.0+4411-6fe04045-SNAPSHOT"
+val pekkoVersion = "0.0.0+26669-ec5b6764-SNAPSHOT"
+val pekkoManagementVersion = "0.0.0+752-95cdd415-SNAPSHOT"
 val logbackVersion = "1.2.12"
 
 // allow access to snapshots
@@ -16,7 +16,7 @@ ThisBuild / dynverSeparator := "-"
 
 scalacOptions := Seq("-feature", "-unchecked", "-deprecation", "-encoding", "utf8")
 classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.AllLibraryJars
-fork in run := true
+run / fork := true
 Compile / run / fork := true
 
 mainClass in (Compile, run) := Some("pekko.sample.cluster.kubernetes.DemoApp")

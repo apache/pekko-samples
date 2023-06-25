@@ -2,9 +2,9 @@ name := "pekko-distributed-workers"
 
 version := "1.0"
 
-scalaVersion := "2.13.10"
-val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
-val cassandraPluginVersion = "0.0.0-1068-9a5c7580-SNAPSHOT"
+scalaVersion := "2.13.11"
+val pekkoVersion = "0.0.0+26669-ec5b6764-SNAPSHOT"
+val cassandraPluginVersion = "0.0.0-1095-5ca43b58-SNAPSHOT"
 val logbackVersion = "1.2.12"
 
 // allow access to snapshots

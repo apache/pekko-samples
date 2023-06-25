@@ -1,13 +1,13 @@
 organization := "org.apache.pekko"
 name := "pekko-sample-replicated-event-sourcing-scala"
 
-scalaVersion := "2.13.10"
+scalaVersion := "2.13.11"
 
-val pekkoVersion = "0.0.0+26617-325e2156-SNAPSHOT"
-val cassandraPluginVersion = "0.0.0-1068-9a5c7580-SNAPSHOT"
+val pekkoVersion = "0.0.0+26669-ec5b6764-SNAPSHOT"
+val cassandraPluginVersion = "0.0.0-1095-5ca43b58-SNAPSHOT"
 
-val pekkoHttpVersion = "0.0.0+4335-81a9800e-SNAPSHOT"
-val pekkoClusterManagementVersion = "0.0.0+710-b49055bd-SNAPSHOT"
+val pekkoHttpVersion = "0.0.0+4411-6fe04045-SNAPSHOT"
+val pekkoClusterManagementVersion = "0.0.0+752-95cdd415-SNAPSHOT"
 
 val logbackVersion = "1.2.12"
 
