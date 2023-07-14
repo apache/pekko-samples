@@ -6,25 +6,13 @@
 
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <pekko.version>0.0.0+26669-ec5b6764-SNAPSHOT</pekko.version>
+      <pekko.version>1.0.0</pekko.version>
   </properties>
 
   <groupId>org.apache.pekko</groupId>
   <artifactId>pekko-sample-fsm-java</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-
-  <repositories>
-      <repository>
-      <id>apache-pekko-snapshots</id>
-      <name>Apache Snapshots Repository</name>
-      <url>https://repository.apache.org/content/repositories/snapshots/</url>
-      <layout>default</layout>
-      <snapshots>
-          <enabled>true</enabled>
-      </snapshots>
-      </repository>
-  </repositories>
 
   <dependencies>
     <dependency>
