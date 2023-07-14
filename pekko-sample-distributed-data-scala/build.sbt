@@ -1,11 +1,8 @@
 import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
-val pekkoVersion = "0.0.0+26669-ec5b6764-SNAPSHOT"
+val pekkoVersion = "1.0.0"
 val logbackVersion = "1.2.12"
-
-// allow access to snapshots
-resolvers += "Apache Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
 
 val `pekko-sample-distributed-data-scala` = project
   .in(file("."))
