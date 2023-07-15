@@ -18,8 +18,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <pekko.version>0.0.0+26669-ec5b6764-SNAPSHOT</pekko.version>
-        <pekko-http.version>0.0.0+4411-6fe04045-SNAPSHOT</pekko-http.version>
+        <pekko.version>1.0.0</pekko.version>
+        <pekko-http.version>0.0.0+4468-963bd592-SNAPSHOT</pekko-http.version>
     </properties>
 
     <repositories>
