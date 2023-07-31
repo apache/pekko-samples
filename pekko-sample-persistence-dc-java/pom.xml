@@ -30,7 +30,7 @@
 
    <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <pekko.version"1.0.1"</pekko.version>
+    <pekko.version>1.0.1</pekko.version>
     <pekko-persistence-cassandra.version>0.0.0-1102-939e199d-SNAPSHOT</pekko-persistence-cassandra.version>
     <pekko-http.version>0.0.0+4468-963bd592-SNAPSHOT</pekko-http.version>
     <pekko-management.version>0.0.0+757-f7d48cde-SNAPSHOT</pekko-management.version>

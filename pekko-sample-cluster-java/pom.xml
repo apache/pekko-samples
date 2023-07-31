@@ -11,7 +11,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <pekko.version"1.0.1"</pekko.version>
+    <pekko.version>1.0.1</pekko.version>
   </properties>
 
   <dependencies>
