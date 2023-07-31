@@ -4,7 +4,7 @@ name := "pekko-sample-cluster-kubernetes-scala"
 
 scalaVersion := "2.13.11"
 val pekkoHttpVersion = "0.0.0+4468-963bd592-SNAPSHOT"
-val pekkoVersion = "1.0.0"
+val pekkoVersion = "1.0.1"
 val pekkoManagementVersion = "0.0.0+757-f7d48cde-SNAPSHOT"
 val logbackVersion = "1.2.12"
 

@@ -3,7 +3,7 @@ name := "pekko-sample-replicated-event-sourcing-scala"
 
 scalaVersion := "2.13.11"
 
-val pekkoVersion = "1.0.0"
+val pekkoVersion = "1.0.1"
 val cassandraPluginVersion = "0.0.0-1102-939e199d-SNAPSHOT"
 
 val pekkoHttpVersion = "0.0.0+4468-963bd592-SNAPSHOT"
