@@ -60,6 +60,6 @@ lazy val `killrweather-fog` = project
       "ch.qos.logback" % "logback-classic" % logbackVersion))
 
 // Startup aliases for the first two seed nodes and a third, more can be started.
-addCommandAlias("sharding1", "runMain sample.killrweather.KillrWeather 7345")
-addCommandAlias("sharding2", "runMain sample.killrweather.KillrWeather 7355")
-addCommandAlias("sharding3", "runMain sample.killrweather.KillrWeather 0")
+addCommandAlias("sharding1", "killrweather/runMain sample.killrweather.KillrWeather 7345")
+addCommandAlias("sharding2", "killrweather/runMain sample.killrweather.KillrWeather 7355")
+addCommandAlias("sharding3", "killrweather/runMain sample.killrweather.KillrWeather 0")
