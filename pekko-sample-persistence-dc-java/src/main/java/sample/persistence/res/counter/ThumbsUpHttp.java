@@ -39,7 +39,7 @@ public class ThumbsUpHttp extends AllDirectives {
     return
         pathPrefix("thumbs-up", () ->
             concat(
-                // example: curl http://0.0.0.0:22551/thumbs-up/a
+                // example: curl http://0.0.0.0:27345/thumbs-up/pekko
                 get(() -> path(segment(), resourceId -> {
                   return onComplete(replicatedSharding.getEntityRefsFor(resourceId).get(selfReplica).<ThumbsUpCounter.State>ask(replyTo ->  new ThumbsUpCounter.GetUsers(resourceId, replyTo), timeout), state -> {
                     Source<ByteString, NotUsed> s =
@@ -49,7 +49,7 @@ public class ThumbsUpHttp extends AllDirectives {
                     return complete(HttpEntities.create(ContentTypes.TEXT_PLAIN_UTF8, s));
                   });
                 })),
-                // example: curl -X POST http://0.0.0.0:22551/thumbs-up/a/u1
+                // example: curl -X POST http://0.0.0.0:27345/thumbs-up/pekko/u1
                 post(() -> {
                   return path(segments(2), seg -> {
                     final String resourceId = seg.get(0);

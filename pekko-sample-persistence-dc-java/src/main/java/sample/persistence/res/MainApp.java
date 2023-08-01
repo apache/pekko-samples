@@ -50,8 +50,8 @@ public class MainApp {
   private static void startClusterInSameJvm() {
     startCassandraDatabase();
 
-    startNode(2551, "eu-west");
-    startNode(2552, "eu-central");
+    startNode(7345, "eu-west");
+    startNode(7355, "eu-central");
   }
 
   private static void startNode(int port, String dc) {
