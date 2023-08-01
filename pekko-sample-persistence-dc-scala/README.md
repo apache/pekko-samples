@@ -13,7 +13,7 @@ to run a replica per datacenter.
 1. In terminal 3: `sbt "runMain sample.persistence.res.MainApp 7355 eu-central"`
 
 1. In terminal 4:
-   * To add a thumbs-up for resource `pekko` from user `u1` in DC `eu-west`: `curl -X POST http://127.0.0.1:27355/thumbs-up/pekko/u1`
+   * To add a thumbs-up for resource `pekko` from user `u1` in DC `eu-central`: `curl -X POST http://127.0.0.1:27355/thumbs-up/pekko/u1`
    * To add a thumbs-up for resource `pekko` from user `u2` in DC `eu-west`: `curl -X POST http://127.0.0.1:27345/thumbs-up/pekko/u2`
    * To get the users that gave thumbs-up for resource `pekko`: `curl http://127.0.0.1:27355/thumbs-up/pekko`
    * Note the port numbers 27355 for eu-west and 27345 for eu-central

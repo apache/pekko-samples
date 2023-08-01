@@ -43,8 +43,8 @@ object MainApp {
   def startClusterInSameJvm(): Unit = {
     startCassandraDatabase()
 
-    startNode(2551, "eu-west")
-    startNode(2552, "eu-central")
+    startNode(7345, "eu-west")
+    startNode(7355, "eu-central")
   }
 
   def startNode(port: Int, dc: String): Unit = {
