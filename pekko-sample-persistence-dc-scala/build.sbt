@@ -34,3 +34,8 @@ dependencyOverrides += "org.apache.pekko" %% "pekko-cluster-tools" % pekkoVersio
 dependencyOverrides += "org.apache.pekko" %% "pekko-coordination" % pekkoVersion
 
 licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0")))
+
+// Startup aliases for the cassandra server and for two seed nodes one for eu-west and another for eu-central
+addCommandAlias("cassandra", "runMain sample.persistence.res.MainApp cassandra")
+addCommandAlias("eu-west", "runMain sample.persistence.res.MainApp 7345 eu-west")
+addCommandAlias("eu-central", "runMain sample.persistence.res.MainApp 7355 eu-central")
