@@ -26,7 +26,7 @@ object ThumbsUpHttp {
 
     pathPrefix("thumbs-up") {
       concat(
-        // example: curl http://127.0.0.1:22551/thumbs-up/a
+        // example: curl http://127.0.0.1:27345/thumbs-up/pekko
         get {
           path(Segment) { resourceId =>
             onComplete(res.entityRefsFor(resourceId)(selfReplica).ask[State](replyTo =>
@@ -40,7 +40,7 @@ object ThumbsUpHttp {
             }
           }
         },
-        // example: curl -X POST http://127.0.0.1:22551/thumbs-up/a/u1
+        // example: curl -X POST http://127.0.0.1:27345/thumbs-up/pekko/u1
         post {
           path(Segment / Segment) { (resourceId, userId) =>
             onComplete(res.entityRefsFor(resourceId)(selfReplica).ask[Long](replyTo =>
