@@ -1,12 +1,10 @@
 val pekkoVersion = "1.0.1"
-val pekkoHttpVersion = "0.0.0+4468-963bd592-SNAPSHOT"
+val pekkoHttpVersion = "1.0.0"
 val logbackVersion = "1.2.12"
 
 lazy val buildSettings = Seq(
   organization := "org.apache.pekko",
-  scalaVersion := "2.13.11",
-  // allow access to snapshots
-  resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/"))
+  scalaVersion := "2.13.11")
 
 lazy val commonJavacOptions = Seq(
   "-Xlint:unchecked",
