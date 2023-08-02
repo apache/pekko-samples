@@ -5,7 +5,7 @@ name := "pekko-sample-cluster-kubernetes-scala"
 scalaVersion := "2.13.11"
 val pekkoHttpVersion = "1.0.0"
 val pekkoVersion = "1.0.1"
-val pekkoManagementVersion = "0.0.0+769-aa190a6b-SNAPSHOT"
+val pekkoManagementVersion = "1.0.0-RC1+1-15f8c323-SNAPSHOT"
 val logbackVersion = "1.2.12"
 
 // allow access to snapshots
