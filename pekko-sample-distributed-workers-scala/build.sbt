@@ -1,4 +1,4 @@
-name := "pekko-distributed-workers"
+name := "pekko-distributed-workers-scala"
 
 version := "1.0"
 
