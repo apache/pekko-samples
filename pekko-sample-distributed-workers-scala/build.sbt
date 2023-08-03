@@ -8,7 +8,7 @@ val cassandraPluginVersion = "0.0.0-1102-939e199d-SNAPSHOT"
 val logbackVersion = "1.2.12"
 
 // allow access to snapshots
-resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
+resolvers += Resolver.ApacheMavenSnapshotsRepo
 
 Global / cancelable := false
 

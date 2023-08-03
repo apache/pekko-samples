@@ -18,7 +18,7 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
 
   val themeSettings = Seq(
     // allow access to snapshots for pekko-sbt-paradox
-    resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/repositories/snapshots/"),
+    resolvers += Resolver.ApacheMavenSnapshotsRepo,
     pekkoParadoxGithub := Some("https://github.com/apache/incubator-pekko"))
 
   val propertiesSettings = Seq(

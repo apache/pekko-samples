@@ -1,5 +1,5 @@
 // allow access to snapshots
-resolvers += "Apache Snapshots".at("https://repository.apache.org/content/repositories/snapshots/")
+resolvers += Resolver.ApacheMavenSnapshotsRepo
 
 addSbtPlugin("org.apache.pekko" % "sbt-pekko-grpc" % "0.0.0-73-c03eff2b-SNAPSHOT")
 addSbtPlugin("com.lightbend.sbt" % "sbt-javaagent" % "0.1.4")

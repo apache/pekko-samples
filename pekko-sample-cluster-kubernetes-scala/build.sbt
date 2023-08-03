@@ -9,7 +9,7 @@ val pekkoManagementVersion = "1.0.0-RC1+1-15f8c323-SNAPSHOT"
 val logbackVersion = "1.2.12"
 
 // allow access to snapshots
-resolvers += "Apache Snapshots".at("https://repository.apache.org/content/repositories/snapshots/")
+resolvers += Resolver.ApacheMavenSnapshotsRepo
 
 // make version compatible with docker for publishing
 ThisBuild / dynverSeparator := "-"
