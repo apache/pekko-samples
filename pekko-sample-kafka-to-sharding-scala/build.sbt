@@ -20,7 +20,7 @@ ThisBuild / Test / testOptions += Tests.Argument("-oDF")
 ThisBuild / licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0")))
 
 // allow access to snapshots
-ThisBuild / resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
+ThisBuild / resolvers += Resolver.ApacheMavenSnapshotsRepo
 
 Global / cancelable := true // ctrl-c
 

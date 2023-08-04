@@ -4,15 +4,15 @@ name := "pekko-sample-replicated-event-sourcing-scala"
 scalaVersion := "2.13.11"
 
 val pekkoVersion = "1.0.1"
-val cassandraPluginVersion = "0.0.0-1102-939e199d-SNAPSHOT"
+val cassandraPluginVersion = "0.0.0-1110-6b7494d3-SNAPSHOT"
 
-val pekkoHttpVersion = "0.0.0+4468-963bd592-SNAPSHOT"
-val pekkoClusterManagementVersion = "0.0.0+757-f7d48cde-SNAPSHOT"
+val pekkoHttpVersion = "1.0.0"
+val pekkoClusterManagementVersion = "1.0.0-RC1+1-15f8c323-SNAPSHOT"
 
 val logbackVersion = "1.2.12"
 
 // allow access to snapshots
-resolvers += "Apache Nexus Snapshots".at("https://repository.apache.org/content/groups/snapshots/")
+resolvers += Resolver.ApacheMavenSnapshotsRepo
 
 libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-cluster-sharding-typed" % pekkoVersion,
