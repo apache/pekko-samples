@@ -76,7 +76,7 @@ The `FrontEnd` actor schedules `Tick` messages to itself when starting up. the `
 
 The cluster contains one `WorkManager` actor. The `FrontEnd` actor does not need to know the exact location because it sends work to the `masterProxy` that is a cluster singleton proxy.
 
-The 'WorkManager' actor can accept or deny a work request and we need to deal with unexpected errors:
+The 'WorkManager' actor can accept or deny a work request, and we need to deal with unexpected errors:
 
 * If the 'WorkManager' accepts the request, the actor schedules a new tick to itself and toggles back to the idle behavior.
 * To deal with failures, the message uses the [ask pattern](https://pekko.apache.org/docs/pekko/current/scala/actors.html#ask-send-and-receive-future) to add a timeout to wait for a reply. If the timeout expires before the master responds, the returned 'Future' fails with a pekko.pattern.AskTimeoutException.
@@ -87,8 +87,8 @@ a `Tick` to start the process again.
 
 If the work is not accepted or there is no response, for example if the message or response got lost, the `FrontEnd` actor backs off a bit and then sends the work again.
 
-You can see the how the actors on a front-end node is started in the method `Main.start` when the node
-contains the `front-end` role:
+You can see how actors on a front-end node are started in the method `Main.start` when the node
+contains the `front-end` role.
 
 ### The Work Result Consumer Actor
 
@@ -166,7 +166,7 @@ strategy:
 * Any type of failure -- whether from the network, worker actor, or node -- that prevents a `RegisterWorker`
   message from arriving within the `work-timeout` period causes the 'WorkManager' actor to remove the worker from its list.
 
-When stopping a `Worker` Actor still tries to gracefully remove it self using the `DeRegisterWorker` message,
+When stopping a `Worker` Actor still tries to gracefully remove itself using the `DeRegisterWorker` message,
 but in case of crash it will have no chance to communicate that with the master node.
 
 Now let's move on to the last piece of the puzzle, the worker nodes.
