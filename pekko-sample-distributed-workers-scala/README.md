@@ -76,7 +76,7 @@ The `FrontEnd` actor schedules `Tick` messages to itself when starting up. the `
 
 The cluster contains one `WorkManager` actor. The `FrontEnd` actor does not need to know the exact location because it sends work to the `masterProxy` that is a cluster singleton proxy.
 
-The 'WorkManager' actor can accept or deny a work request, and we need to deal with unexpected errors:
+The 'WorkManager' actor can accept or deny a work request and we need to deal with unexpected errors:
 
 * If the 'WorkManager' accepts the request, the actor schedules a new tick to itself and toggles back to the idle behavior.
 * To deal with failures, the message uses the [ask pattern](https://pekko.apache.org/docs/pekko/current/scala/actors.html#ask-send-and-receive-future) to add a timeout to wait for a reply. If the timeout expires before the master responds, the returned 'Future' fails with a pekko.pattern.AskTimeoutException.
