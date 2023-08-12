@@ -5,11 +5,8 @@ name := "pekko-sample-cluster-kubernetes-scala"
 scalaVersion := "2.13.11"
 val pekkoHttpVersion = "1.0.0"
 val pekkoVersion = "1.0.1"
-val pekkoManagementVersion = "1.0.0-RC1+1-15f8c323-SNAPSHOT"
+val pekkoManagementVersion = "1.0.0"
 val logbackVersion = "1.2.12"
-
-// allow access to snapshots
-resolvers += Resolver.ApacheMavenSnapshotsRepo
 
 // make version compatible with docker for publishing
 ThisBuild / dynverSeparator := "-"

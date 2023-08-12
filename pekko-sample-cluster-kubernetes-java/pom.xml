@@ -20,22 +20,10 @@
     <encoding>UTF-8</encoding>
     <pekko.version>1.0.1</pekko.version>
     <pekko-http.version>1.0.0</pekko-http.version>
-    <pekko-management.version>0.0.0+757-f7d48cde-SNAPSHOT</pekko-management.version>
+    <pekko-management.version>1.0.0</pekko-management.version>
     <scala.binary.version>2.13</scala.binary.version>
     <version.number>${git.commit.time}-${git.commit.id.abbrev}</version.number>
   </properties>
-
-  <repositories>
-      <repository>
-      <id>apache-pekko-snapshots</id>
-      <name>Apache Snapshots Repository</name>
-      <url>https://repository.apache.org/content/repositories/snapshots/</url>
-      <layout>default</layout>
-      <snapshots>
-          <enabled>true</enabled>
-      </snapshots>
-      </repository>
-  </repositories>
 
   <dependencies>
     <dependency>
