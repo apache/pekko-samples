@@ -4,7 +4,7 @@ version := "1.0"
 
 scalaVersion := "2.13.11"
 val pekkoVersion = "1.0.1"
-val cassandraPluginVersion = "0.0.0-1102-939e199d-SNAPSHOT"
+val cassandraPluginVersion = "0.0.0-1111-f170d7eb-SNAPSHOT"
 val logbackVersion = "1.2.12"
 
 // allow access to snapshots

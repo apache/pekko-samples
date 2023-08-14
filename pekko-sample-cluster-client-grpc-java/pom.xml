@@ -11,7 +11,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <pekko.version>1.0.1</pekko.version>
-    <pekko.grpc.version>0.0.0-64-719d069a-SNAPSHOT</pekko.grpc.version>
+    <pekko.grpc.version>1.0.0-RC1-3-ae23c14d-SNAPSHOT</pekko.grpc.version>
   </properties>
 
   <repositories>
