@@ -1,9 +1,8 @@
 package worker
 
-import org.apache.pekko
 import org.apache.pekko.actor.typed.delivery.ConsumerController
 import org.apache.pekko.actor.typed.scaladsl.Behaviors
-import pekko.actor.testkit.typed.scaladsl.ScalaTestWithActorTestKit
+import org.apache.pekko.actor.testkit.typed.scaladsl.ScalaTestWithActorTestKit
 import org.scalatest.wordspec.AnyWordSpecLike
 
 class WorkerSpec extends ScalaTestWithActorTestKit with AnyWordSpecLike{
