@@ -3,13 +3,11 @@ package worker
 import java.io.File
 import java.util.concurrent.CountDownLatch
 import org.apache.pekko.actor.typed.ActorSystem
+import org.apache.pekko.actor.typed.eventstream.EventStream
 import org.apache.pekko.actor.typed.scaladsl.{ ActorContext, Behaviors }
-import org.apache.pekko.cluster.typed.Cluster
+import org.apache.pekko.cluster.typed.{ Cluster, SelfUp, Subscribe }
 import org.apache.pekko.persistence.cassandra.testkit.CassandraLauncher
 import com.typesafe.config.{ Config, ConfigFactory }
-import org.apache.pekko.actor.typed.eventstream.EventStream
-import org.apache.pekko.cluster.typed.SelfUp
-import org.apache.pekko.cluster.typed.Subscribe
 
 object Main {
 
