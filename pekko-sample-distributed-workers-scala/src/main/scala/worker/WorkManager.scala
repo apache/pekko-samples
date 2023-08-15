@@ -119,6 +119,9 @@ object WorkManager {
           // Any in progress work from the previous incarnation is retried
           ctx.self ! ResetWorkInProgress
       }
+        // Publish events to the system event stream as PublishedEvent after they have been persisted
+        .withEventPublishing(enabled = true)
+
     }
 
 }
