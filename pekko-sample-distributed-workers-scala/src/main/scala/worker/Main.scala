@@ -2,12 +2,12 @@ package worker
 
 import java.io.File
 import java.util.concurrent.CountDownLatch
-
 import org.apache.pekko.actor.typed.ActorSystem
-import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.scaladsl.{ActorContext, Behaviors}
 import org.apache.pekko.cluster.typed.Cluster
 import org.apache.pekko.persistence.cassandra.testkit.CassandraLauncher
-import com.typesafe.config.{ Config, ConfigFactory }
+import com.typesafe.config.{Config, ConfigFactory}
+import org.apache.pekko.actor.typed.eventstream.EventStream
 import org.apache.pekko.cluster.typed.SelfUp
 import org.apache.pekko.cluster.typed.Subscribe
 
@@ -40,7 +40,7 @@ object Main {
   }
 
   def startClusterInSameJvm(): Unit = {
-    startCassandraDatabase()
+    //startCassandraDatabase()
     // two backend nodes
     start(7345, "back-end")
     start(7355, "back-end")
@@ -52,11 +52,17 @@ object Main {
     start(5002, "worker", 2)
   }
 
+  private def createWorkResultsConsumer(ctx: ActorContext[SelfUp]): Unit = {
+    val eventListener = ctx.spawn(WorkResultConsumerActor(), "work-consumer-actor")
+    ctx.system.eventStream ! EventStream.Subscribe(eventListener)
+  }
+
   def start(port: Int, role: String, workers: Int = 2): Unit = {
     ActorSystem(
       Behaviors.setup[SelfUp](ctx => {
         val cluster = Cluster(ctx.system)
         cluster.subscriptions ! Subscribe(ctx.self, classOf[SelfUp])
+        createWorkResultsConsumer(ctx)
         Behaviors.receiveMessage {
           case SelfUp(_) =>
             ctx.log.info("Node is up")
