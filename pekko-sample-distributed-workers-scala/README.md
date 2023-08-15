@@ -87,8 +87,8 @@ a `Tick` to start the process again.
 
 If the work is not accepted or there is no response, for example if the message or response got lost, the `FrontEnd` actor backs off a bit and then sends the work again.
 
-You can see the how the actors on a front-end node is started in the method `Main.start` when the node
-contains the `front-end` role:
+You can see how actors on a front-end node are started in the method `Main.start` when the node
+contains the `front-end` role.
 
 ### The Work Result Consumer Actor
 
@@ -166,7 +166,7 @@ strategy:
 * Any type of failure -- whether from the network, worker actor, or node -- that prevents a `RegisterWorker`
   message from arriving within the `work-timeout` period causes the 'WorkManager' actor to remove the worker from its list.
 
-When stopping a `Worker` Actor still tries to gracefully remove it self using the `DeRegisterWorker` message,
+When stopping a `Worker` Actor still tries to gracefully remove itself using the `DeRegisterWorker` message,
 but in case of crash it will have no chance to communicate that with the master node.
 
 Now let's move on to the last piece of the puzzle, the worker nodes.
