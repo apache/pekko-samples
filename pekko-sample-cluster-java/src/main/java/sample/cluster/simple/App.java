@@ -35,7 +35,7 @@ public class App {
     // Override the configuration of the port
     // Override the configuration of the port
     Map<String, Object> overrides = new HashMap<>();
-    overrides.put("org.apache.pekko.remote.artery.canonical.port", port);
+    overrides.put("pekko.remote.artery.canonical.port", port);
 
     Config config = ConfigFactory.parseMap(overrides)
         .withFallback(ConfigFactory.load());
