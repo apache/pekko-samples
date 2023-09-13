@@ -52,8 +52,8 @@ public class App {
 
     // Override the configuration of the port
     Map<String, Object> overrides = new HashMap<>();
-    overrides.put("org.apache.pekko.remote.artery.canonical.port", port);
-    overrides.put("org.apache.pekko.cluster.roles", Collections.singletonList(role));
+    overrides.put("pekko.remote.artery.canonical.port", port);
+    overrides.put("pekko.cluster.roles", Collections.singletonList(role));
 
     Config config = ConfigFactory.parseMap(overrides)
         .withFallback(ConfigFactory.load("transformation"));
