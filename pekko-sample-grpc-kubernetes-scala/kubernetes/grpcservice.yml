@@ -1,0 +1,44 @@
+---
+apiVersion: "apps/v1"
+kind: Deployment
+metadata:
+  name: "grpcservice-v0-1-0-snapshot"
+  labels:
+    appName: grpcservice
+    appNameVersion: "grpcservice-v0-1-0-snapshot"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appNameVersion: "grpcservice-v0-1-0-snapshot"
+  template:
+    metadata:
+      labels:
+        appName: grpcservice
+        appNameVersion: "grpcservice-v0-1-0-snapshot"
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: grpcservice
+          image: "grpcservice:0.1.0-SNAPSHOT"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts: []
+      volumes: []
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appName: grpcservice
+  name: grpcservice
+spec:
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    appName: grpcservice
