@@ -1,12 +1,11 @@
 package sample.grpckubernetes
 
 import org.apache.pekko.actor.ActorSystem
-import org.apache.pekko.http.scaladsl.model.{HttpRequest, HttpResponse}
-import org.apache.pekko.http.scaladsl.{Http, HttpConnectionContext}
-import org.apache.pekko.stream.{ActorMaterializer, Materializer}
+import org.apache.pekko.http.scaladsl.model.{ HttpRequest, HttpResponse }
+import org.apache.pekko.http.scaladsl.{ Http, HttpConnectionContext }
+import org.apache.pekko.stream.{ ActorMaterializer, Materializer }
 
-import scala.concurrent.{ExecutionContext, Future}
-
+import scala.concurrent.{ ExecutionContext, Future }
 
 object GreeterServer {
 

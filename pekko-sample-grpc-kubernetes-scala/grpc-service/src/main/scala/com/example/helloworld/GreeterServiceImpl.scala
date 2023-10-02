@@ -10,9 +10,7 @@ import org.apache.pekko.stream.scaladsl.MergeHub
 import org.apache.pekko.stream.scaladsl.Sink
 import org.apache.pekko.stream.scaladsl.Source
 
-
 class GreeterServiceImpl(materializer: Materializer, log: LoggingAdapter) extends GreeterService {
-
 
   private implicit val mat: Materializer = materializer
 

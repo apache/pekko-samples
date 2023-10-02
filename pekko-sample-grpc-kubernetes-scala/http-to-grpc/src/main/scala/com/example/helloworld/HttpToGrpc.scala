@@ -6,12 +6,11 @@ import org.apache.pekko.grpc.GrpcClientSettings
 import org.apache.pekko.http.scaladsl.Http
 import org.apache.pekko.http.scaladsl.model._
 import org.apache.pekko.http.scaladsl.server.Directives._
-import org.apache.pekko.stream.{ActorMaterializer, Materializer}
+import org.apache.pekko.stream.{ ActorMaterializer, Materializer }
 
 import scala.concurrent.duration._
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
-
+import scala.concurrent.{ ExecutionContext, Future }
+import scala.util.{ Failure, Success }
 
 object HttpToGrpc {
 
@@ -25,12 +24,12 @@ object HttpToGrpc {
     val client = GreeterServiceClient(settings)
 
     system.scheduler.scheduleAtFixedRate(5.seconds, 5.seconds)(() => {
-        log.info("Scheduled say hello to chris")
-        val response: Future[HelloReply] = client.sayHello(HelloRequest("Christopher"))
-        response.onComplete { r =>
-          log.info("Scheduled say hello response {}", r)
-        }
-      })
+      log.info("Scheduled say hello to chris")
+      val response: Future[HelloReply] = client.sayHello(HelloRequest("Christopher"))
+      response.onComplete { r =>
+        log.info("Scheduled say hello response {}", r)
+      }
+    })
 
     val route =
       path("hello" / Segment) { name =>

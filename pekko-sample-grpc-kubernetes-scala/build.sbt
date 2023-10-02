@@ -17,18 +17,13 @@ lazy val httpToGrpc = (project in file("http-to-grpc"))
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
       "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
-
       "org.apache.pekko" %% "pekko-parsing" % pekkoHttpVersion,
       "org.apache.pekko" %% "pekko-http-core" % pekkoHttpVersion,
       "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
       "org.apache.pekko" %% "pekko-http-spray-json" % pekkoHttpVersion,
-
       "org.apache.pekko" %% "pekko-discovery-kubernetes-api" % discoveryVersion,
-
-      "ch.qos.logback" % "logback-classic" % "1.2.12"
-    ),
-    dockerExposedPorts := Seq(8080),
-  )
+      "ch.qos.logback" % "logback-classic" % "1.2.12"),
+    dockerExposedPorts := Seq(8080))
 
 // gRPC back end that echoes back messages
 lazy val grpcService = (project in file("grpc-service"))
@@ -41,9 +36,5 @@ lazy val grpcService = (project in file("grpc-service"))
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
       "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
-
       "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
-
-      "ch.qos.logback" % "logback-classic" % "1.2.12"
-    )
-  )
+      "ch.qos.logback" % "logback-classic" % "1.2.12"))
