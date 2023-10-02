@@ -25,7 +25,7 @@ lazy val httpToGrpc = (project in file("http-to-grpc"))
 
       "org.apache.pekko" %% "pekko-discovery-kubernetes-api" % discoveryVersion,
 
-      "ch.qos.logback" % "logback-classic" % "1.4.11"
+      "ch.qos.logback" % "logback-classic" % "1.2.12"
     ),
     dockerExposedPorts := Seq(8080),
   )
@@ -44,6 +44,6 @@ lazy val grpcService = (project in file("grpc-service"))
 
       "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
 
-      "ch.qos.logback" % "logback-classic" % "1.4.11"
+      "ch.qos.logback" % "logback-classic" % "1.2.12"
     )
   )
