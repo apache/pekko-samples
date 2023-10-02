@@ -1,5 +1,5 @@
 name := "pekko-grpc-kubernetes"
-scalaVersion := "2.13.3"
+scalaVersion := "2.13.11"
 
 lazy val pekkoVersion = "1.0.1"
 lazy val discoveryVersion = "1.0.0"
@@ -25,11 +25,12 @@ lazy val httpToGrpc = (project in file("http-to-grpc"))
 
       "org.apache.pekko" %% "pekko-discovery-kubernetes-api" % discoveryVersion,
 
-      "ch.qos.logback" % "logback-classic" % "1.2.3"
+      "ch.qos.logback" % "logback-classic" % "1.4.11"
     ),
     dockerExposedPorts := Seq(8080),
   )
 
+// gRPC back end that echoes back messages
 lazy val grpcService = (project in file("grpc-service"))
   .enablePlugins(PekkoGrpcPlugin, DockerPlugin, JavaAppPackaging)
   .settings(
@@ -43,8 +44,6 @@ lazy val grpcService = (project in file("grpc-service"))
 
       "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
 
-      "ch.qos.logback" % "logback-classic" % "1.2.3"
+      "ch.qos.logback" % "logback-classic" % "1.4.11"
     )
   )
-
-
