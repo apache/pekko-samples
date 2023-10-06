@@ -3,9 +3,6 @@ import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
 val pekkoVersion = "1.0.1"
 
-// allow access to snapshots
-resolvers += Resolver.ApacheMavenSnapshotsRepo
-
 lazy val `pekko-sample-cluster-client-grpc-scala` = project
   .in(file("."))
   .enablePlugins(JavaAgent)

@@ -4,11 +4,8 @@ version := "1.0"
 
 scalaVersion := "2.13.11"
 val pekkoVersion = "1.0.1"
-val cassandraPluginVersion = "0.0.0-1114-8714f01e-SNAPSHOT"
+val cassandraPluginVersion = "1.0.0"
 val logbackVersion = "1.2.12"
-
-// allow access to snapshots
-resolvers += Resolver.ApacheMavenSnapshotsRepo
 
 Global / cancelable := false
 

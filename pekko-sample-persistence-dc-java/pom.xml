@@ -16,22 +16,10 @@
     </license>
   </licenses>
 
-  <repositories>
-      <repository>
-      <id>apache-pekko-snapshots</id>
-      <name>Apache Snapshots Repository</name>
-      <url>https://repository.apache.org/content/repositories/snapshots/</url>
-      <layout>default</layout>
-      <snapshots>
-          <enabled>true</enabled>
-      </snapshots>
-      </repository>
-  </repositories>
-
-   <properties>
+  <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <pekko.version>1.0.1</pekko.version>
-    <pekko-persistence-cassandra.version>0.0.0-1114-8714f01e-SNAPSHOT</pekko-persistence-cassandra.version>
+    <pekko-persistence-cassandra.version>1.0.0</pekko-persistence-cassandra.version>
     <pekko-http.version>1.0.0</pekko-http.version>
     <pekko-management.version>1.0.0</pekko-management.version>
   </properties>
