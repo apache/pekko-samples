@@ -19,9 +19,6 @@ ThisBuild / Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecati
 ThisBuild / Test / testOptions += Tests.Argument("-oDF")
 ThisBuild / licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0")))
 
-// allow access to snapshots
-ThisBuild / resolvers += Resolver.ApacheMavenSnapshotsRepo
-
 Global / cancelable := true // ctrl-c
 
 lazy val `pekko-sample-kafka-to-sharding` = project.in(file(".")).aggregate(producer, processor, client)
