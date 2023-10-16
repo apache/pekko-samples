@@ -81,3 +81,9 @@ lazy val `pekko-sample-kafka-to-sharding-scala` = project
   .settings(
     name := "Apache Pekko Kafka to Sharding with Scala",
     baseProject := "pekko-sample-kafka-to-sharding-scala")
+
+lazy val `pekko-sample-grpc-kubernetes-scala` = project
+  .enablePlugins(PekkoSamplePlugin)
+  .settings(
+    name := "Apache Pekko gRPC on Kubernetes",
+    baseProject := "pekko-sample-grpc-kubernetes-scala")
