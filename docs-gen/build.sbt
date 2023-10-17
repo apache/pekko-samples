@@ -1,3 +1,9 @@
+
+ThisBuild / resolvers += Resolver.ApacheMavenSnapshotsRepo
+
+// disabled display versioning, in other words: hidden unnecessary version.
+paradoxProperties += ("disabled.versioning.display" -> "true")
+
 lazy val `pekko-sample-cluster-java` = project
   .enablePlugins(PekkoSamplePlugin)
   .settings(
