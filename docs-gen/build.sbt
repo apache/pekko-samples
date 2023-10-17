@@ -1,4 +1,3 @@
-
 ThisBuild / resolvers += Resolver.ApacheMavenSnapshotsRepo
 
 // disabled display versioning, in other words: hidden unnecessary version.
