@@ -16,6 +16,9 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
   }
   import autoImport._
 
+  // disabled display versioning, in other words: hidden unnecessary version.
+  paradoxProperties += ("disabled.versioning.display" -> "true")
+
   val themeSettings = Seq(
     pekkoParadoxGithub := Some("https://github.com/apache/incubator-pekko"))
 
