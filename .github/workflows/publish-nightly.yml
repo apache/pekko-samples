@@ -50,6 +50,7 @@ jobs:
           mv docs-gen/pekko-sample-distributed-data-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-distributed-data-scala/
           mv docs-gen/pekko-sample-distributed-workers-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-distributed-workers-scala/
           mv docs-gen/pekko-sample-kafka-to-sharding-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-kafka-to-sharding-scala/
+          mv docs-gen/pekko-sample-grpc-kubernetes-scala/target/paradox/site/main target/nightly-docs/docs/pekko-samples/${{ github.ref_name }}-snapshot/docs/pekko-sample-grpc-kubernetes-scala/
 
       - name: Upload nightly docs
         uses: ./.github/actions/sync-nightlies
