@@ -2,7 +2,7 @@
 
 This is an example of an Apache Pekko HTTP service communicating with a gRPC service. Both services are deployed to Kubernetes. The HTTP service uses [Kubernetes API discovery mechanism](https://pekko.apache.org/docs/pekko-management/current/discovery/index.html#discovery-method-kubernetes-api) to find the gRPC service and send messages to the gRPC service.
 
-The Apache Pekko HTTP application discovers the gRPC application using [Akka Discovery](https://developer.lightbend.com/docs/akka-management/current/discovery.html).
+The Apache Pekko HTTP application discovers the gRPC application using [Pekko Discovery](https://pekko.apache.org/docs/pekko/current/discovery/index.html).
 It uses the `pekko-dns` mechanism which relies on the `SRV` records created by Kubernetes.
 All the technologies used in this example are open source.
 
