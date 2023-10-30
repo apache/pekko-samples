@@ -6,7 +6,7 @@ import org.apache.pekko.grpc.GrpcClientSettings
 import org.apache.pekko.http.scaladsl.Http
 import org.apache.pekko.http.scaladsl.model._
 import org.apache.pekko.http.scaladsl.server.Directives._
-import org.apache.pekko.stream.{ ActorMaterializer, Materializer }
+import org.apache.pekko.stream.Materializer
 
 import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContext, Future }
