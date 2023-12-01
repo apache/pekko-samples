@@ -2,7 +2,7 @@ import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
 val pekkoVersion = "1.0.1"
-val logbackVersion = "1.2.12"
+val logbackVersion = "1.2.13"
 
 val `pekko-sample-distributed-data-scala` = project
   .in(file("."))
