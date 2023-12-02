@@ -2,7 +2,7 @@ organization := "org.apache.pekko"
 name := "pekko-sample-fsm-scala"
 
 val pekkoVersion = "1.0.1"
-val logbackVersion = "1.2.12"
+val logbackVersion = "1.2.13"
 
 scalaVersion := "2.13.11"
 libraryDependencies ++= Seq(

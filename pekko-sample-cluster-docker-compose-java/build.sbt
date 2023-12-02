@@ -11,7 +11,7 @@ scalacOptions ++= Seq(
   "-Xlint")
 
 val pekkoVersion = "1.0.1"
-val logbackVersion = "1.2.12"
+val logbackVersion = "1.2.13"
 
 /* dependencies */
 libraryDependencies ++= Seq(
