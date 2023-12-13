@@ -2,7 +2,7 @@
 
 This sample is an adaptation of [Dining Hakkers](http://www.dalnefre.com/wp/2010/08/dining-philosophers-in-humus/). 
 
-Open [DiningHakkersTyped.scala](src/main/scala/sample/DiningHakkers.scala).
+Open [DiningHakkers.scala](src/main/scala/sample/DiningHakkers.scala).
 
 It illustrates how the behaviors and transitions can be defined with Apache Pekko Typed.
 
