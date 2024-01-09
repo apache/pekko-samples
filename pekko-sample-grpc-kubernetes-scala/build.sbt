@@ -16,6 +16,7 @@ lazy val httpToGrpc = (project in file("http-to-grpc"))
       "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion,
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-pki" % pekkoVersion,
       "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
       "org.apache.pekko" %% "pekko-parsing" % pekkoHttpVersion,
       "org.apache.pekko" %% "pekko-http-core" % pekkoHttpVersion,
@@ -33,6 +34,7 @@ lazy val grpcService = (project in file("grpc-service"))
     libraryDependencies ++= Seq(
       "org.apache.pekko" %% "pekko-actor" % pekkoVersion,
       "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-pki" % pekkoVersion,
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
       "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
