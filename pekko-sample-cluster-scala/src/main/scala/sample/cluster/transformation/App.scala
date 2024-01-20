@@ -43,8 +43,8 @@ object App {
     // Override the configuration of the port and role
     val config = ConfigFactory
       .parseString(s"""
-        org.apache.pekko.remote.artery.canonical.port=$port
-        org.apache.pekko.cluster.roles = [$role]
+        pekko.remote.artery.canonical.port=$port
+        pekko.cluster.roles = [$role]
         """)
       .withFallback(ConfigFactory.load("transformation"))
 

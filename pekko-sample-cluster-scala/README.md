@@ -8,7 +8,7 @@ This tutorial contains 3 samples illustrating different [Pekko cluster](https://
 
 Open [application.conf](src/main/resources/application.conf)
 
-To enable cluster capabilities in your Apache Pekko project you should, at a minimum, add the remote settings, and use `cluster` as the `org.apache.pekko.actor.provider`. The `org.apache.pekko.cluster.seed-nodes` should normally also be added to your `application.conf` file.
+To enable cluster capabilities in your Apache Pekko project you should, at a minimum, add the remote settings, and use `cluster` as the `pekko.actor.provider`. The `pekko.cluster.seed-nodes` should normally also be added to your `application.conf` file.
 
 The seed nodes are configured contact points which newly started nodes will try to connect with in order to join the cluster.
 
