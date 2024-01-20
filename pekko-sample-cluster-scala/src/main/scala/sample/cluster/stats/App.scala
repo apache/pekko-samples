@@ -59,8 +59,8 @@ object App {
     // Override the configuration of the port when specified as program argument
     val config = ConfigFactory
       .parseString(s"""
-      org.apache.pekko.remote.artery.canonical.port=$port
-      org.apache.pekko.cluster.roles = [$role]
+      pekko.remote.artery.canonical.port=$port
+      pekko.cluster.roles = [$role]
       """)
       .withFallback(ConfigFactory.load("stats"))
 
