@@ -25,5 +25,5 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
       "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
       "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
       "org.apache.pekko" %% "pekko-multi-node-testkit" % pekkoVersion % Test,
-      "org.scalatest" %% "scalatest" % "3.2.15" % Test))
+      "org.scalatest" %% "scalatest" % "3.2.18" % Test))
   .configs(MultiJvm)
