@@ -3,7 +3,7 @@ scalaVersion := "2.13.11"
 
 lazy val pekkoVersion = "1.0.2"
 lazy val discoveryVersion = "1.0.0"
-lazy val pekkoHttpVersion = "1.0.0"
+lazy val pekkoHttpVersion = "1.0.1"
 
 lazy val root = (project in file("."))
   .aggregate(httpToGrpc, grpcService)

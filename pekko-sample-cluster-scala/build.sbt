@@ -19,7 +19,7 @@ lazy val `pekko-sample-cluster-scala` = project
       "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
       "ch.qos.logback" % "logback-classic" % logbackVersion,
       "org.apache.pekko" %% "pekko-multi-node-testkit" % pekkoVersion % Test,
-      "org.scalatest" %% "scalatest" % "3.2.15" % Test,
+      "org.scalatest" %% "scalatest" % "3.2.18" % Test,
       "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test),
     run / fork := false,
     Global / cancelable := false,

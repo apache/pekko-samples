@@ -6,7 +6,7 @@ scalaVersion := "2.13.11"
 val pekkoVersion = "1.0.2"
 val cassandraPluginVersion = "1.0.0"
 
-val pekkoHttpVersion = "1.0.0"
+val pekkoHttpVersion = "1.0.1"
 val pekkoClusterManagementVersion = "1.0.0"
 
 val logbackVersion = "1.2.13"
@@ -23,7 +23,7 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % logbackVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra-launcher" % cassandraPluginVersion,
   "org.apache.pekko" %% "pekko-persistence-testkit" % pekkoVersion % Test,
-  "org.scalatest" %% "scalatest" % "3.2.15" % Test)
+  "org.scalatest" %% "scalatest" % "3.2.18" % Test)
 
 // transitive dependency of akka 2.5x that is brought in by addons but evicted
 dependencyOverrides += "org.apache.pekko" %% "pekko-protobuf" % pekkoVersion
