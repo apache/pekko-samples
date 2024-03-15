@@ -1,5 +1,3 @@
-ThisBuild / resolvers += Resolver.ApacheMavenSnapshotsRepo
-
 lazy val `pekko-sample-cluster-java` = project
   .enablePlugins(PekkoSamplePlugin)
   .settings(
