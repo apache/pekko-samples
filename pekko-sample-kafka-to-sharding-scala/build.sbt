@@ -7,7 +7,7 @@ val EmbeddedKafkaVersion = "2.4.1.1"
 val logbackVersion = "1.2.13"
 val slf4jVersion = "1.7.32"
 
-ThisBuild / scalaVersion := "2.13.11"
+ThisBuild / scalaVersion := "2.13.13"
 ThisBuild / organization := "org.apache.pekko"
 ThisBuild / Compile / scalacOptions ++= Seq(
   "-deprecation",

@@ -10,7 +10,7 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
   .settings(multiJvmSettings: _*)
   .settings(
     organization := "org.apache.pekko",
-    scalaVersion := "2.13.11",
+    scalaVersion := "2.13.13",
     Compile / scalacOptions ++= Seq(
       "-deprecation",
       "-feature",

@@ -4,7 +4,7 @@ val logbackVersion = "1.2.13"
 
 lazy val buildSettings = Seq(
   organization := "org.apache.pekko",
-  scalaVersion := "2.13.11")
+  scalaVersion := "2.13.13")
 
 lazy val commonScalacOptions = Seq(
   "-deprecation",

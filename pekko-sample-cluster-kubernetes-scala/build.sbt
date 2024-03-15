@@ -2,7 +2,7 @@ ThisBuild / organization := "org.apache.pekko"
 
 name := "pekko-sample-cluster-kubernetes-scala"
 
-scalaVersion := "2.13.11"
+scalaVersion := "2.13.13"
 val pekkoHttpVersion = "1.0.1"
 val pekkoVersion = "1.0.2"
 val pekkoManagementVersion = "1.0.0"
