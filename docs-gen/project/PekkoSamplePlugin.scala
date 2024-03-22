@@ -20,7 +20,7 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
   paradoxProperties += ("disabled.versioning.display" -> "true")
 
   val themeSettings = Seq(
-    pekkoParadoxGithub := Some("https://github.com/apache/incubator-pekko-samples"))
+    pekkoParadoxGithub := Some("https://github.com/apache/pekko-samples"))
 
   val propertiesSettings = Seq(
     Compile / paradoxProperties ++= Map(
@@ -58,7 +58,7 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
     propertiesSettings ++
     sourceDirectorySettings ++
     Seq(
-      baseUrl := "https://github.com/apache/incubator-pekko-samples/tree/main",
+      baseUrl := "https://github.com/apache/pekko-samples/tree/main",
       crossPaths := false,
       templateName := baseProject.value.replaceAll("-sample-", "-samples-"))
 }
