@@ -1,6 +1,6 @@
 # Cluster Sharding sample
 
-The KillrWeather sample illustrates how to use [Apache Pekko Cluster Sharding](https://pekko.apache.org/docs/pekko/current/java/typed/cluster-sharding.html) in Java, for the same sample in Scala see [Cluster Sharding Sample Scala](https://github.com/apache/incubator-pekko-samples/tree/main/pekko-sample-sharding-scala)
+The KillrWeather sample illustrates how to use [Apache Pekko Cluster Sharding](https://pekko.apache.org/docs/pekko/current/java/typed/cluster-sharding.html) in Java, for the same sample in Scala see [Cluster Sharding Sample Scala](https://github.com/apache/pekko-samples/tree/main/pekko-sample-sharding-scala)
 It also shows the basic usage of [Apache Pekko HTTP](https://pekko.apache.org/docs/pekko-http/current/index.html).
 
 The sample consists of two applications, each a separate maven submodule:
