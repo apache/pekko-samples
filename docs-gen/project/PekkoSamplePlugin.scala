@@ -60,5 +60,6 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
     Seq(
       baseUrl := "https://github.com/apache/pekko-samples/tree/main",
       crossPaths := false,
-      templateName := baseProject.value.replaceAll("-sample-", "-samples-"))
+      templateName := baseProject.value.replaceAll("-sample-", "-samples-"),
+      Global / pekkoParadoxIncubatorNotice := None)
 }
