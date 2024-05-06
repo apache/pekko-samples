@@ -1,7 +1,7 @@
 organization := "org.apache.pekko"
 name := "pekko-sample-persistence-scala"
 
-scalaVersion := "2.13.13"
+scalaVersion := "2.13.14"
 val pekkoVersion = "1.0.2"
 val logbackVersion = "1.2.13"
 

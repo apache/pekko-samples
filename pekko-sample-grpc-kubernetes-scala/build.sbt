@@ -1,5 +1,5 @@
 name := "pekko-grpc-kubernetes"
-scalaVersion := "2.13.13"
+scalaVersion := "2.13.14"
 
 lazy val pekkoVersion = "1.0.2"
 lazy val discoveryVersion = "1.0.0"

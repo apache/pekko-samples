@@ -4,7 +4,7 @@ val logbackVersion = "1.2.13"
 
 lazy val buildSettings = Seq(
   organization := "org.apache.pekko",
-  scalaVersion := "2.13.13")
+  scalaVersion := "2.13.14")
 
 lazy val commonJavacOptions = Seq(
   "-Xlint:unchecked",
