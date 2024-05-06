@@ -42,7 +42,7 @@ spec:
               protocol: TCP
             # pekko-management and bootstrap
             - name: management
-              containerPort: 8558
+              containerPort: 7626
               protocol: TCP
             - name: http
               containerPort: 8080

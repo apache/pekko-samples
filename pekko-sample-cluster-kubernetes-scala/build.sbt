@@ -20,7 +20,7 @@ mainClass in (Compile, run) := Some("pekko.sample.cluster.kubernetes.DemoApp")
 
 enablePlugins(JavaServerAppPackaging, DockerPlugin)
 
-dockerExposedPorts := Seq(8080, 8558, 17355)
+dockerExposedPorts := Seq(8080, 7626, 17355)
 dockerUpdateLatest := true
 dockerUsername := sys.props.get("docker.username")
 dockerRepository := sys.props.get("docker.registry")
