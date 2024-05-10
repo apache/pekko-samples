@@ -100,7 +100,7 @@
                 <from>adoptopenjdk:11-jre-hotspot</from>
                 <ports>
                   <port>8080</port>
-                  <port>8558</port>
+                  <port>7626</port>
                 </ports>
                 <entryPoint>
                   java $JAVA_OPTS -cp '/maven/*' org.apache.pekko.cluster.bootstrap.demo.DemoApp

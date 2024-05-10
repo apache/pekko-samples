@@ -53,7 +53,7 @@ for 'hello world':
 
 You can inspect the Apache Pekko Cluster membership status with the [Cluster HTTP Management](https://pekko.apache.org/docs/pekko-management/current/cluster-http-management.html).
 
-    curl http://127.0.0.1:8558/cluster/members/
+    curl http://127.0.0.1:7626/cluster/members/
 
 To check what you have done in Kubernetes so far, you can do:
 
