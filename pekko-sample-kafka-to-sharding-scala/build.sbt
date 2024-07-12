@@ -1,10 +1,10 @@
-val pekkoVersion = "1.0.3"
-val pekkoHttpVersion = "1.0.1"
+val pekkoVersion = "1.1.0"
+val pekkoHttpVersion = "1.1.0"
 
-val pekkoConnectorsKafkaVersion = "1.0.0"
-val pekkoManagementVersion = "1.0.0"
+val pekkoConnectorsKafkaVersion = "1.1.0-M1"
+val pekkoManagementVersion = "1.1.0-M1"
 val EmbeddedKafkaVersion = "2.4.1.1"
-val logbackVersion = "1.2.13"
+val logbackVersion = "1.3.14"
 val slf4jVersion = "1.7.32"
 
 ThisBuild / scalaVersion := "2.13.15"
