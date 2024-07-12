@@ -23,7 +23,7 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % logbackVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra-launcher" % cassandraPluginVersion,
   "org.apache.pekko" %% "pekko-persistence-testkit" % pekkoVersion % Test,
-  "org.scalatest" %% "scalatest" % "3.2.18" % Test)
+  "org.scalatest" %% "scalatest" % "3.2.19" % Test)
 
 // transitive dependency of akka 2.5x that is brought in by addons but evicted
 dependencyOverrides += "org.apache.pekko" %% "pekko-protobuf" % pekkoVersion

@@ -57,7 +57,7 @@ lazy val processor = project
     "org.apache.pekko" %% "pekko-http-spray-json" % pekkoHttpVersion,
     "ch.qos.logback" % "logback-classic" % logbackVersion,
     "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
-    "org.scalatest" %% "scalatest" % "3.2.18" % Test))
+    "org.scalatest" %% "scalatest" % "3.2.19" % Test))
 
 lazy val producer = project
   .in(file("producer"))
@@ -66,4 +66,4 @@ lazy val producer = project
     "org.apache.pekko" %% "pekko-connectors-kafka" % pekkoConnectorsKafkaVersion,
     "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
     "ch.qos.logback" % "logback-classic" % logbackVersion,
-    "org.scalatest" %% "scalatest" % "3.2.18" % Test))
+    "org.scalatest" %% "scalatest" % "3.2.19" % Test))
