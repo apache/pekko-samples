@@ -9,7 +9,7 @@ val cassandraPluginVersion = "1.0.0"
 val pekkoHttpVersion = "1.1.0-M1"
 val pekkoClusterManagementVersion = "1.1.0-M1"
 
-val logbackVersion = "1.2.13"
+val logbackVersion = "1.3.14"
 
 libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-cluster-sharding-typed" % pekkoVersion,

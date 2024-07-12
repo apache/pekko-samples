@@ -6,7 +6,7 @@ scalaVersion := "2.13.14"
 val pekkoHttpVersion = "1.1.0-M1"
 val pekkoVersion = "1.1.0-M1"
 val pekkoManagementVersion = "1.1.0-M1"
-val logbackVersion = "1.2.13"
+val logbackVersion = "1.3.14"
 
 // make version compatible with docker for publishing
 ThisBuild / dynverSeparator := "-"
