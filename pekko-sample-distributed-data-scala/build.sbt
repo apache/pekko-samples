@@ -20,7 +20,7 @@ val `pekko-sample-distributed-data-scala` = project
       "org.apache.pekko" %% "pekko-multi-node-testkit" % pekkoVersion % Test,
       "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
       "ch.qos.logback" % "logback-classic" % logbackVersion % Test,
-      "org.scalatest" %% "scalatest" % "3.2.18" % Test),
+      "org.scalatest" %% "scalatest" % "3.2.19" % Test),
     run / fork := true,
     Global / cancelable := false, // ctrl-c
     // disable parallel tests
