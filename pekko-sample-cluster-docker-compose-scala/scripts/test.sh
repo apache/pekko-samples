@@ -4,12 +4,12 @@ set -x
 
 clean_up () {
     echo "cleaning up test docker containers"
-    docker-compose down
+    docker compose down
 } 
 
 sbt docker:publishLocal
 
-docker-compose up -d
+docker compose up -d
 
 docker logs pekko-sample-cluster-docker-compose-scala_seed_1
 

@@ -1,4 +1,3 @@
-version: '2'
 services:
   seed:
     container_name: pekko-sample-cluster-docker-compose-java_seed_1
