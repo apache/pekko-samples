@@ -8,6 +8,6 @@ This sample is based on [akka-sample-cluster-docker-compose-java](https://github
 
 In SBT, just run `docker:publishLocal` to create a local docker container. 
 
-To run the cluster, run `docker-compose up`. This will create 3 nodes, a seed and two regular members, called `seed`, `c1`, and `c2` respectively.
+To run the cluster, run `docker compose up`. This will create 3 nodes, a seed and two regular members, called `seed`, `c1`, and `c2` respectively.
 
-While running, try opening a new terminal and (from the same directory) try things like `docker-compose down seed` and watch the cluster nodes respond.
+While running, try opening a new terminal and (from the same directory) try things like `docker compose down seed` and watch the cluster nodes respond.
