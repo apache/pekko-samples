@@ -6,7 +6,7 @@
 
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <pekko.version>1.0.3</pekko.version>
+      <pekko.version>1.1.1</pekko.version>
   </properties>
 
   <groupId>org.apache.pekko</groupId>

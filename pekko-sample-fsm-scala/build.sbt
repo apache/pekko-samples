@@ -1,7 +1,7 @@
 organization := "org.apache.pekko"
 name := "pekko-sample-fsm-scala"
 
-val pekkoVersion = "1.0.3"
+val pekkoVersion = "1.1.1"
 val logbackVersion = "1.2.13"
 
 scalaVersion := "2.13.14"
