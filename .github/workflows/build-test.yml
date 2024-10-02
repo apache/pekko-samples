@@ -29,10 +29,7 @@ jobs:
       - name: Start minikube
         uses: medyagh/setup-minikube@latest
         with:
-          addons: ingress
-
-      - name: Try the cluster!
-        run: kubectl get pods -A          
+          addons: ingress      
 
       - name: Test pekko-sample-grpc-kubernetes-scala
         run: cd pekko-sample-grpc-kubernetes-scala && ./scripts/test.sh
@@ -41,4 +38,4 @@ jobs:
         run: cd pekko-sample-cluster-kubernetes-scala && ./scripts/test.sh
 
       - name: Test pekko-sample-cluster-kubernetes-java
-        run: cd pekko-sample-cluster-kubernetes-java && ./scripts/test.sh
+        run: minikube start && cd pekko-sample-cluster-kubernetes-java && ./scripts/test.sh
