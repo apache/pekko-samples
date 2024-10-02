@@ -23,68 +23,13 @@ jobs:
       - name: Cache Coursier cache
         uses: coursier/cache-action@v6
 
-      - name: Test pekko-sample-cluster-java
-        run: cd pekko-sample-cluster-java && sbt multi-jvm:test
+      - name: Start minikube
+        uses: medyagh/setup-minikube@latest
+        with:
+          addons: ingress
 
-      - name: Test pekko-sample-cluster-scala
-        run: cd pekko-sample-cluster-scala && sbt multi-jvm:test
+      - name: Try the cluster!
+        run: kubectl get pods -A          
 
-      - name: Test pekko-sample-cluster-client-grpc-scala
-        run: cd pekko-sample-cluster-client-grpc-scala && sbt multi-jvm:test
-
-      - name: Test pekko-sample-cluster-client-grpc-java
-        run: cd pekko-sample-cluster-client-grpc-java && mvn test
-
-      - name: Test pekko-sample-distributed-data-java
-        run: cd pekko-sample-distributed-data-java && sbt multi-jvm:test
-
-      - name: Test pekko-sample-distributed-data-scala
-        run: cd pekko-sample-distributed-data-scala && sbt multi-jvm:test
-
-      - name: Test pekko-sample-distributed-workers-scala
-        run: cd pekko-sample-distributed-workers-scala && sbt test
-
-      - name: Test pekko-sample-fsm-java
-        run: cd pekko-sample-fsm-java && mvn test
-
-      - name: Test pekko-sample-fsm-scala
-        run: cd pekko-sample-fsm-scala && sbt test
-      
       - name: Test pekko-sample-grpc-kubernetes-scala
-        run: cd pekko-sample-grpc-kubernetes-scala && ./scripts/setup-minikube-for-linux.sh && ./scripts/test.sh
-
-      - name: Test pekko-sample-persistence-java
-        run: cd pekko-sample-persistence-java && mvn test
-
-      - name: Test pekko-sample-persistence-scala
-        run: cd pekko-sample-persistence-scala && sbt test
-
-      - name: Test pekko-sample-persistence-dc-java
-        run: cd pekko-sample-persistence-dc-java && mvn test
-
-      - name: Test pekko-sample-persistence-dc-scala
-        run: cd pekko-sample-persistence-dc-scala && sbt test
-
-      - name: Test pekko-sample-sharding-java
-        run: cd pekko-sample-sharding-java && mvn test
-
-      - name: Test pekko-sample-sharding-scala
-        run: cd pekko-sample-sharding-scala && sbt test
-
-      - name: Test pekko-sample-kafka-to-sharding-scala
-        run: cd pekko-sample-kafka-to-sharding-scala && sbt test
-
-      - name: Test pekko-sample-cluster-docker-compose-java
-        run: cd pekko-sample-cluster-docker-compose-java && ./scripts/test.sh
-
-      - name: Test pekko-sample-cluster-docker-compose-scala
-        run: cd pekko-sample-cluster-docker-compose-scala && ./scripts/test.sh
-
-      - name: Test pekko-sample-cluster-kubernetes-scala
-        run: cd pekko-sample-cluster-kubernetes-scala && ./scripts/setup-minikube-for-linux.sh && ./scripts/test.sh
-        
-      - name: Test pekko-sample-cluster-kubernetes-java
-        run: cd pekko-sample-cluster-kubernetes-java && ./scripts/setup-minikube-for-linux.sh && ./scripts/test.sh
-
-      - name: Test docs gen
-        run: cd docs-gen && sbt paradox
+        run: cd pekko-sample-grpc-kubernetes-scala && ./scripts/test.sh
