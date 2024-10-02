@@ -36,3 +36,9 @@ jobs:
 
       - name: Test pekko-sample-grpc-kubernetes-scala
         run: cd pekko-sample-grpc-kubernetes-scala && ./scripts/test.sh
+
+      - name: Test pekko-sample-cluster-kubernetes-scala
+        run: cd pekko-sample-cluster-kubernetes-scala && ./scripts/test.sh
+
+      - name: Test pekko-sample-cluster-kubernetes-java
+        run: cd pekko-sample-cluster-kubernetes-java && ./scripts/test.sh
