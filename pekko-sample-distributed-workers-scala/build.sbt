@@ -2,7 +2,7 @@ name := "pekko-distributed-workers-scala"
 
 version := "1.0"
 
-scalaVersion := "2.13.14"
+scalaVersion := "2.13.15"
 
 val pekkoVersion = "1.0.3"
 val cassandraPluginVersion = "1.0.0"
