@@ -34,10 +34,10 @@ jobs:
         run: minikube addons enable ingress
 
       - name: Test pekko-sample-grpc-kubernetes-scala
-        run: cd pekko-sample-grpc-kubernetes-scala && ./scripts/test.sh && minikube stop
+        run: cd pekko-sample-grpc-kubernetes-scala && ./scripts/test.sh
 
       - name: Test pekko-sample-cluster-kubernetes-scala
-        run: minikube start && cd pekko-sample-cluster-kubernetes-scala && ./scripts/test.sh && minikube stop
+        run: cd pekko-sample-cluster-kubernetes-scala && ./scripts/test.sh
 
       - name: Test pekko-sample-cluster-kubernetes-java
         run: minikube start && cd pekko-sample-cluster-kubernetes-java && ./scripts/test.sh && minikube stop
