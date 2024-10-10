@@ -1,8 +1,8 @@
 import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
-val pekkoVersion = "1.0.3"
-val logbackVersion = "1.2.13"
+val pekkoVersion = "1.1.2"
+val logbackVersion = "1.3.14"
 
 lazy val `pekko-sample-cluster-java` = project
   .in(file("."))
