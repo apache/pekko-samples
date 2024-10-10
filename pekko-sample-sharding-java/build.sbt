@@ -1,4 +1,4 @@
-val pekkoVersion = "1.1.0"
+val pekkoVersion = "1.1.2"
 val pekkoHttpVersion = "1.1.0"
 val logbackVersion = "1.3.14"
 
