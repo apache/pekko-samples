@@ -7,7 +7,7 @@ val pekkoVersion = "1.1.2"
 val cassandraPluginVersion = "1.1.0-M1"
 
 val pekkoHttpVersion = "1.1.0"
-val pekkoClusterManagementVersion = "1.1.0-M1"
+val pekkoClusterManagementVersion = "1.1.0"
 
 val logbackVersion = "1.3.14"
 

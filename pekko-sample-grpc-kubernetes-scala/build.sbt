@@ -2,7 +2,7 @@ name := "pekko-grpc-kubernetes"
 scalaVersion := "2.13.15"
 
 lazy val pekkoVersion = "1.1.2"
-lazy val discoveryVersion = "1.1.0-M1"
+lazy val pekkoManagementVersion = "1.1.0"
 lazy val pekkoHttpVersion = "1.1.0"
 
 lazy val root = (project in file("."))
@@ -22,7 +22,7 @@ lazy val httpToGrpc = (project in file("http-to-grpc"))
       "org.apache.pekko" %% "pekko-http-core" % pekkoHttpVersion,
       "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
       "org.apache.pekko" %% "pekko-http-spray-json" % pekkoHttpVersion,
-      "org.apache.pekko" %% "pekko-discovery-kubernetes-api" % discoveryVersion,
+      "org.apache.pekko" %% "pekko-discovery-kubernetes-api" % pekkoManagementVersion,
       "ch.qos.logback" % "logback-classic" % "1.3.14"),
     dockerExposedPorts := Seq(8080))
 
