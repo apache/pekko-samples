@@ -20,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <pekko.version>1.1.2</pekko.version>
         <pekko-http.version>1.1.0</pekko-http.version>
+        <scala.binary.version>3</scala.binary.version>
     </properties>
 
     <repositories>
@@ -37,27 +38,27 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.pekko</groupId>
-            <artifactId>pekko-actor-typed_2.13</artifactId>
+            <artifactId>pekko-actor-typed_${scala.binary.version}</artifactId>
             <version>${pekko.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.pekko</groupId>
-            <artifactId>pekko-stream-typed_2.13</artifactId>
+            <artifactId>pekko-stream-typed_${scala.binary.version}</artifactId>
             <version>${pekko.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.pekko</groupId>
-            <artifactId>pekko-serialization-jackson_2.13</artifactId>
+            <artifactId>pekko-serialization-jackson_${scala.binary.version}</artifactId>
             <version>${pekko.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.pekko</groupId>
-            <artifactId>pekko-http_2.13</artifactId>
+            <artifactId>pekko-http_${scala.binary.version}</artifactId>
             <version>${pekko-http.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.pekko</groupId>
-            <artifactId>pekko-http-jackson_2.13</artifactId>
+            <artifactId>pekko-http-jackson_${scala.binary.version}</artifactId>
             <version>${pekko-http.version}</version>
         </dependency>
 

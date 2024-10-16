@@ -26,7 +26,7 @@ object ClusterClientReceptionist extends ExtensionId[ClusterClientReceptionist] 
   override def get(system: ActorSystem): ClusterClientReceptionist =
     super.get(system)
 
-  override def lookup() = ClusterClientReceptionist
+  override def lookup: ExtensionId[_ <: Extension] = ClusterClientReceptionist
 
   override def createExtension(system: ExtendedActorSystem): ClusterClientReceptionist =
     new ClusterClientReceptionist(system)
@@ -43,7 +43,7 @@ final class ClusterClientReceptionist(system: ExtendedActorSystem) extends Exten
   val settings: ClusterReceptionistSettings = ClusterReceptionistSettings(system)
   private val role: Option[String] = settings.role
 
-  private val log = Logging(system, getClass)
+  private val log = Logging(system, classOf[ClusterClientReceptionist])
 
   /**
    * Returns true if this member is not tagged with the role configured for the
@@ -91,8 +91,8 @@ final class ClusterClientReceptionist(system: ExtendedActorSystem) extends Exten
   private val server: Future[Http.ServerBinding] = {
     log.info("Starting ClusterClientReceptionist gRPC server at {}", settings.hostPort)
 
-    implicit val sys = system
-    implicit val materializer = Materializer(sys)
+    implicit val sys: ActorSystem = system
+    implicit val materializer: Materializer = Materializer(sys)
 
     val serialization = new ClusterClientSerialization(system)
 

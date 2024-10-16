@@ -2,7 +2,7 @@ organization := "org.apache.pekko"
 name := "pekko-sample-cluster-docker-compose-scala"
 
 /* scala versions and options */
-scalaVersion := "2.13.15"
+scalaVersion := "3.3.4"
 
 // These options will be used for *all* versions.
 scalacOptions ++= Seq(
