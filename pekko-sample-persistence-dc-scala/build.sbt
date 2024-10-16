@@ -3,13 +3,13 @@ name := "pekko-sample-replicated-event-sourcing-scala"
 
 scalaVersion := "2.13.15"
 
-val pekkoVersion = "1.0.3"
-val cassandraPluginVersion = "1.0.0"
+val pekkoVersion = "1.1.2"
+val cassandraPluginVersion = "1.1.0-M1"
 
-val pekkoHttpVersion = "1.0.1"
-val pekkoClusterManagementVersion = "1.0.0"
+val pekkoHttpVersion = "1.1.0"
+val pekkoClusterManagementVersion = "1.1.0"
 
-val logbackVersion = "1.2.13"
+val logbackVersion = "1.3.14"
 
 libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-cluster-sharding-typed" % pekkoVersion,
@@ -20,8 +20,8 @@ libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-management" % pekkoClusterManagementVersion,
   "org.apache.pekko" %% "pekko-management-cluster-http" % pekkoClusterManagementVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra" % cassandraPluginVersion,
-  "ch.qos.logback" % "logback-classic" % logbackVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra-launcher" % cassandraPluginVersion,
+  "ch.qos.logback" % "logback-classic" % logbackVersion,
   "org.apache.pekko" %% "pekko-persistence-testkit" % pekkoVersion % Test,
   "org.scalatest" %% "scalatest" % "3.2.19" % Test)
 

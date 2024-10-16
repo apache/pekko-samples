@@ -3,10 +3,10 @@ ThisBuild / organization := "org.apache.pekko"
 name := "pekko-sample-cluster-kubernetes-scala"
 
 scalaVersion := "2.13.15"
-val pekkoHttpVersion = "1.0.1"
-val pekkoVersion = "1.0.3"
-val pekkoManagementVersion = "1.0.0"
-val logbackVersion = "1.2.13"
+val pekkoHttpVersion = "1.1.0"
+val pekkoVersion = "1.1.2"
+val pekkoManagementVersion = "1.1.0"
+val logbackVersion = "1.3.14"
 
 // make version compatible with docker for publishing
 ThisBuild / dynverSeparator := "-"

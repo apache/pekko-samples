@@ -4,9 +4,9 @@ version := "1.0"
 
 scalaVersion := "2.13.15"
 
-val pekkoVersion = "1.0.3"
-val cassandraPluginVersion = "1.0.0"
-val logbackVersion = "1.2.13"
+val pekkoVersion = "1.1.2"
+val cassandraPluginVersion = "1.1.0-M1"
+val logbackVersion = "1.3.14"
 
 Global / cancelable := false
 
