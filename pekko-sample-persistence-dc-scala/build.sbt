@@ -20,8 +20,8 @@ libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-management" % pekkoClusterManagementVersion,
   "org.apache.pekko" %% "pekko-management-cluster-http" % pekkoClusterManagementVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra" % cassandraPluginVersion,
-  "ch.qos.logback" % "logback-classic" % logbackVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra-launcher" % cassandraPluginVersion,
+  "ch.qos.logback" % "logback-classic" % logbackVersion,
   "org.apache.pekko" %% "pekko-persistence-testkit" % pekkoVersion % Test,
   "org.scalatest" %% "scalatest" % "3.2.19" % Test)
 
