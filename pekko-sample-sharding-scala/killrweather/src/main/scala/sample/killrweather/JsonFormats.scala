@@ -42,7 +42,9 @@ object JsonFormats {
   implicit val dataIngestedFormat: RootJsonFormat[WeatherStation.DataRecorded] =
     jsonFormat1(WeatherStation.DataRecorded.apply)
 
-  implicit val queryWindowFormat: RootJsonFormat[WeatherStation.TimeWindow] = jsonFormat3(WeatherStation.TimeWindow.apply)
-  implicit val queryStatusFormat: RootJsonFormat[WeatherStation.QueryResult] = jsonFormat5(WeatherStation.QueryResult.apply)
+  implicit val queryWindowFormat: RootJsonFormat[WeatherStation.TimeWindow] =
+    jsonFormat3(WeatherStation.TimeWindow.apply)
+  implicit val queryStatusFormat: RootJsonFormat[WeatherStation.QueryResult] =
+    jsonFormat5(WeatherStation.QueryResult.apply)
 
 }
