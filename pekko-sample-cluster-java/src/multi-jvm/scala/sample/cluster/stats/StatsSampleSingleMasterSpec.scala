@@ -1,18 +1,14 @@
 package sample.cluster.stats
 
-import org.apache.pekko.actor.testkit.typed.scaladsl.TestProbe
-import org.apache.pekko.actor.typed.scaladsl.adapter._
-import org.apache.pekko.actor.typed.scaladsl.Behaviors
-import org.apache.pekko.actor.typed.scaladsl.Routers
-import org.apache.pekko.actor.typed.ActorRef
-import org.apache.pekko.cluster.Cluster
-import org.apache.pekko.cluster.ClusterEvent.CurrentClusterState
-import org.apache.pekko.cluster.ClusterEvent.MemberUp
-import org.apache.pekko.cluster.typed.ClusterSingleton
-import org.apache.pekko.cluster.typed.ClusterSingletonSettings
-import org.apache.pekko.cluster.typed.SingletonActor
-import org.apache.pekko.remote.testkit.MultiNodeConfig
-import org.apache.pekko.remote.testkit.MultiNodeSpec
+import org.apache.pekko
+import pekko.actor.testkit.typed.scaladsl.TestProbe
+import pekko.actor.typed.{ ActorRef, ActorSystem }
+import pekko.actor.typed.scaladsl.adapter._
+import pekko.actor.typed.scaladsl.{ Behaviors, Routers }
+import pekko.cluster.Cluster
+import pekko.cluster.ClusterEvent.{ CurrentClusterState, MemberUp }
+import pekko.cluster.typed.{ ClusterSingleton, ClusterSingletonSettings, SingletonActor }
+import pekko.remote.testkit.{ MultiNodeConfig, MultiNodeSpec }
 import com.typesafe.config.ConfigFactory
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.should.Matchers
@@ -53,7 +49,7 @@ abstract class StatsSampleSingleMasterSpec extends MultiNodeSpec(StatsSampleSing
 
   override def afterAll() = multiNodeSpecAfterAll()
 
-  implicit val typedSystem = system.toTyped
+  implicit val typedSystem: ActorSystem[Nothing] = system.toTyped
 
   var singletonProxy: ActorRef[StatsService.Command] = _
 

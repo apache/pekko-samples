@@ -6,6 +6,7 @@ import org.apache.pekko.actor.typed.scaladsl.adapter._
 import org.apache.pekko.actor.typed.scaladsl.Behaviors
 import org.apache.pekko.actor.typed.scaladsl.Routers
 import org.apache.pekko.actor.typed.ActorRef
+import org.apache.pekko.actor.typed.ActorSystem
 import org.apache.pekko.actor.typed.Behavior
 import org.apache.pekko.actor.typed.Props
 import org.apache.pekko.actor.typed.SpawnProtocol
@@ -61,7 +62,7 @@ abstract class StatsSampleSingleMasterSpec extends MultiNodeSpec(StatsSampleSing
 
   override def afterAll() = multiNodeSpecAfterAll()
 
-  implicit val typedSystem = system.toTyped
+  implicit val typedSystem: ActorSystem[Nothing] = system.toTyped
 
   var singletonProxy: ActorRef[StatsService.Command] = _
 

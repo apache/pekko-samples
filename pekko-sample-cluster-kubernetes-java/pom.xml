@@ -21,7 +21,7 @@
     <pekko.version>1.1.2</pekko.version>
     <pekko-http.version>1.1.0</pekko-http.version>
     <pekko-management.version>1.1.0</pekko-management.version>
-    <scala.binary.version>2.13</scala.binary.version>
+    <scala.binary.version>3</scala.binary.version>
     <version.number>${git.commit.time}-${git.commit.id.abbrev}</version.number>
   </properties>
 

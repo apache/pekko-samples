@@ -10,12 +10,14 @@ import org.apache.pekko.management.cluster.bootstrap.ClusterBootstrap
 import org.apache.pekko.management.javadsl.PekkoManagement
 import org.apache.pekko.{ actor => classic }
 
+import scala.concurrent.ExecutionContext
+
 object DemoApp extends App {
 
   ActorSystem[Nothing](Behaviors.setup[Nothing] { context =>
       import org.apache.pekko.actor.typed.scaladsl.adapter._
       implicit val classicSystem: classic.ActorSystem = context.system.toClassic
-      implicit val ec = context.system.executionContext
+      implicit val ec: ExecutionContext = context.system.executionContext
 
       val cluster = Cluster(context.system)
       context.log.info("Started [" + context.system + "], cluster.selfAddress = " + cluster.selfMember.address + ")")

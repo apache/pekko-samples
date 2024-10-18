@@ -5,6 +5,7 @@ import org.apache.pekko.actor.typed.receptionist.Receptionist
 import org.apache.pekko.actor.typed.scaladsl.AskPattern._
 import org.apache.pekko.actor.typed.scaladsl.adapter._
 import org.apache.pekko.actor.typed.ActorRef
+import org.apache.pekko.actor.typed.ActorSystem
 import org.apache.pekko.actor.typed.Behavior
 import org.apache.pekko.actor.typed.Props
 import org.apache.pekko.actor.typed.SpawnProtocol
@@ -57,7 +58,7 @@ abstract class StatsSampleSpec extends MultiNodeSpec(StatsSampleSpecConfig)
 
   override def afterAll() = multiNodeSpecAfterAll()
 
-  implicit val typedSystem = system.toTyped
+  implicit val typedSystem: ActorSystem[Nothing] = system.toTyped
 
   "The stats sample" must {
 

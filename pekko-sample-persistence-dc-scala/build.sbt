@@ -1,7 +1,7 @@
 organization := "org.apache.pekko"
 name := "pekko-sample-replicated-event-sourcing-scala"
 
-scalaVersion := "2.13.15"
+scalaVersion := "3.3.4"
 
 val pekkoVersion = "1.1.2"
 val cassandraPluginVersion = "1.1.0-M1"

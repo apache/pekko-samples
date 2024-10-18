@@ -4,7 +4,7 @@ name := "pekko-sample-fsm-scala"
 val pekkoVersion = "1.1.2"
 val logbackVersion = "1.3.14"
 
-scalaVersion := "2.13.15"
+scalaVersion := "3.3.4"
 libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion,
   "ch.qos.logback" % "logback-classic" % logbackVersion)

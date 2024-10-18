@@ -7,9 +7,9 @@ import org.apache.pekko.actor.typed.scaladsl.LoggerOps
 import org.apache.pekko.http.scaladsl.Http
 import org.apache.pekko.http.scaladsl.client.RequestBuilding.Post
 import org.apache.pekko.http.scaladsl.unmarshalling.Unmarshal
-import org.apache.pekko.stream.SystemMaterializer
+import org.apache.pekko.stream.{ Materializer, SystemMaterializer }
 
-import scala.concurrent.Future
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Failure
 import scala.util.Random
 import scala.util.Success
@@ -85,8 +85,8 @@ private class WeatherStation(context: ActorContext[WeatherStation.Command], wsid
   }
 
   private def recordTemperature(eventTime: Long, temperature: Double): Unit = {
-    implicit val ec = context.executionContext
-    implicit val materializer = SystemMaterializer(context.system).materializer
+    implicit val ec: ExecutionContext = context.executionContext
+    implicit val materializer: Materializer = SystemMaterializer(context.system).materializer
 
     // we could also use a class and a Json formatter like in the server
     // but since this is the only json we send this is a bit more concise

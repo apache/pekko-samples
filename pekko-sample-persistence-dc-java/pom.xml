@@ -22,72 +22,73 @@
     <pekko-persistence-cassandra.version>1.1.0-M1</pekko-persistence-cassandra.version>
     <pekko-http.version>1.1.0</pekko-http.version>
     <pekko-management.version>1.1.0</pekko-management.version>
+    <scala.binary.version>3</scala.binary.version>
   </properties>
 
    <dependencies>
     <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-cluster-sharding-typed_2.13</artifactId>
+      <artifactId>pekko-cluster-sharding-typed_${scala.binary.version}</artifactId>
       <version>${pekko.version}</version>
     </dependency>
     <dependency>
         <groupId>org.apache.pekko</groupId>
-        <artifactId>pekko-cluster_2.13</artifactId>
+        <artifactId>pekko-cluster_${scala.binary.version}</artifactId>
         <version>${pekko.version}</version>
     </dependency>
     <dependency>
         <groupId>org.apache.pekko</groupId>
-        <artifactId>pekko-actor_2.13</artifactId>
+        <artifactId>pekko-actor_${scala.binary.version}</artifactId>
         <version>${pekko.version}</version>
     </dependency>
     <dependency>
         <groupId>org.apache.pekko</groupId>
-        <artifactId>pekko-cluster-tools_2.13</artifactId>
+        <artifactId>pekko-cluster-tools_${scala.binary.version}</artifactId>
         <version>${pekko.version}</version>
     </dependency>
     <dependency>
         <groupId>org.apache.pekko</groupId>
-        <artifactId>pekko-serialization-jackson_2.13</artifactId>
+        <artifactId>pekko-serialization-jackson_${scala.binary.version}</artifactId>
         <version>${pekko.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-persistence-typed_2.13</artifactId>
+      <artifactId>pekko-persistence-typed_${scala.binary.version}</artifactId>
       <version>${pekko.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-persistence-query_2.13</artifactId>
+      <artifactId>pekko-persistence-query_${scala.binary.version}</artifactId>
       <version>${pekko.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-persistence-cassandra_2.13</artifactId>
+      <artifactId>pekko-persistence-cassandra_${scala.binary.version}</artifactId>
       <version>${pekko-persistence-cassandra.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-persistence-cassandra-launcher_2.13</artifactId>
+      <artifactId>pekko-persistence-cassandra-launcher_${scala.binary.version}</artifactId>
       <version>${pekko-persistence-cassandra.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-http_2.13</artifactId>
+      <artifactId>pekko-http_${scala.binary.version}</artifactId>
       <version>${pekko-http.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-http-spray-json_2.13</artifactId>
+      <artifactId>pekko-http-spray-json_${scala.binary.version}</artifactId>
       <version>${pekko-http.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-management_2.13</artifactId>
+      <artifactId>pekko-management_${scala.binary.version}</artifactId>
       <version>${pekko-management.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-management-cluster-http_2.13</artifactId>
+      <artifactId>pekko-management-cluster-http_${scala.binary.version}</artifactId>
       <version>${pekko-management.version}</version>
     </dependency>
     <dependency>
@@ -97,7 +98,7 @@
     </dependency>
      <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-actor-testkit-typed_2.13</artifactId>
+      <artifactId>pekko-actor-testkit-typed_${scala.binary.version}</artifactId>
       <version>${pekko.version}</version>
       <scope>test</scope>
     </dependency>

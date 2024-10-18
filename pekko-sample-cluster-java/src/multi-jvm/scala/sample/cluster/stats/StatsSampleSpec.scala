@@ -1,12 +1,14 @@
 package sample.cluster.stats
 
-import org.apache.pekko.actor.testkit.typed.scaladsl.TestProbe
-import org.apache.pekko.actor.typed.receptionist.Receptionist
-import org.apache.pekko.actor.typed.scaladsl.adapter._
-import org.apache.pekko.cluster.Cluster
-import org.apache.pekko.cluster.ClusterEvent.CurrentClusterState
-import org.apache.pekko.cluster.ClusterEvent.MemberUp
-import org.apache.pekko.remote.testkit.MultiNodeConfig
+import org.apache.pekko
+import pekko.actor.testkit.typed.scaladsl.TestProbe
+import pekko.actor.typed.ActorSystem
+import pekko.actor.typed.receptionist.Receptionist
+import pekko.actor.typed.scaladsl.adapter._
+import pekko.cluster.Cluster
+import pekko.cluster.ClusterEvent.CurrentClusterState
+import pekko.cluster.ClusterEvent.MemberUp
+import pekko.remote.testkit.MultiNodeConfig
 import com.typesafe.config.ConfigFactory
 
 import scala.concurrent.duration._
@@ -49,7 +51,7 @@ abstract class StatsSampleSpec extends MultiNodeSpec(StatsSampleSpecConfig)
 
   override def afterAll() = multiNodeSpecAfterAll()
 
-  implicit val typedSystem = system.toTyped
+  implicit val typedSystem: ActorSystem[Nothing] = system.toTyped
 
   "The stats sample" must {
 

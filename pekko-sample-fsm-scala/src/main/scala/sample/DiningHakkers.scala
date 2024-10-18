@@ -86,7 +86,7 @@ class Hakker(ctx: ActorContext[Command],
 
   import Hakker._
 
-  private val adapter = ctx.messageAdapter(HandleChopstickAnswer)
+  private val adapter = ctx.messageAdapter(HandleChopstickAnswer.apply)
 
   val waiting: Behavior[Command] =
     Behaviors.receiveMessagePartial {

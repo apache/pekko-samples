@@ -7,6 +7,7 @@
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <pekko.version>1.1.2</pekko.version>
+      <scala.binary.version>3</scala.binary.version>
   </properties>
 
   <groupId>org.apache.pekko</groupId>
@@ -17,7 +18,7 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.pekko</groupId>
-      <artifactId>pekko-actor-typed_2.13</artifactId>
+      <artifactId>pekko-actor-typed_${scala.binary.version}</artifactId>
       <version>${pekko.version}</version>
     </dependency>
     <dependency>

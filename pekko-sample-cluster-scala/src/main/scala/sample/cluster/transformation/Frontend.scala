@@ -52,8 +52,9 @@ object Frontend {
           ctx.log.info("Sending work for processing to {}", selectedWorker)
           val text = s"hello-$jobCounter"
           ctx.ask(selectedWorker, Worker.TransformText(text, _)) {
-            case Success(transformedText) => TransformCompleted(transformedText.text, text)
-            case Failure(ex)              => JobFailed("Processing timed out", text)
+            case Success(transformedText) =>
+              TransformCompleted(transformedText.asInstanceOf[Worker.TransformText].text, text)
+            case Failure(ex) => JobFailed("Processing timed out", text)
           }
           running(ctx, workers, jobCounter + 1)
         }

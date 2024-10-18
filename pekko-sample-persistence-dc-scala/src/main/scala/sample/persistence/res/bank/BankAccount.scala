@@ -18,14 +18,14 @@ object BankAccount {
   final case class Withdraw(amount: Long, replyTo: ActorRef[StatusReply[Done]]) extends Command
   final case class GetBalance(replyTo: ActorRef[Long]) extends Command
 
-  private case class AlertOverdrawn(long: Long) extends Command
+  final case class AlertOverdrawn(long: Long) extends Command
 
   sealed trait Event extends CborSerializable
   final case class Deposited(amount: Long) extends Event
   final case class Withdrawn(amount: Long) extends Event
   final case class Overdrawn(amount: Long) extends Event
 
-  private final case class State(balance: Long) {
+  final case class State(balance: Long) {
     def applyOperation(event: Event): State = event match {
       case Deposited(amount) => State(balance + amount)
       case Withdrawn(amount) => State(balance - amount)
