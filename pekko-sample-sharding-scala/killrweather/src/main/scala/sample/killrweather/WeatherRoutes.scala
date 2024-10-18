@@ -36,12 +36,12 @@ private[killrweather] final class WeatherRoutes(system: ActorSystem[_]) {
   // unmarshallers for the query parameters
   private val funcsFromName =
     WeatherStation.Function.All.map(function => function.toString.toLowerCase -> function).toMap
-  private implicit val functionTypeUnmarshaller =
+  private implicit val functionTypeUnmarshaller: Unmarshaller[String, WeatherStation.Function] =
     Unmarshaller.strict[String, WeatherStation.Function](text => funcsFromName(text.toLowerCase))
 
   private val dataTypesFromNames =
     WeatherStation.DataType.All.map(dataType => dataType.toString.toLowerCase -> dataType).toMap
-  private implicit val dataTypeUnmarshaller =
+  private implicit val dataTypeUnmarshaller: Unmarshaller[String, WeatherStation.DataType] =
     Unmarshaller.strict[String, WeatherStation.DataType](text => dataTypesFromNames(text.toLowerCase))
 
   // imports needed for the routes and entity json marshalling

@@ -10,7 +10,7 @@ import org.apache.pekko.stream.{ Materializer, OverflowStrategy }
 import org.apache.pekko.stream.scaladsl.Source
 import org.apache.pekko.util.Timeout
 
-import scala.concurrent.Future
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.control.NonFatal
 
 class ClusterClientReceptionistGrpcImpl(
@@ -74,8 +74,8 @@ class ClusterClientReceptionistGrpcImpl(
   override def askSend(sendReq: SendReq): Future[Rsp] = {
     try {
       import org.apache.pekko.pattern.ask
-      implicit val timeout = Timeout(settings.askSendTimeout)
-      implicit val ec = mat.executionContext
+      implicit val timeout: Timeout = Timeout(settings.askSendTimeout)
+      implicit val ec: ExecutionContext = mat.executionContext
       val msg = serialization.deserializePayload(sendReq.payload.get)
       (pubSubMediator ? DistributedPubSubMediator.Send(
         sendReq.path,

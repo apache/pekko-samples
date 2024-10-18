@@ -171,7 +171,7 @@ class ClusterClientSpec
       runOn(client) {
         import org.apache.pekko.pattern.ask
         val c = system.actorOf(ClusterClient.props(ClusterClientSettings(system)), "ask-session-client")
-        implicit val timeout = Timeout(remaining)
+        implicit val timeout: Timeout = Timeout(remaining)
         val reply1 = c ? ClusterClient.Send("/user/testService", "hello-1-request", localAffinity = true)
         Await.result(reply1.mapTo[Reply], remaining).msg should be("hello-1-request-ack")
         val reply2 = c ? ClusterClient.Send("/user/testService", "hello-2-request", localAffinity = true)
@@ -190,7 +190,7 @@ class ClusterClientSpec
       runOn(client) {
         import org.apache.pekko.pattern.ask
         val c = system.actorOf(ClusterClient.props(ClusterClientSettings(system)), "ask-client")
-        implicit val timeout = Timeout(remaining)
+        implicit val timeout: Timeout = Timeout(remaining)
         val reply1 = c ? ClusterClient.SendAsk("/user/testService", "hello-1-request", localAffinity = true)
         Await.result(reply1.mapTo[Reply], remaining).msg should be("hello-1-request-ack")
         val reply2 = c ? ClusterClient.SendAsk("/user/testService", "hello-2-request", localAffinity = true)

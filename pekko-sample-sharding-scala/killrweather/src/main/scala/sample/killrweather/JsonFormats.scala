@@ -37,12 +37,12 @@ object JsonFormats {
 
   implicit val functionFormat: JsonFormat[WeatherStation.Function] = SimpleEnumFormat(WeatherStation.Function.All)
   implicit val dataTypeFormat: JsonFormat[WeatherStation.DataType] = SimpleEnumFormat(WeatherStation.DataType.All)
-  implicit val dataFormat: RootJsonFormat[WeatherStation.Data] = jsonFormat3(WeatherStation.Data)
+  implicit val dataFormat: RootJsonFormat[WeatherStation.Data] = jsonFormat3(WeatherStation.Data.apply)
 
   implicit val dataIngestedFormat: RootJsonFormat[WeatherStation.DataRecorded] =
-    jsonFormat1(WeatherStation.DataRecorded)
+    jsonFormat1(WeatherStation.DataRecorded.apply)
 
-  implicit val queryWindowFormat: RootJsonFormat[WeatherStation.TimeWindow] = jsonFormat3(WeatherStation.TimeWindow)
-  implicit val queryStatusFormat: RootJsonFormat[WeatherStation.QueryResult] = jsonFormat5(WeatherStation.QueryResult)
+  implicit val queryWindowFormat: RootJsonFormat[WeatherStation.TimeWindow] = jsonFormat3(WeatherStation.TimeWindow.apply)
+  implicit val queryStatusFormat: RootJsonFormat[WeatherStation.QueryResult] = jsonFormat5(WeatherStation.QueryResult.apply)
 
 }

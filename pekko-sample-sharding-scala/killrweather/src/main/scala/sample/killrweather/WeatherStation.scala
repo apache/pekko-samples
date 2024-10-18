@@ -49,8 +49,8 @@ private[killrweather] object WeatherStation {
   // small domain model for querying and storing weather data
 
   // needed for CBOR serialization with Jackson
-  @JsonSerialize(using = classOf[DataTypeJsonSerializer])
-  @JsonDeserialize(using = classOf[DataTypeJsonDeserializer])
+  @JsonSerialize(`using` = classOf[DataTypeJsonSerializer])
+  @JsonDeserialize(`using` = classOf[DataTypeJsonDeserializer])
   sealed trait DataType
   object DataType {
 
@@ -62,8 +62,8 @@ private[killrweather] object WeatherStation {
   }
 
   // needed for CBOR serialization with Jackson
-  @JsonSerialize(using = classOf[FunctionJsonSerializer])
-  @JsonDeserialize(using = classOf[FunctionJsonDeserializer])
+  @JsonSerialize(`using` = classOf[FunctionJsonSerializer])
+  @JsonDeserialize(`using` = classOf[FunctionJsonDeserializer])
   sealed trait Function
   object Function {
     case object HighLow extends Function
