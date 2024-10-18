@@ -46,7 +46,7 @@ object WorkManager {
       val producerController =
         ctx.spawn(WorkPullingProducerController[WorkerCommand]("work-manager", ManagerServiceKey, None),
           "producer-controller")
-      val requestNextAdapter = ctx.messageAdapter(RequestNextWrapper)
+      val requestNextAdapter = ctx.messageAdapter(RequestNextWrapper.apply)
       producerController ! WorkPullingProducerController.Start(requestNextAdapter)
 
       var requestNext: Option[RequestNext[WorkerCommand]] = None
