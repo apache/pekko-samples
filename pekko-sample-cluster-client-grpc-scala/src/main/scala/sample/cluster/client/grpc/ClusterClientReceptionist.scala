@@ -26,7 +26,7 @@ object ClusterClientReceptionist extends ExtensionId[ClusterClientReceptionist] 
   override def get(system: ActorSystem): ClusterClientReceptionist =
     super.get(system)
 
-  override def lookup: ExtensionId[_ <: Extension] = ClusterClientReceptionist
+  override def lookup = ClusterClientReceptionist
 
   override def createExtension(system: ExtendedActorSystem): ClusterClientReceptionist =
     new ClusterClientReceptionist(system)
