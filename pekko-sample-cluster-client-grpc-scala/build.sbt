@@ -1,7 +1,7 @@
 import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
-val pekkoVersion = "1.1.2"
+val pekkoVersion = "1.1.3"
 
 lazy val `pekko-sample-cluster-client-grpc-scala` = project
   .in(file("."))
