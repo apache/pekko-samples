@@ -16,7 +16,8 @@ import scala.util.control.NonFatal
 class ClusterClientReceptionistGrpcImpl(
     settings: ClusterReceptionistSettings,
     pubSubMediator: ActorRef,
-    serialization: ClusterClientSerialization)(implicit
+    serialization: ClusterClientSerialization)(
+    implicit
     mat: Materializer,
     log: LoggingAdapter)
     extends ClusterClientReceptionistService {
