@@ -1,13 +1,13 @@
-val pekkoVersion = "1.1.3"
-val pekkoHttpVersion = "1.1.0"
+val pekkoVersion = "1.1.4"
+val pekkoHttpVersion = "1.2.0"
 
 val pekkoConnectorsKafkaVersion = "1.1.0"
-val pekkoManagementVersion = "1.1.0"
+val pekkoManagementVersion = "1.1.1"
 val EmbeddedKafkaVersion = "2.4.1.1"
 val logbackVersion = "1.3.15"
 val slf4jVersion = "2.0.16"
 
-ThisBuild / scalaVersion := "3.3.4"
+ThisBuild / scalaVersion := "3.3.6"
 ThisBuild / organization := "org.apache.pekko"
 ThisBuild / Compile / scalacOptions ++= Seq(
   "-deprecation",

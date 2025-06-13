@@ -1,9 +1,9 @@
 organization := "org.apache.pekko"
 name := "pekko-sample-persistence-scala"
 
-scalaVersion := "3.3.4"
+scalaVersion := "3.3.6"
 
-val pekkoVersion = "1.1.3"
+val pekkoVersion = "1.1.4"
 val logbackVersion = "1.3.15"
 
 libraryDependencies ++= Seq(
