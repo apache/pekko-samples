@@ -1,7 +1,7 @@
 import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
-val pekkoVersion = "1.1.3"
+val pekkoVersion = "1.1.4"
 val logbackVersion = "1.3.15"
 
 val `pekko-sample-distributed-data-java` = project
@@ -10,7 +10,7 @@ val `pekko-sample-distributed-data-java` = project
   .settings(
     organization := "org.apache.pekko",
     version := "1.0",
-    scalaVersion := "3.3.4",
+    scalaVersion := "3.3.6",
     Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint"),
     Compile / javacOptions ++= Seq("-parameters", "-Xlint:unchecked", "-Xlint:deprecation", "-Xdiags:verbose"),
     run / javaOptions ++= Seq("-Xms128m", "-Xmx1024m"),
