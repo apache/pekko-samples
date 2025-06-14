@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.pekko</groupId>
   <artifactId>pekko-sample-cluster-kubernetes-java</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.0-SNAPSHOT</version>
   <name>${project.artifactId}</name>
   <description>Apache Pekko Sample for forming a Cluster in Kubernetes</description>
   <inceptionYear>2023</inceptionYear>
