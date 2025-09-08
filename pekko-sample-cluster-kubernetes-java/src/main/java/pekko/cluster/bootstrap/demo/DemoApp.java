@@ -13,10 +13,11 @@ import org.apache.pekko.cluster.typed.Cluster;
 import org.apache.pekko.cluster.typed.Subscribe;
 import org.apache.pekko.http.javadsl.ConnectHttp;
 import org.apache.pekko.http.javadsl.Http;
-import static org.apache.pekko.http.javadsl.server.Directives.*;
 import org.apache.pekko.management.cluster.bootstrap.ClusterBootstrap;
 import org.apache.pekko.management.scaladsl.PekkoManagement;
 import org.apache.pekko.stream.Materializer;
+
+import static org.apache.pekko.http.javadsl.server.Directives.*;
 
 public class DemoApp {
 
