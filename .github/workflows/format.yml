@@ -29,12 +29,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current branch (full)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           persist-credentials: false
 
       - name: Check project is formatted
-        uses: jrouly/scalafmt-native-action@v3
+        uses: jrouly/scalafmt-native-action@14620cde093e5ff6bfbbecd4f638370024287b9d # v4
         with:
           arguments: '--list --mode diff-ref=origin/main'
