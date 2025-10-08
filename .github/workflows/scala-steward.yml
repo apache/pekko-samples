@@ -35,7 +35,7 @@ jobs:
       - name: Install sbt
         uses: sbt/setup-sbt@17575ea4e18dd928fe5968dbe32294b97923d65b # v1.1.13
       - name: Launch Scala Steward
-        uses: scala-steward-org/scala-steward-action@v2
+        uses: scala-steward-org/scala-steward-action@53d486a68877f4a6d1e110e8058fe21e593db356 # v2.77.0
         env:
           JAVA_OPTS: "-XX:+UseG1GC -Xms4G -Xmx4G -Xss2M -XX:+AlwaysActAsServerClassMachine -XX:ReservedCodeCacheSize=256m -XX:MaxGCPauseMillis=750 -XX:+UseCompressedOops -XX:MetaspaceSize=512M"
         with:
