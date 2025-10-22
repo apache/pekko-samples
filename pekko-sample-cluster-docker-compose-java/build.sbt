@@ -1,7 +1,7 @@
 organization := "org.apache.pekko"
 
 /* scala versions and options */
-scalaVersion := "3.3.6"
+scalaVersion := "3.3.7"
 
 // These options will be used for *all* versions.
 scalacOptions ++= Seq(
@@ -10,7 +10,7 @@ scalacOptions ++= Seq(
   "-encoding", "UTF-8",
   "-Xlint")
 
-val pekkoVersion = "1.2.0"
+val pekkoVersion = "1.2.1"
 val logbackVersion = "1.3.15"
 
 /* dependencies */

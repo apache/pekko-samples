@@ -1,7 +1,7 @@
 import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
-val pekkoVersion = "1.2.0"
+val pekkoVersion = "1.2.1"
 val logbackVersion = "1.3.15"
 
 lazy val `pekko-sample-cluster-scala` = project
@@ -9,7 +9,7 @@ lazy val `pekko-sample-cluster-scala` = project
   .settings(multiJvmSettings: _*)
   .settings(
     organization := "org.apache.pekko",
-    scalaVersion := "3.3.6",
+    scalaVersion := "3.3.7",
     Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint"),
     Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
     run / javaOptions ++= Seq("-Xms128m", "-Xmx1024m", "-Djava.library.path=./target/native"),

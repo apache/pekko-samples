@@ -1,7 +1,7 @@
 import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
-val pekkoVersion = "1.2.0"
+val pekkoVersion = "1.2.1"
 
 lazy val `pekko-sample-cluster-client-grpc-scala` = project
   .in(file("."))
@@ -10,7 +10,7 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
   .settings(multiJvmSettings: _*)
   .settings(
     organization := "org.apache.pekko",
-    scalaVersion := "3.3.6",
+    scalaVersion := "3.3.7",
     Compile / scalacOptions ++= Seq(
       "-deprecation",
       "-feature",
