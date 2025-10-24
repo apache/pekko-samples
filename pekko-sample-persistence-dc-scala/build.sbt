@@ -20,15 +20,10 @@ libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-management" % pekkoClusterManagementVersion,
   "org.apache.pekko" %% "pekko-management-cluster-http" % pekkoClusterManagementVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra" % cassandraPluginVersion,
-  "org.apache.pekko" %% "pekko-persistence-cassandra-launcher" % cassandraPluginVersion,
+  "org.testcontainers" % "testcontainers-cassandra" % "2.0.1",
   "ch.qos.logback" % "logback-classic" % logbackVersion,
   "org.apache.pekko" %% "pekko-persistence-testkit" % pekkoVersion % Test,
   "org.scalatest" %% "scalatest" % "3.2.19" % Test)
-
-// transitive dependency of akka 2.5x that is brought in by addons but evicted
-dependencyOverrides += "org.apache.pekko" %% "pekko-protobuf" % pekkoVersion
-dependencyOverrides += "org.apache.pekko" %% "pekko-cluster-tools" % pekkoVersion
-dependencyOverrides += "org.apache.pekko" %% "pekko-coordination" % pekkoVersion
 
 licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0")))
 

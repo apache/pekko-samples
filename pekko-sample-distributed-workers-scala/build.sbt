@@ -17,9 +17,9 @@ libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra" % cassandraPluginVersion,
   // this allows us to start cassandra from the sample
-  "org.apache.pekko" %% "pekko-persistence-cassandra-launcher" % cassandraPluginVersion,
+  "org.testcontainers" % "testcontainers-cassandra" % "2.0.1",
   "ch.qos.logback" % "logback-classic" % logbackVersion,
   // test dependencies
   "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
   "org.scalatest" %% "scalatest" % "3.2.19" % Test,
-  "commons-io" % "commons-io" % "2.11.0" % Test)
+  "commons-io" % "commons-io" % "2.20.0" % Test)
