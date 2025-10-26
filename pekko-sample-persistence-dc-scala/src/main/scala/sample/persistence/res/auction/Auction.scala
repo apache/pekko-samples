@@ -158,7 +158,7 @@ object Auction {
 
   final case class IsClosed(replyTo: ActorRef[Boolean]) extends Command
 
-  private final case object Close extends Command // Internal, should not be sent from the outside
+  private case object Close extends Command // Internal, should not be sent from the outside
 
   sealed trait Event extends CborSerializable
 
