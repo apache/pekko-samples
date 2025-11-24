@@ -1,5 +1,5 @@
-val pekkoVersion = "1.2.1"
-val pekkoHttpVersion = "1.2.0"
+val pekkoVersion = "1.3.0"
+val pekkoHttpVersion = "1.3.0"
 
 val pekkoConnectorsKafkaVersion = "1.1.0"
 val pekkoManagementVersion = "1.1.1"

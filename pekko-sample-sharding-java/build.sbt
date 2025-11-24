@@ -1,5 +1,5 @@
-val pekkoVersion = "1.2.1"
-val pekkoHttpVersion = "1.2.0"
+val pekkoVersion = "1.3.0"
+val pekkoHttpVersion = "1.3.0"
 val logbackVersion = "1.3.15"
 
 lazy val buildSettings = Seq(
