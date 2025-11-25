@@ -24,13 +24,16 @@ lazy val httpToGrpc = (project in file("http-to-grpc"))
       "org.apache.pekko" %% "pekko-http-spray-json" % pekkoHttpVersion,
       "org.apache.pekko" %% "pekko-discovery-kubernetes-api" % pekkoManagementVersion,
       "ch.qos.logback" % "logback-classic" % "1.3.15"),
-    dockerExposedPorts := Seq(8080))
+    dockerExposedPorts := Seq(8080),
+    dockerBaseImage := "eclipse-temurin:21",
+  )
 
 // gRPC back end that echoes back messages
 lazy val grpcService = (project in file("grpc-service"))
   .enablePlugins(PekkoGrpcPlugin, DockerPlugin, JavaAppPackaging)
   .settings(
     dockerExposedPorts := Seq(8080),
+    dockerBaseImage := "eclipse-temurin:21",
     libraryDependencies ++= Seq(
       "org.apache.pekko" %% "pekko-actor" % pekkoVersion,
       "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion,
