@@ -3,7 +3,7 @@ name := "pekko-sample-persistence-scala"
 
 scalaVersion := "3.3.7"
 
-val pekkoVersion = "1.3.0"
+val pekkoVersion = "1.4.0"
 val logbackVersion = "1.3.15"
 
 libraryDependencies ++= Seq(
