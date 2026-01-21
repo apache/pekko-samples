@@ -14,8 +14,9 @@ import org.apache.pekko.cluster.sharding.typed.ReplicatedSharding;
 import org.apache.pekko.cluster.sharding.typed.ReplicatedShardingExtension;
 import org.apache.pekko.cluster.typed.Cluster;
 import org.apache.pekko.management.javadsl.PekkoManagement;
-import org.apache.pekko.persistence.cassandra.testkit.CassandraLauncher;
 import org.apache.pekko.persistence.typed.ReplicaId;
+import org.testcontainers.cassandra.CassandraContainer;
+import org.testcontainers.utility.DockerImageName;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import sample.persistence.res.counter.ThumbsUpCounter;
@@ -81,12 +82,13 @@ public class MainApp {
    * in a real application a pre-existing Cassandra cluster should be used.
    */
   private static void startCassandraDatabase() {
-    File databaseDirectory = new File("target/cassandra-db");
-    CassandraLauncher.start(
-      databaseDirectory,
-      CassandraLauncher.DefaultTestConfigResource(),
-      false,
-      9042);
+    final CassandraContainer container = new CassandraContainer(
+      DockerImageName.parse("cassandra:5.0.5"));
+    // defaults to port 9042
+    container.start();
+
+    // shut the cassandra instance down when the JVM stops
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> container.stop()));
   }
 
 }

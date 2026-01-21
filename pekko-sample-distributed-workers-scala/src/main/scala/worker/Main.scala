@@ -6,7 +6,6 @@ import org.apache.pekko.actor.typed.ActorSystem
 import org.apache.pekko.actor.typed.eventstream.EventStream
 import org.apache.pekko.actor.typed.scaladsl.{ ActorContext, Behaviors }
 import org.apache.pekko.cluster.typed.{ Cluster, SelfUp, Subscribe }
-import org.apache.pekko.persistence.cassandra.testkit.CassandraLauncher
 import com.typesafe.config.{ Config, ConfigFactory }
 
 object Main {
@@ -93,16 +92,15 @@ object Main {
    * in a real application a pre-existing Apache Cassandra cluster should be used.
    */
   def startCassandraDatabase(): Unit = {
-    val databaseDirectory = new File("target/cassandra-db")
-    CassandraLauncher.start(
-      databaseDirectory,
-      CassandraLauncher.DefaultTestConfigResource,
-      clean = false,
-      port = 9042)
+    import org.testcontainers.cassandra.CassandraContainer
+    import org.testcontainers.utility.DockerImageName
+    val container = new CassandraContainer(DockerImageName.parse("cassandra:5.0.5"))
+    // defaults to port 9042
+    container.start()
 
     // shut the cassandra instance down when the JVM stops
     sys.addShutdownHook {
-      CassandraLauncher.stop()
+      container.stop()
     }
   }
 
