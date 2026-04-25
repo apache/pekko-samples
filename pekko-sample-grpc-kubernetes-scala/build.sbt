@@ -1,9 +1,9 @@
 name := "pekko-grpc-kubernetes"
 scalaVersion := "3.3.7"
 
-lazy val pekkoVersion = "1.4.0"
-lazy val pekkoManagementVersion = "1.1.1"
-lazy val pekkoHttpVersion = "1.3.0"
+lazy val pekkoVersion = "2.0.0-M1"
+lazy val pekkoManagementVersion = "2.0.0-M1"
+lazy val pekkoHttpVersion = "2.0.0-M1"
 
 lazy val root = (project in file("."))
   .aggregate(httpToGrpc, grpcService)

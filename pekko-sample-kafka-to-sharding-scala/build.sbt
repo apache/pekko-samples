@@ -1,8 +1,8 @@
-val pekkoVersion = "1.4.0"
-val pekkoHttpVersion = "1.3.0"
+val pekkoVersion = "2.0.0-M1"
+val pekkoHttpVersion = "2.0.0-M1"
 
-val pekkoConnectorsKafkaVersion = "1.1.0"
-val pekkoManagementVersion = "1.1.1"
+val pekkoConnectorsKafkaVersion = "2.0.0-M1"
+val pekkoManagementVersion = "2.0.0-M1"
 val EmbeddedKafkaVersion = "2.4.1.1"
 val logbackVersion = "1.3.15"
 val slf4jVersion = "2.0.17"
@@ -43,7 +43,7 @@ lazy val client = project
 lazy val processor = project
   .in(file("processor"))
   .enablePlugins(PekkoGrpcPlugin, JavaAgent)
-  .settings(javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.9" % "runtime;test")
+  .settings(javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.10" % "runtime;test")
   .settings(libraryDependencies ++= Seq(
     "org.apache.pekko" %% "pekko-connectors-kafka" % pekkoConnectorsKafkaVersion,
     "org.apache.pekko" %% "pekko-connectors-kafka-cluster-sharding" % pekkoConnectorsKafkaVersion,
