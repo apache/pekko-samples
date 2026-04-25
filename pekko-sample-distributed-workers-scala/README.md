@@ -254,13 +254,13 @@ As long as one of the four nodes is alive the cluster will keep working. You can
 You can start more cluster front-end nodes using port numbers between 3000-3999:
 
 ```bash
-sbt "runMain worker.Main 3002
+sbt "runMain worker.Main 3002"
 ```
 
 Any port outside these ranges creates a worker node, for which you can also play around with the number of worker actors on using the second parameter.
 
 ```bash
-sbt "runMain worker.Main 5009 4
+sbt "runMain worker.Main 5009 4"
 ```
 
 ## The journal
