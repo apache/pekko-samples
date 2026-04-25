@@ -10,7 +10,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <pekko.version>1.5.0</pekko.version>
+    <pekko.version>2.0.0-M1</pekko.version>
     <pekko.grpc.version>1.2.0</pekko.grpc.version>
     <scala.binary.version>3</scala.binary.version>
   </properties>
