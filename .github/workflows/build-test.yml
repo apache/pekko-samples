@@ -32,7 +32,7 @@ jobs:
         uses: sbt/setup-sbt@508b753e53cb6095967669e0911487d2b9bc9f41 # v1.1.22
 
       - name: Cache Coursier cache
-        uses: coursier/cache-action@4e2615869d13561d626ed48655e1a39e5b192b3c # 6.4.7
+        uses: coursier/cache-action@90c37294538be80a558fd665531fcdc2b467b475 # 8.1.0
 
       - name: Test pekko-sample-cluster-java
         run: cd pekko-sample-cluster-java && sbt multi-jvm:test
