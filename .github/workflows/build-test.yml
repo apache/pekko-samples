@@ -90,7 +90,7 @@ jobs:
 
       # Tests below require Minikube  
       - name: Start minikube
-        uses: manusa/actions-setup-minikube@a4e4e6a9358e4716d1398048e11660975c35dc54 # v2.12.0
+        uses: manusa/actions-setup-minikube@96202dee4ae1c2f46a62fe197273aaf22b83f42d # v2.16.1
         with:
           driver: docker
           minikube version: 'v1.34.0'
