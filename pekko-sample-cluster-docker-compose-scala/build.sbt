@@ -11,7 +11,7 @@ scalacOptions ++= Seq(
   "-encoding", "UTF-8",
   "-Xlint")
 
-val pekkoVersion = "1.5.0"
+val pekkoVersion = "2.0.0-M1"
 val logbackVersion = "1.3.15"
 
 /* dependencies */
