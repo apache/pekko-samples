@@ -4,7 +4,7 @@ version := "1.0"
 
 scalaVersion := "3.3.7"
 
-val pekkoVersion = "1.4.0"
+val pekkoVersion = "1.5.0"
 val cassandraPluginVersion = "1.1.0"
 val logbackVersion = "1.3.15"
 
@@ -22,4 +22,4 @@ libraryDependencies ++= Seq(
   // test dependencies
   "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
   "org.scalatest" %% "scalatest" % "3.2.19" % Test,
-  "commons-io" % "commons-io" % "2.11.0" % Test)
+  "commons-io" % "commons-io" % "2.22.0" % Test)
