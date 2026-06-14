@@ -106,7 +106,7 @@ object ReplicatedMetrics {
               Behaviors.same
 
             case InternalSubscribeResponse(_)                 => Behaviors.same // ok
-            case InternalUpdateResponse(_: UpdateResponse[_]) => Behaviors.same // ok
+            case InternalUpdateResponse(_: UpdateResponse[?]) => Behaviors.same // ok
 
             case InternalClusterMemberUp(ClusterEvent.MemberUp(m)) =>
               nodesInCluster += nodeKey(m.address)

@@ -14,7 +14,7 @@ import org.apache.pekko.util.Timeout
  * 1. Receiving data from remote weather stations
  * 2. Receiving and responding to queries
  */
-private[killrweather] final class WeatherRoutes(system: ActorSystem[_]) {
+private[killrweather] final class WeatherRoutes(system: ActorSystem[?]) {
 
   private val sharding = ClusterSharding(system)
 

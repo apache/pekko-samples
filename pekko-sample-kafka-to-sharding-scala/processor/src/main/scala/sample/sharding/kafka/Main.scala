@@ -95,7 +95,7 @@ object Main {
       }
 
     def startGrpc(
-        system: ActorSystem[_], frontEndPort: Int, region: ActorRef[UserEvents.Command]): Future[Http.ServerBinding] = {
+        system: ActorSystem[?], frontEndPort: Int, region: ActorRef[UserEvents.Command]): Future[Http.ServerBinding] = {
       val mat = Materializer.createMaterializer(system.toClassic)
       val service: HttpRequest => Future[HttpResponse] =
         UserServiceHandler(new UserGrpcService(system, region))(system.toClassic)

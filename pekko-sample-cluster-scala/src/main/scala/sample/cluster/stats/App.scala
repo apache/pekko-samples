@@ -30,7 +30,8 @@ object App {
         val service = ctx.spawn(StatsService(workers), "StatsService")
 
         // published through the receptionist to the other nodes in the cluster
-        ctx.system.receptionist ! Receptionist
+        ctx.system.receptionist !
+        Receptionist
           .Register(StatsServiceKey, service)
       }
       if (cluster.selfMember.hasRole("client")) {

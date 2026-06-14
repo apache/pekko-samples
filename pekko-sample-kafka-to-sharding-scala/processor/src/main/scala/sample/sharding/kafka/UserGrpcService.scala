@@ -8,7 +8,7 @@ import sample.sharding.kafka.UserEvents.{ Command, GetRunningTotal, RunningTotal
 import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContextExecutor, Future }
 
-class UserGrpcService(system: ActorSystem[_], shardRegion: ActorRef[Command]) extends UserService {
+class UserGrpcService(system: ActorSystem[?], shardRegion: ActorRef[Command]) extends UserService {
 
   implicit val timeout: Timeout = Timeout(5.seconds)
   implicit val sched: Scheduler = system.scheduler

@@ -45,7 +45,7 @@ object Guardian {
 
 object FogSettings {
 
-  def apply(system: ActorSystem[_]): FogSettings = {
+  def apply(system: ActorSystem[?]): FogSettings = {
     apply(system.settings.config.getConfig("killrweather.fog"))
   }
 

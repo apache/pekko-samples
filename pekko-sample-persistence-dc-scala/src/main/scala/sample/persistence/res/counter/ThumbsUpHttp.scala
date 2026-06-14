@@ -17,7 +17,7 @@ import scala.util.{ Failure, Success }
 object ThumbsUpHttp {
 
   def route(selfReplica: ReplicaId, res: ReplicatedSharding[ThumbsUpCounter.Command])(
-      implicit system: ActorSystem[_]): Route = {
+      implicit system: ActorSystem[?]): Route = {
 
     import org.apache.pekko.http.scaladsl.server.Directives._
 

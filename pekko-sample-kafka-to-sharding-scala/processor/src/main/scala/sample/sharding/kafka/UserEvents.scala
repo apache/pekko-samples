@@ -11,7 +11,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 
 object UserEvents {
-  def init(system: ActorSystem[_], settings: ProcessorSettings): Future[ActorRef[Command]] = {
+  def init(system: ActorSystem[?], settings: ProcessorSettings): Future[ActorRef[Command]] = {
     import system.executionContext
     KafkaClusterSharding(settings.system).messageExtractorNoEnvelope(
       timeout = 10.seconds,

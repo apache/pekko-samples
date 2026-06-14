@@ -31,7 +31,7 @@ private[killrweather] object WeatherStation {
   val TypeKey: EntityTypeKey[WeatherStation.Command] =
     EntityTypeKey[WeatherStation.Command]("WeatherStation")
 
-  def initSharding(system: ActorSystem[_]): Unit =
+  def initSharding(system: ActorSystem[?]): Unit =
     ClusterSharding(system).init(Entity(TypeKey) { entityContext =>
       WeatherStation(entityContext.entityId)
     })
