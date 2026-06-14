@@ -33,7 +33,7 @@ object UserEventsKafkaProcessor {
   def apply(shardRegion: ActorRef[UserEvents.Command], processorSettings: ProcessorSettings): Behavior[Nothing] = {
     Behaviors
       .setup[Command] { ctx =>
-        implicit val sys: TypedActorSystem[_] = ctx.system
+        implicit val sys: TypedActorSystem[?] = ctx.system
         val result = startConsumingFromTopic(shardRegion, processorSettings)
 
         ctx.pipeToSelf(result) {
@@ -50,7 +50,7 @@ object UserEventsKafkaProcessor {
   }
 
   private def startConsumingFromTopic(shardRegion: ActorRef[UserEvents.Command], processorSettings: ProcessorSettings)(
-      implicit actorSystem: TypedActorSystem[_]): Future[Done] = {
+      implicit actorSystem: TypedActorSystem[?]): Future[Done] = {
 
     implicit val ec: ExecutionContext = actorSystem.executionContext
     implicit val scheduler: Scheduler = actorSystem.toClassic.scheduler

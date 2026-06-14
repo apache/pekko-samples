@@ -186,7 +186,7 @@ final class ClusterClient(settings: ClusterClientSettings)(
       val originalSender = sender()
       val session = sessionRef.get(originalSender) match {
         case Some(ses) => ses
-        case None =>
+        case None      =>
           val ses = newSession(
             settings,
             receptionistServiceClient,

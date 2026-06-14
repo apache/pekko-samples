@@ -125,10 +125,10 @@ object ShoppingCart {
       }
 
       def receiveOther: PartialFunction[Command, Behavior[Command]] = {
-        case InternalUpdateResponse(_: UpdateSuccess[_]) => Behaviors.same
-        case InternalUpdateResponse(_: UpdateTimeout[_]) => Behaviors.same
+        case InternalUpdateResponse(_: UpdateSuccess[?]) => Behaviors.same
+        case InternalUpdateResponse(_: UpdateTimeout[?]) => Behaviors.same
         // UpdateTimeout, will eventually be replicated
-        case InternalUpdateResponse(e: UpdateFailure[_]) => throw new IllegalStateException("Unexpected failure: " + e)
+        case InternalUpdateResponse(e: UpdateFailure[?]) => throw new IllegalStateException("Unexpected failure: " + e)
       }
 
       behavior

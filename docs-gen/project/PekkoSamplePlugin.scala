@@ -53,7 +53,7 @@ object PekkoSamplePlugin extends sbt.AutoPlugin {
       outDir
     })
 
-  override def projectSettings: Seq[Setting[_]] =
+  override def projectSettings: Seq[Setting[?]] =
     themeSettings ++
     propertiesSettings ++
     sourceDirectorySettings ++

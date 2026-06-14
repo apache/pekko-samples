@@ -37,7 +37,7 @@ object HttpToGrpc {
           log.info("hello request")
           onComplete(client.sayHello(HelloRequest(name))) {
             case Success(reply) => complete(reply.message)
-            case Failure(t) =>
+            case Failure(t)     =>
               log.error(t, "Request failed")
               complete(StatusCodes.InternalServerError, t.getMessage)
           }

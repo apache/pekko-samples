@@ -203,8 +203,8 @@ object ShoppingCart {
 
   private def handleEvent(state: State, event: Event) = {
     event match {
-      case ItemAdded(_, itemId, quantity) => state.updateItem(itemId, quantity)
-      case ItemRemoved(_, itemId)         => state.removeItem(itemId)
+      case ItemAdded(_, itemId, quantity)            => state.updateItem(itemId, quantity)
+      case ItemRemoved(_, itemId)                    => state.removeItem(itemId)
       case ItemQuantityAdjusted(_, itemId, quantity) =>
         state.updateItem(itemId, quantity)
       case CheckedOut(_, eventTime) => state.checkout(eventTime)

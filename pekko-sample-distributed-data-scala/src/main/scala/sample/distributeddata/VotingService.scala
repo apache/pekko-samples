@@ -71,7 +71,7 @@ object VotingService {
 
             Behaviors.same
 
-          case InternalUpdateResponse(_: UpdateSuccess[_]) => Behaviors.same
+          case InternalUpdateResponse(_: UpdateSuccess[?]) => Behaviors.same
 
           case Close =>
             replicatorFlag.askUpdate(
@@ -103,8 +103,8 @@ object VotingService {
             replyTo ! Votes(Map.empty, open)
             Behaviors.same
 
-          case InternalGetResponse(_, _: GetFailure[_])    => Behaviors.same
-          case InternalUpdateResponse(_: UpdateSuccess[_]) => Behaviors.same
+          case InternalGetResponse(_, _: GetFailure[?])    => Behaviors.same
+          case InternalUpdateResponse(_: UpdateSuccess[?]) => Behaviors.same
         }
 
         start

@@ -57,7 +57,7 @@ object ReplicatedCache {
           replyTo ! Cached(key, g.dataValue.get(key))
           Behaviors.same
 
-        case InternalGetResponse(key, replyTo, _: NotFound[_]) =>
+        case InternalGetResponse(key, replyTo, _: NotFound[?]) =>
           replyTo ! Cached(key, None)
           Behaviors.same
 

@@ -13,7 +13,7 @@ object WorkManagerSingleton {
   private val singletonName = "work-manager"
   private val singletonRole = "back-end"
 
-  def init(system: ActorSystem[_]): ActorRef[Command] = {
+  def init(system: ActorSystem[?]): ActorRef[Command] = {
     val workTimeout = system.settings.config.getDuration("distributed-workers.work-timeout").getSeconds.seconds
 
     ClusterSingleton(system).init(

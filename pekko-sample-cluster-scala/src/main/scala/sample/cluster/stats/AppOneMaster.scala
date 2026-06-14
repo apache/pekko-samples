@@ -46,7 +46,8 @@ object AppOneMaster {
         ctx.log.info("Starting {} workers", numberOfWorkers)
         (0 to numberOfWorkers).foreach { n =>
           val worker = ctx.spawn(StatsWorker(), s"StatsWorker$n")
-          ctx.system.receptionist ! Receptionist
+          ctx.system.receptionist !
+          Receptionist
             .Register(WorkerServiceKey, worker)
         }
       }
