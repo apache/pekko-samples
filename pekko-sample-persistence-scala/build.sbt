@@ -13,7 +13,7 @@ libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,
   "org.scalatest" %% "scalatest" % "3.2.19" % Test)
 
-Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint")
+Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
 
 // show full stack traces and test case durations
 Test / testOptions += Tests.Argument("-oDF")
