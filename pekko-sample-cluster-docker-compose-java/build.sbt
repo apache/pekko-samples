@@ -7,8 +7,7 @@ scalaVersion := "3.3.7"
 scalacOptions ++= Seq(
   "-deprecation",
   "-unchecked",
-  "-encoding", "UTF-8",
-  "-Xlint")
+  "-encoding", "UTF-8")
 
 val pekkoVersion = "1.5.0"
 val logbackVersion = "1.3.15"

@@ -10,7 +10,7 @@ lazy val `pekko-sample-cluster-scala` = project
   .settings(
     organization := "org.apache.pekko",
     scalaVersion := "3.3.7",
-    Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint"),
+    Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
     Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
     run / javaOptions ++= Seq("-Xms128m", "-Xmx1024m", "-Djava.library.path=./target/native"),
     libraryDependencies ++= Seq(

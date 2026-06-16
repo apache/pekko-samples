@@ -10,8 +10,6 @@ lazy val commonScalacOptions = Seq(
   "-deprecation",
   "-feature",
   "-unchecked",
-  "-Xlint",
-  "-Ywarn-unused:imports",
   "-encoding", "UTF-8")
 
 lazy val commonJavacOptions = Seq(

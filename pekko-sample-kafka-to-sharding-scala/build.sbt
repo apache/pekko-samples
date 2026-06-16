@@ -12,9 +12,7 @@ ThisBuild / organization := "org.apache.pekko"
 ThisBuild / Compile / scalacOptions ++= Seq(
   "-deprecation",
   "-feature",
-  "-unchecked",
-  "-Xlog-reflective-calls",
-  "-Xlint")
+  "-unchecked")
 ThisBuild / Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
 ThisBuild / Test / testOptions += Tests.Argument("-oDF")
 ThisBuild / licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0")))

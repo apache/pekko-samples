@@ -14,9 +14,7 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
     Compile / scalacOptions ++= Seq(
       "-deprecation",
       "-feature",
-      "-unchecked",
-      "-Xlog-reflective-calls",
-      "-Xlint"),
+      "-unchecked"),
     Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
     // javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.9" % "runtime",
     libraryDependencies ++= Seq(
