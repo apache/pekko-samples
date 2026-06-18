@@ -191,7 +191,7 @@ Now that we have covered all the details, we can experiment with different sets 
 
 ## Experimenting
 
-When running the appliction without parameters it runs a six node cluster within the same JVM and starts a Apache Cassandra database. It can be more interesting to run them in separate processes. Open four terminal windows.
+When running the application without parameters it runs a six node cluster within the same JVM and starts a Apache Cassandra database. It can be more interesting to run them in separate processes. Open four terminal windows.
 
 In the first terminal window, start the Apache Cassandra database with the following command:
 
