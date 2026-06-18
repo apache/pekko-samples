@@ -42,14 +42,14 @@ public final class ThumbsUpCounter extends ReplicatedEventSourcedBehavior<Thumbs
     @Override
     public CommandHandler<Command, Event, State> commandHandler() {
         return newCommandHandlerBuilder().forAnyState()
-                .onCommand(GiveThumbsUp.class, (state, cmd) -> Effect().persist(new GaveThumbsUp(cmd.userId)).thenRun(state2 -> {
-                    ctx.getLog().info("Thumbs-up by {}, total count {}", cmd.userId, state2.users.size());
-                    cmd.replyTo.tell((long) state2.users.size());
+                .onCommand(GiveThumbsUp.class, (state, cmd) -> Effect().persist(new GaveThumbsUp(cmd.userId())).thenRun(state2 -> {
+                    ctx.getLog().info("Thumbs-up by {}, total count {}", cmd.userId(), state2.users.size());
+                    cmd.replyTo().tell((long) state2.users.size());
                 })).onCommand(GetCount.class, (state, cmd) -> {
-                    cmd.replyTo.tell((long) state.users.size());
+                    cmd.replyTo().tell((long) state.users.size());
                     return Effect().none();
                 }).onCommand(GetUsers.class, (state, cmd) -> {
-                    cmd.replyTo.tell(state);
+                    cmd.replyTo().tell(state);
                     return Effect().none();
                 }).build();
     }
@@ -58,7 +58,7 @@ public final class ThumbsUpCounter extends ReplicatedEventSourcedBehavior<Thumbs
     public EventHandler<State, Event> eventHandler() {
         return newEventHandlerBuilder().forAnyState()
                 .onEvent(GaveThumbsUp.class, (state, event) ->
-                        state.add(event.userId)
+                        state.add(event.userId())
                 ).build();
 
     }
@@ -68,50 +68,18 @@ public final class ThumbsUpCounter extends ReplicatedEventSourcedBehavior<Thumbs
     public interface Command extends CborSerializable {
     }
 
-    public static class GiveThumbsUp implements Command {
-        public final String resourceId;
-        public final String userId;
-        public final ActorRef<Long> replyTo;
+    public record GiveThumbsUp(String resourceId, String userId, ActorRef<Long> replyTo)
+        implements Command {}
 
-        public GiveThumbsUp(String resourceId, String userId, ActorRef<Long> replyTo) {
-            this.resourceId = resourceId;
-            this.userId = userId;
-            this.replyTo = replyTo;
-        }
-    }
+    public record GetCount(String resourceId, ActorRef<Long> replyTo) implements Command {}
 
-    public static class GetCount implements Command {
-        public final String resourceId;
-        public final ActorRef<Long> replyTo;
-
-        public GetCount(String resourceId, ActorRef<Long> replyTo) {
-            this.resourceId = resourceId;
-            this.replyTo = replyTo;
-        }
-    }
-
-    public static class GetUsers implements Command {
-        public final String resourceId;
-        public final ActorRef<State> replyTo;
-
-        public GetUsers(String resourceId, ActorRef<State> replyTo) {
-            this.resourceId = resourceId;
-            this.replyTo = replyTo;
-        }
-    }
+    public record GetUsers(String resourceId, ActorRef<State> replyTo) implements Command {}
 
 
     interface Event extends CborSerializable {
     }
 
-    public static class GaveThumbsUp implements Event {
-        public final String userId;
-
-        @JsonCreator
-        public GaveThumbsUp(String userId) {
-            this.userId = userId;
-        }
-    }
+    public record GaveThumbsUp(String userId) implements Event {}
 
     public static class State implements CborSerializable {
         public final Set<String> users;

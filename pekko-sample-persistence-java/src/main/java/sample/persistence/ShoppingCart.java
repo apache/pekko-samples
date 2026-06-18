@@ -11,7 +11,6 @@ import org.apache.pekko.persistence.typed.javadsl.Effect;
 import org.apache.pekko.persistence.typed.javadsl.EventHandler;
 import org.apache.pekko.persistence.typed.javadsl.EventSourcedBehavior;
 import org.apache.pekko.persistence.typed.javadsl.RetentionCriteria;
-import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -97,60 +96,27 @@ public class ShoppingCart
    * It can reply with `StatusReply<Summary>`, which is sent back to the caller when
    * all the events emitted by this command are successfully persisted.
    */
-  public static class AddItem implements Command {
-    public final String itemId;
-    public final int quantity;
-    public final ActorRef<StatusReply<Summary>> replyTo;
-
-    public AddItem(String itemId, int quantity, ActorRef<StatusReply<Summary>> replyTo) {
-      this.itemId = itemId;
-      this.quantity = quantity;
-      this.replyTo = replyTo;
-    }
-  }
+  public record AddItem(String itemId, int quantity, ActorRef<StatusReply<Summary>> replyTo)
+      implements Command {}
 
   /**
    * A command to remove an item from the cart.
    */
-  public static class RemoveItem implements Command {
-    public final String itemId;
-    public final ActorRef<StatusReply<Summary>> replyTo;
-
-    @JsonCreator
-    public RemoveItem(String itemId, ActorRef<StatusReply<Summary>> replyTo) {
-      this.itemId = itemId;
-      this.replyTo = replyTo;
-    }
-  }
+  public record RemoveItem(String itemId, ActorRef<StatusReply<Summary>> replyTo)
+      implements Command {}
 
   /**
    * A command to adjust the quantity of an item in the cart.
    */
-  public static class AdjustItemQuantity implements Command {
-    public final String itemId;
-    public final int quantity;
-    public final ActorRef<StatusReply<Summary>> replyTo;
-
-    public AdjustItemQuantity(String itemId, int quantity, ActorRef<StatusReply<Summary>> replyTo) {
-      this.itemId = itemId;
-      this.quantity = quantity;
-      this.replyTo = replyTo;
-    }
-  }
+  public record AdjustItemQuantity(String itemId, int quantity, ActorRef<StatusReply<Summary>> replyTo)
+      implements Command {}
 
   /**
    * A command to get the current state of the shopping cart.
    *
    * The reply type is the {@link Summary}
    */
-  public static class Get implements Command {
-    public final ActorRef<Summary> replyTo;
-
-    @JsonCreator
-    public Get(ActorRef<Summary> replyTo) {
-      this.replyTo = replyTo;
-    }
-  }
+  public record Get(ActorRef<Summary> replyTo) implements Command {}
 
   /**
    * A command to checkout the shopping cart.
@@ -158,92 +124,42 @@ public class ShoppingCart
    * The reply type is the {@link StatusReply<Summary>}, which will be returned when the events have been
    * emitted.
    */
-  public static class Checkout implements Command {
-    public final ActorRef<StatusReply<Summary>> replyTo;
-
-    @JsonCreator
-    public Checkout(ActorRef<StatusReply<Summary>> replyTo) {
-      this.replyTo = replyTo;
-    }
-  }
+  public record Checkout(ActorRef<StatusReply<Summary>> replyTo) implements Command {}
 
   /**
    * Summary of the shopping cart state, used in reply messages.
    */
-  public static final class Summary implements CborSerializable {
-    public final Map<String, Integer> items;
-    public final boolean checkedOut;
-
-
-    public Summary(Map<String, Integer> items, boolean checkedOut) {
-      // Summary is included in messages and should therefore be immutable
-      this.items = Collections.unmodifiableMap(new HashMap<>(items));
-      this.checkedOut = checkedOut;
+  public record Summary(Map<String, Integer> items, boolean checkedOut) implements CborSerializable {
+    public Summary {
+      items = Collections.unmodifiableMap(new HashMap<>(items));
     }
   }
-  
+
   public interface Event extends CborSerializable {
   }
 
-  public static final class ItemAdded implements Event {
-    public final String cartId;
-    public final String itemId;
-    public final int quantity;
-
-    public ItemAdded(String cartId, String itemId, int quantity) {
-      this.cartId = cartId;
-      this.itemId = itemId;
-      this.quantity = quantity;
-    }
-
+  public record ItemAdded(String cartId, String itemId, int quantity) implements Event {
     @Override
     public String toString() {
       return "ItemAdded(" + cartId + "," + itemId + "," + quantity + ")";
     }
   }
 
-  public static final class ItemRemoved implements Event {
-    public final String cartId;
-    public final String itemId;
-
-    public ItemRemoved(String cartId, String itemId) {
-      this.cartId = cartId;
-      this.itemId = itemId;
-    }
-
+  public record ItemRemoved(String cartId, String itemId) implements Event {
     @Override
     public String toString() {
       return "ItemRemoved(" + cartId + "," + itemId + ")";
     }
   }
 
-  public static final class ItemQuantityAdjusted implements Event {
-    public final String cartId;
-    public final String itemId;
-    public final int quantity;
-
-    public ItemQuantityAdjusted(String cartId, String itemId, int quantity) {
-      this.cartId = cartId;
-      this.itemId = itemId;
-      this.quantity = quantity;
-    }
-
+  public record ItemQuantityAdjusted(String cartId, String itemId, int quantity) implements Event {
     @Override
     public String toString() {
       return "ItemQuantityAdjusted(" + cartId + "," + itemId + "," + quantity + ")";
     }
   }
 
-  public static class CheckedOut implements Event {
-
-    public final String cartId;
-    public final Instant eventTime;
-
-    public CheckedOut(String cartId, Instant eventTime) {
-      this.cartId = cartId;
-      this.eventTime = eventTime;
-    }
-
+  public record CheckedOut(String cartId, Instant eventTime) implements Event {
     @Override
     public String toString() {
       return "CheckedOut(" + cartId + "," + eventTime + ")";
@@ -294,79 +210,79 @@ public class ShoppingCart
   }
 
   private Effect<Event, State> onGet(State state, Get cmd) {
-    cmd.replyTo.tell(state.toSummary());
+    cmd.replyTo().tell(state.toSummary());
     return Effect().none();
   }
 
   private class OpenShoppingCartCommandHandlers {
 
     Effect<Event, State> onAddItem(State state, AddItem cmd) {
-      if (state.hasItem(cmd.itemId)) {
-        cmd.replyTo.tell(StatusReply.error(
-          "Item '" + cmd.itemId + "' was already added to this shopping cart"));
+      if (state.hasItem(cmd.itemId())) {
+        cmd.replyTo().tell(StatusReply.error(
+          "Item '" + cmd.itemId() + "' was already added to this shopping cart"));
         return Effect().none();
-      } else if (cmd.quantity <= 0) {
-        cmd.replyTo.tell(StatusReply.error("Quantity must be greater than zero"));
+      } else if (cmd.quantity() <= 0) {
+        cmd.replyTo().tell(StatusReply.error("Quantity must be greater than zero"));
         return Effect().none();
       } else {
-        return Effect().persist(new ItemAdded(cartId, cmd.itemId, cmd.quantity))
-          .thenRun(updatedCart -> cmd.replyTo.tell(StatusReply.success(updatedCart.toSummary())));
+        return Effect().persist(new ItemAdded(cartId, cmd.itemId(), cmd.quantity()))
+          .thenRun(updatedCart -> cmd.replyTo().tell(StatusReply.success(updatedCart.toSummary())));
       }
     }
 
     Effect<Event, State> onRemoveItem(State state, RemoveItem cmd) {
-      if (state.hasItem(cmd.itemId)) {
-        return Effect().persist(new ItemRemoved(cartId, cmd.itemId))
-          .thenRun(updatedCart -> cmd.replyTo.tell(StatusReply.success(updatedCart.toSummary())));
+      if (state.hasItem(cmd.itemId())) {
+        return Effect().persist(new ItemRemoved(cartId, cmd.itemId()))
+          .thenRun(updatedCart -> cmd.replyTo().tell(StatusReply.success(updatedCart.toSummary())));
       } else {
-        cmd.replyTo.tell(StatusReply.success(state.toSummary()));
+        cmd.replyTo().tell(StatusReply.success(state.toSummary()));
         return Effect().none();
       }
     }
 
     Effect<Event, State> onAdjustItemQuantity(State state, AdjustItemQuantity cmd) {
-      if (cmd.quantity <= 0) {
-        cmd.replyTo.tell(StatusReply.error("Quantity must be greater than zero"));
+      if (cmd.quantity() <= 0) {
+        cmd.replyTo().tell(StatusReply.error("Quantity must be greater than zero"));
         return Effect().none();
-      } else if (state.hasItem(cmd.itemId)) {
-        return Effect().persist(new ItemQuantityAdjusted(cartId, cmd.itemId, cmd.quantity))
-          .thenRun(updatedCart -> cmd.replyTo.tell(StatusReply.success(updatedCart.toSummary())));
+      } else if (state.hasItem(cmd.itemId())) {
+        return Effect().persist(new ItemQuantityAdjusted(cartId, cmd.itemId(), cmd.quantity()))
+          .thenRun(updatedCart -> cmd.replyTo().tell(StatusReply.success(updatedCart.toSummary())));
       } else {
-        cmd.replyTo.tell(StatusReply.error(
-          "Cannot adjust quantity for item '" + cmd.itemId + "'. Item not present on cart"));
+        cmd.replyTo().tell(StatusReply.error(
+          "Cannot adjust quantity for item '" + cmd.itemId() + "'. Item not present on cart"));
         return Effect().none();
       }
     }
 
     Effect<Event, State> onCheckout(State state, Checkout cmd) {
       if (state.isEmpty()) {
-        cmd.replyTo.tell(StatusReply.error("Cannot checkout an empty shopping cart"));
+        cmd.replyTo().tell(StatusReply.error("Cannot checkout an empty shopping cart"));
         return Effect().none();
       } else {
         return Effect().persist(new CheckedOut(cartId, Instant.now()))
-          .thenRun(updatedCart -> cmd.replyTo.tell(StatusReply.success(updatedCart.toSummary())));
+          .thenRun(updatedCart -> cmd.replyTo().tell(StatusReply.success(updatedCart.toSummary())));
       }
     }
   }
 
   private class CheckedOutCommandHandlers {
     Effect<Event, State> onAddItem(AddItem cmd) {
-      cmd.replyTo.tell(StatusReply.error("Can't add an item to an already checked out shopping cart"));
+      cmd.replyTo().tell(StatusReply.error("Can't add an item to an already checked out shopping cart"));
       return Effect().none();
     }
 
     Effect<Event, State> onRemoveItem(RemoveItem cmd) {
-      cmd.replyTo.tell(StatusReply.error("Can't remove an item from an already checked out shopping cart"));
+      cmd.replyTo().tell(StatusReply.error("Can't remove an item from an already checked out shopping cart"));
       return Effect().none();
     }
 
     Effect<Event, State> onAdjustItemQuantity(AdjustItemQuantity cmd) {
-      cmd.replyTo.tell(StatusReply.error("Can't adjust item on an already checked out shopping cart"));
+      cmd.replyTo().tell(StatusReply.error("Can't adjust item on an already checked out shopping cart"));
       return Effect().none();
     }
 
     Effect<Event, State> onCheckout(Checkout cmd) {
-      cmd.replyTo.tell(StatusReply.error("Can't checkout already checked out shopping cart"));
+      cmd.replyTo().tell(StatusReply.error("Can't checkout already checked out shopping cart"));
       return Effect().none();
     }
   }
@@ -374,10 +290,10 @@ public class ShoppingCart
   @Override
   public EventHandler<State, Event> eventHandler() {
     return newEventHandlerBuilder().forAnyState()
-      .onEvent(ItemAdded.class, (state, event) -> state.updateItem(event.itemId, event.quantity))
-      .onEvent(ItemRemoved.class, (state, event) -> state.removeItem(event.itemId))
-      .onEvent(ItemQuantityAdjusted.class, (state, event) -> state.updateItem(event.itemId, event.quantity))
-      .onEvent(CheckedOut.class, (state, event) -> state.checkout(event.eventTime))
+      .onEvent(ItemAdded.class, (state, event) -> state.updateItem(event.itemId(), event.quantity()))
+      .onEvent(ItemRemoved.class, (state, event) -> state.removeItem(event.itemId()))
+      .onEvent(ItemQuantityAdjusted.class, (state, event) -> state.updateItem(event.itemId(), event.quantity()))
+      .onEvent(CheckedOut.class, (state, event) -> state.checkout(event.eventTime()))
       .build();
   }
 

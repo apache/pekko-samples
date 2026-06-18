@@ -42,119 +42,31 @@ public class ShoppingCart {
 
   public interface Command {}
 
-  public static final class GetCart implements Command {
-    public final ActorRef<Cart> replyTo;
+  public record GetCart(ActorRef<Cart> replyTo) implements Command {}
 
-    public GetCart(ActorRef<Cart> replyTo) {
-      this.replyTo = replyTo;
-    }
-  }
+  public record AddItem(LineItem item) implements Command {}
 
-  public static class AddItem implements Command {
-    public final LineItem item;
+  public record RemoveItem(String productId) implements Command {}
 
-    public AddItem(LineItem item) {
-      this.item = item;
-    }
-  }
+  public record Cart(Set<LineItem> items) {}
 
-  public static class RemoveItem implements Command {
-    public final String productId;
-
-    public RemoveItem(String productId) {
-      this.productId = productId;
-    }
-  }
-
-  public static class Cart {
-    public final Set<LineItem> items;
-
-    public Cart(Set<LineItem> items) {
-      this.items = items;
-    }
-  }
-
-  public static class LineItem {
-    public final String productId;
-    public final String title;
-    public final int quantity;
-
-    public LineItem(String productId, String title, int quantity) {
-      this.productId = productId;
-      this.title = title;
-      this.quantity = quantity;
-    }
-
-    @Override
-    public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((productId == null) ? 0 : productId.hashCode());
-      result = prime * result + quantity;
-      result = prime * result + ((title == null) ? 0 : title.hashCode());
-      return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (this == obj)
-        return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
-      LineItem other = (LineItem) obj;
-      if (productId == null) {
-        if (other.productId != null)
-          return false;
-      } else if (!productId.equals(other.productId))
-        return false;
-      if (quantity != other.quantity)
-        return false;
-      if (title == null) {
-        if (other.title != null)
-          return false;
-      } else if (!title.equals(other.title))
-        return false;
-      return true;
-    }
-
+  public record LineItem(String productId, String title, int quantity) {
     @Override
     public String toString() {
       return "LineItem [productId=" + productId + ", title=" + title + ", quantity=" + quantity + "]";
     }
-
   }
 
   private interface InternalCommand extends Command {}
 
-  private static class InternalGetResponse implements InternalCommand {
-    public final GetResponse<LWWMap<String, LineItem>> rsp;
-    public final ActorRef<Cart> replyTo;
+  private record InternalGetResponse(GetResponse<LWWMap<String, LineItem>> rsp, ActorRef<Cart> replyTo)
+      implements InternalCommand {}
 
-    private InternalGetResponse(GetResponse<LWWMap<String, LineItem>> rsp, ActorRef<Cart> replyTo) {
-      this.rsp = rsp;
-      this.replyTo = replyTo;
-    }
-  }
+  private record InternalUpdateResponse<A extends ReplicatedData>(UpdateResponse<A> rsp)
+      implements InternalCommand {}
 
-  private static class InternalUpdateResponse<A extends ReplicatedData> implements InternalCommand {
-    public final UpdateResponse<A> rsp;
-
-    private InternalUpdateResponse(UpdateResponse<A> rsp) {
-      this.rsp = rsp;
-    }
-  }
-
-  private static class InternalRemoveItem implements InternalCommand {
-    public final String productId;
-    public final GetResponse<LWWMap<String, LineItem>> rsp;
-
-    private InternalRemoveItem(String productId, GetResponse<LWWMap<String, LineItem>> rsp) {
-      this.productId = productId;
-      this.rsp = rsp;
-    }
-  }
+  private record InternalRemoveItem(String productId, GetResponse<LWWMap<String, LineItem>> rsp)
+      implements InternalCommand {}
 
   public static Behavior<Command> create(String userId) {
     return Behaviors.setup(context ->
@@ -193,22 +105,22 @@ public class ShoppingCart {
   private Behavior<Command> onGetCart(GetCart command) {
     replicator.askGet(
         askReplyTo -> new Get<>(dataKey, readMajority, askReplyTo),
-        rsp -> new InternalGetResponse(rsp, command.replyTo));
+        rsp -> new InternalGetResponse(rsp, command.replyTo()));
 
     return Behaviors.same();
   }
 
   private Behavior<Command> onInternalGetResponse(InternalGetResponse msg) {
-    if (msg.rsp instanceof GetSuccess) {
-      LWWMap<String, LineItem> data = ((GetSuccess<LWWMap<String, LineItem>>) msg.rsp).get(dataKey);
-      msg.replyTo.tell(new Cart(new HashSet<>(data.getEntries().values())));
-    } else if (msg.rsp instanceof NotFound) {
-      msg.replyTo.tell(new Cart(new HashSet<>()));
-    } else if (msg.rsp instanceof GetFailure) {
+    if (msg.rsp() instanceof GetSuccess<LWWMap<String, LineItem>> success) {
+      LWWMap<String, LineItem> data = success.get(dataKey);
+      msg.replyTo().tell(new Cart(new HashSet<>(data.getEntries().values())));
+    } else if (msg.rsp() instanceof NotFound) {
+      msg.replyTo().tell(new Cart(new HashSet<>()));
+    } else if (msg.rsp() instanceof GetFailure) {
       // ReadMajority failure, try again with local read
       replicator.askGet(
           askReplyTo -> new Get<>(dataKey, Replicator.readLocal(), askReplyTo),
-          rsp -> new InternalGetResponse(rsp, msg.replyTo)
+          rsp -> new InternalGetResponse(rsp, msg.replyTo())
       );
     }
     return Behaviors.same();
@@ -224,7 +136,7 @@ public class ShoppingCart {
                 LWWMap.empty(),
                 writeMajority,
                 askReplyTo,
-                cart -> updateCart(cart, command.item)
+                cart -> updateCart(cart, command.item())
             ),
         InternalUpdateResponse::new);
 
@@ -234,13 +146,13 @@ public class ShoppingCart {
   //#add-item
 
   private LWWMap<String, LineItem> updateCart(LWWMap<String, LineItem> data, LineItem item) {
-    if (data.contains(item.productId)) {
-      LineItem existingItem = data.get(item.productId).get();
-      int newQuantity = existingItem.quantity + item.quantity;
-      LineItem newItem = new LineItem(item.productId, item.title, newQuantity);
-      return data.put(node, item.productId, newItem);
+    if (data.contains(item.productId())) {
+      LineItem existingItem = data.get(item.productId()).get();
+      int newQuantity = existingItem.quantity() + item.quantity();
+      LineItem newItem = new LineItem(item.productId(), item.title(), newQuantity);
+      return data.put(node, item.productId(), newItem);
     } else {
-      return data.put(node, item.productId, item);
+      return data.put(node, item.productId(), item);
     }
   }
 
@@ -250,19 +162,19 @@ public class ShoppingCart {
     // remove must have seen the item to be able to remove it.
     replicator.askGet(
         askReplyTo -> new Get<>(dataKey, readMajority, askReplyTo),
-        rsp -> new InternalRemoveItem(command.productId, rsp));
+        rsp -> new InternalRemoveItem(command.productId(), rsp));
 
     return Behaviors.same();
   }
 
   private Behavior<Command> onInternalRemoveItem(InternalRemoveItem msg) {
-    if (msg.rsp instanceof GetSuccess) {
-      removeItem(msg.productId);
-    } else if (msg.rsp instanceof NotFound) {
+    if (msg.rsp() instanceof GetSuccess) {
+      removeItem(msg.productId());
+    } else if (msg.rsp() instanceof NotFound) {
       /* nothing to remove */
-    } else if (msg.rsp instanceof GetFailure) {
+    } else if (msg.rsp() instanceof GetFailure) {
       // ReadMajority failed, fall back to best effort local value
-      removeItem(msg.productId);
+      removeItem(msg.productId());
     }
     return Behaviors.same();
   }
@@ -282,12 +194,12 @@ public class ShoppingCart {
   //#remove-item
 
   private Behavior<Command> onInternalUpdateResponse(InternalUpdateResponse<?> msg) {
-    if (msg.rsp instanceof UpdateSuccess) {
+    if (msg.rsp() instanceof UpdateSuccess) {
       // ok
-    } else if (msg.rsp instanceof UpdateTimeout) {
+    } else if (msg.rsp() instanceof UpdateTimeout) {
       // will eventually be replicated
-    } else if (msg.rsp instanceof UpdateFailure) {
-      throw new IllegalStateException("Unexpected failure: " + msg.rsp);
+    } else if (msg.rsp() instanceof UpdateFailure) {
+      throw new IllegalStateException("Unexpected failure: " + msg.rsp());
     }
     return Behaviors.same();
   }

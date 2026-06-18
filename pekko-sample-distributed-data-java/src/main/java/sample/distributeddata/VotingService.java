@@ -38,49 +38,20 @@ public class VotingService {
     }
   }
 
-  public static class Vote implements Command {
-    public final String participant;
+  public record Vote(String participant) implements Command {}
 
-    public Vote(String participant) {
-      this.participant = participant;
-    }
-  }
-
-  public static class GetVotes implements Command {
-    public final ActorRef<Votes> replyTo;
-
-    public GetVotes(ActorRef<Votes> replyTo) {
-      this.replyTo = replyTo;
-    }
-  }
+  public record GetVotes(ActorRef<Votes> replyTo) implements Command {}
 
   private interface InternalCommand extends Command {}
 
-  private static class InternalSubscribeResponse implements InternalCommand {
-    public final SubscribeResponse<Flag> rsp;
+  private record InternalSubscribeResponse(SubscribeResponse<Flag> rsp)
+      implements InternalCommand {}
 
-    private InternalSubscribeResponse(SubscribeResponse<Flag> rsp) {
-      this.rsp = rsp;
-    }
-  }
+  private record InternalUpdateResponse<A extends ReplicatedData>(UpdateResponse<A> rsp)
+      implements InternalCommand {}
 
-  private static class InternalUpdateResponse<A extends ReplicatedData> implements InternalCommand {
-    public final UpdateResponse<A> rsp;
-
-    private InternalUpdateResponse(UpdateResponse<A> rsp) {
-      this.rsp = rsp;
-    }
-  }
-
-  private static class InternalGetResponse implements InternalCommand {
-    public final ActorRef<Votes> replyTo;
-    public final GetResponse<PNCounterMap<String>> rsp;
-
-    private InternalGetResponse(ActorRef<Votes> replyTo, GetResponse<PNCounterMap<String>> rsp) {
-      this.replyTo = replyTo;
-      this.rsp = rsp;
-    }
-  }
+  private record InternalGetResponse(ActorRef<Votes> replyTo, GetResponse<PNCounterMap<String>> rsp)
+      implements InternalCommand {}
 
   private final ReplicatorMessageAdapter<Command, Flag> replicatorFlag;
   private final ReplicatorMessageAdapter<Command, PNCounterMap<String>> replicatorCounters;
@@ -140,7 +111,7 @@ public class VotingService {
   }
 
   private Behavior<Command> receiveGetVotesEmpty(GetVotes getVotes) {
-    getVotes.replyTo.tell(new Votes(new HashMap<>(), false));
+    getVotes.replyTo().tell(new Votes(new HashMap<>(), false));
     return Behaviors.same();
   }
 
@@ -156,7 +127,7 @@ public class VotingService {
   private Behavior<Command> receiveVote(Vote vote) {
     replicatorCounters.askUpdate(
         askReplyTo -> new Update<>(countersKey, PNCounterMap.create(), writeLocal(), askReplyTo,
-            curr -> curr.increment(node, vote.participant, 1)),
+            curr -> curr.increment(node, vote.participant(), 1)),
         InternalUpdateResponse::new);
 
     return Behaviors.same();
@@ -171,12 +142,12 @@ public class VotingService {
   }
 
   private Behavior<Command> onInternalSubscribeResponse(InternalSubscribeResponse rsp) {
-    if (rsp.rsp instanceof Changed && rsp.rsp.key().equals(openedKey)) {
-      if (((Changed<Flag>) rsp.rsp).dataValue().enabled()) {
+    if (rsp.rsp() instanceof Changed<Flag> changed && rsp.rsp().key().equals(openedKey)) {
+      if (changed.dataValue().enabled()) {
         return becomeOpen();
       }
-    } else if (rsp.rsp instanceof Changed && rsp.rsp.key().equals(closedKey)) {
-      if (((Changed<Flag>) rsp.rsp).dataValue().enabled()) {
+    } else if (rsp.rsp() instanceof Changed<Flag> changed2 && rsp.rsp().key().equals(closedKey)) {
+      if (changed2.dataValue().enabled()) {
         return matchGetVotes(false);
       }
     }
@@ -198,19 +169,18 @@ public class VotingService {
   private Behavior<Command> receiveGetVotes(GetVotes getVotes) {
     replicatorCounters.askGet(
         askReplyTo -> new Get<>(countersKey, readAll, askReplyTo),
-        rsp -> new InternalGetResponse(getVotes.replyTo, rsp)
+        rsp -> new InternalGetResponse(getVotes.replyTo(), rsp)
     );
     return Behaviors.same();
   }
 
   private Behavior<Command> onInternalGetResponse(boolean open, InternalGetResponse rsp) {
-    if (rsp.rsp instanceof GetSuccess && rsp.rsp.key().equals(countersKey)) {
-      GetSuccess<PNCounterMap<String>> rsp1 = (GetSuccess<PNCounterMap<String>>) rsp.rsp;
-      Map<String, BigInteger> result = rsp1.dataValue().getEntries();
-      rsp.replyTo.tell(new Votes(result, open));
-    } else if (rsp.rsp instanceof NotFound && rsp.rsp.key().equals(countersKey)) {
-      rsp.replyTo.tell(new Votes(new HashMap<>(), open));
-    } else if (rsp.rsp instanceof GetFailure && rsp.rsp.key().equals(countersKey)) {
+    if (rsp.rsp() instanceof GetSuccess<PNCounterMap<String>> success && rsp.rsp().key().equals(countersKey)) {
+      Map<String, BigInteger> result = success.dataValue().getEntries();
+      rsp.replyTo().tell(new Votes(result, open));
+    } else if (rsp.rsp() instanceof NotFound && rsp.rsp().key().equals(countersKey)) {
+      rsp.replyTo().tell(new Votes(new HashMap<>(), open));
+    } else if (rsp.rsp() instanceof GetFailure && rsp.rsp().key().equals(countersKey)) {
       // skip
     }
     return Behaviors.same();

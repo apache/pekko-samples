@@ -70,17 +70,7 @@ public class ClusterClient extends AbstractLoggingActor {
 
   public interface Command {}
 
-  public static class Send implements Command {
-    public final String path;
-    public final Object msg;
-    public final boolean localAffinity;
-
-    public Send(String path, Object msg, boolean localAffinity) {
-      this.path = path;
-      this.msg = msg;
-      this.localAffinity = localAffinity;
-    }
-
+  public record Send(String path, Object msg, boolean localAffinity) implements Command {
     /**
      * Convenience constructor with `localAffinity` false
      */
@@ -92,17 +82,7 @@ public class ClusterClient extends AbstractLoggingActor {
   /**
    * More efficient than `Send` for single request-reply interaction
    */
-  public static class SendAsk implements Command {
-    public final String path;
-    public final Object msg;
-    public final boolean localAffinity;
-
-    public SendAsk(String path, Object msg, boolean localAffinity) {
-      this.path = path;
-      this.msg = msg;
-      this.localAffinity = localAffinity;
-    }
-
+  public record SendAsk(String path, Object msg, boolean localAffinity) implements Command {
     /**
      * Convenience constructor with `localAffinity` false
      */
@@ -111,25 +91,9 @@ public class ClusterClient extends AbstractLoggingActor {
     }
   }
 
-  public static class SendToAll implements Command {
-    public final String path;
-    public final Object msg;
+  public record SendToAll(String path, Object msg) implements Command {}
 
-    public SendToAll(String path, Object msg) {
-      this.path = path;
-      this.msg = msg;
-    }
-  }
-
-  public static class Publish implements Command {
-    public final String topic;
-    public final Object msg;
-
-    public Publish(String topic, Object msg) {
-      this.topic = topic;
-      this.msg = msg;
-    }
-  }
+  public record Publish(String topic, Object msg) implements Command {}
 
   private static ClusterClientReceptionistServiceClient createClientStub(ClusterClientSettings settings,
       Materializer mat) {
@@ -161,29 +125,26 @@ public class ClusterClient extends AbstractLoggingActor {
             )
           .via(killSwitch.flow())
           .map(msg -> {
-            if (msg instanceof Send) {
-              Send send = (Send) msg;
-              Payload payload = serialization.serializePayload(send.msg);
+            if (msg instanceof Send send) {
+              Payload payload = serialization.serializePayload(send.msg());
               return Req.newBuilder()
                 .setSend(SendReq.newBuilder()
-                  .setPath(send.path)
-                  .setLocalAffinity(send.localAffinity)
+                  .setPath(send.path())
+                  .setLocalAffinity(send.localAffinity())
                   .setPayload(payload))
                   .build();
-            } else if (msg instanceof SendToAll) {
-              SendToAll sendToAll = (SendToAll) msg;
-              Payload payload = serialization.serializePayload(sendToAll.msg);
+            } else if (msg instanceof SendToAll sendToAll) {
+              Payload payload = serialization.serializePayload(sendToAll.msg());
               return Req.newBuilder()
                 .setSendToAll(SendToAllReq.newBuilder()
-                  .setPath(sendToAll.path)
+                  .setPath(sendToAll.path())
                   .setPayload(payload))
                   .build();
-            } else if (msg instanceof Publish) {
-              Publish publish = (Publish) msg;
-              Payload payload = serialization.serializePayload(publish.msg);
+            } else if (msg instanceof Publish publish) {
+              Payload payload = serialization.serializePayload(publish.msg());
               return Req.newBuilder()
                 .setPublish(PublishReq.newBuilder()
-                  .setTopic(publish.topic)
+                  .setTopic(publish.topic())
                   .setPayload(payload))
                   .build();
             } else {
@@ -216,10 +177,10 @@ public class ClusterClient extends AbstractLoggingActor {
     ClusterClientReceptionistServiceClient receptionistServiceClient,
     SendAsk send,
     ClusterClientSerialization serialization) {
-    Payload payload = serialization.serializePayload(send.msg);
+    Payload payload = serialization.serializePayload(send.msg());
     SendReq sendReq = SendReq.newBuilder()
-      .setPath(send.path)
-      .setLocalAffinity(send.localAffinity)
+      .setPath(send.path())
+      .setLocalAffinity(send.localAffinity())
       .setPayload(payload)
       .build();
     return receptionistServiceClient.askSend(sendReq).thenApply( rsp ->
