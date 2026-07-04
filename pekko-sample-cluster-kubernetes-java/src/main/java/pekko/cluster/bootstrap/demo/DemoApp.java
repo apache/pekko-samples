@@ -11,11 +11,9 @@ import org.apache.pekko.actor.typed.javadsl.Behaviors;
 import org.apache.pekko.cluster.ClusterEvent;
 import org.apache.pekko.cluster.typed.Cluster;
 import org.apache.pekko.cluster.typed.Subscribe;
-import org.apache.pekko.http.javadsl.ConnectHttp;
 import org.apache.pekko.http.javadsl.Http;
 import org.apache.pekko.management.cluster.bootstrap.ClusterBootstrap;
 import org.apache.pekko.management.scaladsl.PekkoManagement;
-import org.apache.pekko.stream.Materializer;
 
 import static org.apache.pekko.http.javadsl.server.Directives.*;
 
@@ -44,10 +42,8 @@ public class DemoApp {
     public static Behavior<Void> create() {
       return Behaviors.setup(context -> {
         final org.apache.pekko.actor.ActorSystem classicSystem = Adapter.toClassic(context.getSystem());
-        Materializer mat = Materializer.matFromSystem(classicSystem);
 
-        Http.get(classicSystem).bindAndHandle(complete("Hello world")
-                .flow(classicSystem, mat), ConnectHttp.toHost("0.0.0.0", 8080), mat)
+        Http.get(classicSystem).newServerAt("0.0.0.0", 8080).bind(complete("Hello world"))
                 .whenComplete((binding, failure) -> {
                   if (failure == null) {
                     classicSystem.log().info("HTTP server now listening at port 8080");
