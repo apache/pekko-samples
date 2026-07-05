@@ -141,7 +141,7 @@ public class ShoppingCart
   /**
    * A command to get the current state of the shopping cart.
    *
-   * The reply type is the {@link Summary}
+   * The reply type is the {@link ShoppingCart.Summary}
    */
   public static class Get implements Command {
     public final ActorRef<Summary> replyTo;
