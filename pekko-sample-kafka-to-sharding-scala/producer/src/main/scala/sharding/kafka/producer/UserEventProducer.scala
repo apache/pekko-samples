@@ -15,42 +15,44 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Random
 
-object UserEventProducer extends App {
+object UserEventProducer {
+  def main(args: Array[String]): Unit = {
 
-  implicit val system: ActorSystem = ActorSystem(
-    "UserEventProducer",
-    ConfigFactory.parseString("""
-      pekko.actor.provider = "local" 
-     """.stripMargin).withFallback(ConfigFactory.load()).resolve())
+    implicit val system: ActorSystem = ActorSystem(
+      "UserEventProducer",
+      ConfigFactory.parseString("""
+        pekko.actor.provider = "local" 
+       """.stripMargin).withFallback(ConfigFactory.load()).resolve())
 
-  val log = Logging(system, "UserEventProducer")
+    val log = Logging(system, "UserEventProducer")
 
-  val config = system.settings.config.getConfig("pekko.kafka.producer")
+    val config = system.settings.config.getConfig("pekko.kafka.producer")
 
-  val producerConfig = ProducerConfig(system.settings.config.getConfig("kafka-to-sharding-producer"))
+    val producerConfig = ProducerConfig(system.settings.config.getConfig("kafka-to-sharding-producer"))
 
-  val producerSettings: ProducerSettings[String, Array[Byte]] =
-    ProducerSettings(config, new StringSerializer, new ByteArraySerializer)
-      .withBootstrapServers(producerConfig.bootstrapServers)
+    val producerSettings: ProducerSettings[String, Array[Byte]] =
+      ProducerSettings(config, new StringSerializer, new ByteArraySerializer)
+        .withBootstrapServers(producerConfig.bootstrapServers)
 
-  val nrUsers = 200
-  val maxPrice = 10000
-  val maxQuantity = 5
-  val products = List("cat t-shirt", "pekko t-shirt", "skis", "climbing shoes", "rope")
+    val nrUsers = 200
+    val maxPrice = 10000
+    val maxQuantity = 5
+    val products = List("cat t-shirt", "pekko t-shirt", "skis", "climbing shoes", "rope")
 
-  val done: Future[Done] =
-    Source
-      .tick(1.second, 1.second, "tick")
-      .map(_ => {
-        val randomEntityId = Random.nextInt(nrUsers).toString
-        val price = Random.nextInt(maxPrice)
-        val quantity = Random.nextInt(maxQuantity)
-        val product = products(Random.nextInt(products.size))
-        val message = UserPurchaseProto(randomEntityId, product, quantity, price).toByteArray
-        log.info("Sending message to user {}", randomEntityId)
-        // rely on the default kafka partitioner to hash the key and distribute among shards
-        // the logic of the default partitioner must be replicated in MessageExtractor entityId -> shardId function
-        new ProducerRecord[String, Array[Byte]](producerConfig.topic, randomEntityId, message)
-      })
-      .runWith(Producer.plainSink(producerSettings))
+    val done: Future[Done] =
+      Source
+        .tick(1.second, 1.second, "tick")
+        .map(_ => {
+          val randomEntityId = Random.nextInt(nrUsers).toString
+          val price = Random.nextInt(maxPrice)
+          val quantity = Random.nextInt(maxQuantity)
+          val product = products(Random.nextInt(products.size))
+          val message = UserPurchaseProto(randomEntityId, product, quantity, price).toByteArray
+          log.info("Sending message to user {}", randomEntityId)
+          // rely on the default kafka partitioner to hash the key and distribute among shards
+          // the logic of the default partitioner must be replicated in MessageExtractor entityId -> shardId function
+          new ProducerRecord[String, Array[Byte]](producerConfig.topic, randomEntityId, message)
+        })
+        .runWith(Producer.plainSink(producerSettings))
+  }
 }
