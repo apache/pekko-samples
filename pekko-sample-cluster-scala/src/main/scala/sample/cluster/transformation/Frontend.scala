@@ -51,7 +51,9 @@ object Frontend {
           val selectedWorker = workers(jobCounter % workers.size)
           ctx.log.info("Sending work for processing to {}", selectedWorker)
           val text = s"hello-$jobCounter"
-          ctx.ask(selectedWorker, Worker.TransformText(text, _)) {
+          // the type params are explicit because Scala 3.3 cannot infer the response type here: ActorRef is
+          // contravariant, so TextTransformed is only a lower bound for it and gets widened to Any
+          ctx.ask[Worker.TransformText, Worker.TextTransformed](selectedWorker, Worker.TransformText(text, _)) {
             case Success(transformedText) =>
               TransformCompleted(text, transformedText.text)
             case Failure(ex) => JobFailed("Processing timed out", text)
