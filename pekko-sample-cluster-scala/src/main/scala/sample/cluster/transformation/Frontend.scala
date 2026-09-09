@@ -53,7 +53,7 @@ object Frontend {
           val text = s"hello-$jobCounter"
           ctx.ask(selectedWorker, Worker.TransformText(text, _)) {
             case Success(transformedText) =>
-              TransformCompleted(transformedText.asInstanceOf[Worker.TransformText].text, text)
+              TransformCompleted(text, transformedText.text)
             case Failure(ex) => JobFailed("Processing timed out", text)
           }
           running(ctx, workers, jobCounter + 1)
