@@ -65,12 +65,12 @@ object ClusterClient {
         Source
           .actorRef[Any](
             bufferSize = settings.bufferSize,
-            overflowStrategy = OverflowStrategy.dropNew,
+            overflowStrategy = OverflowStrategy.dropTail,
             // never complete from stream element
             completionMatcher = PartialFunction.empty,
             // never fail from stream element
             failureMatcher = PartialFunction.empty)
-          // .actorRef[Any](bufferSize = settings.bufferSize, overflowStrategy = OverflowStrategy.dropNew)
+          // .actorRef[Any](bufferSize = settings.bufferSize, overflowStrategy = OverflowStrategy.dropTail)
           .via(killSwitch.flow)
           .map {
             case send: Send =>

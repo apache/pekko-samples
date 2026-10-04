@@ -21,7 +21,7 @@ private[killrweather] object WeatherHttpServer {
 
     import system.executionContext
 
-    Http().bindAndHandle(routes, "localhost", port).onComplete {
+    Http().newServerAt("localhost", port).bind(routes).onComplete {
       case Success(binding) =>
         val address = binding.localAddress
         system.log.info(

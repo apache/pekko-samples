@@ -157,7 +157,7 @@ public class ClusterClient extends AbstractLoggingActor {
             // never fail from stream element
             elem -> Optional.empty(),
             settings.bufferSize,
-            OverflowStrategy.dropNew()
+            OverflowStrategy.dropTail()
             )
           .via(killSwitch.flow())
           .map(msg -> {
