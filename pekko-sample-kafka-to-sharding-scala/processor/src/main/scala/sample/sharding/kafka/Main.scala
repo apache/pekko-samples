@@ -7,7 +7,6 @@ import org.apache.pekko.cluster.typed.{ Cluster, SelfUp, Subscribe }
 import org.apache.pekko.http.scaladsl._
 import org.apache.pekko.http.scaladsl.model.{ HttpRequest, HttpResponse }
 import org.apache.pekko.management.scaladsl.PekkoManagement
-import org.apache.pekko.stream.Materializer
 import com.typesafe.config.{ Config, ConfigFactory }
 
 import scala.concurrent.Future
@@ -96,14 +95,9 @@ object Main {
 
     def startGrpc(
         system: ActorSystem[?], frontEndPort: Int, region: ActorRef[UserEvents.Command]): Future[Http.ServerBinding] = {
-      val mat = Materializer.createMaterializer(system.toClassic)
       val service: HttpRequest => Future[HttpResponse] =
         UserServiceHandler(new UserGrpcService(system, region))(system.toClassic)
-      Http()(system.toClassic).bindAndHandleAsync(
-        service,
-        interface = "127.0.0.1",
-        port = frontEndPort,
-        connectionContext = HttpConnectionContext())(mat)
+      Http()(system.toClassic).newServerAt("127.0.0.1", frontEndPort).bind(service)
 
     }
 

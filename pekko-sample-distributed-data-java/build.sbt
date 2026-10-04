@@ -1,6 +1,6 @@
 import com.typesafe.sbt.MultiJvmPlugin.multiJvmSettings
 
-val pekkoVersion = "2.0.0-M1"
+val pekkoVersion = "2.0.0-M4"
 val logbackVersion = "1.3.15"
 
 val `pekko-sample-distributed-data-java` = project
