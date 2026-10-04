@@ -1,5 +1,5 @@
 import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
-import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
+import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.{ jvmOptions, MultiJvm }
 
 val pekkoVersion = "2.0.0-M4"
 val logbackVersion = "1.3.15"
@@ -9,11 +9,13 @@ val `pekko-sample-distributed-data-scala` = project
   .settings(multiJvmSettings: _*)
   .settings(
     organization := "org.apache.pekko",
+    // Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
+    MultiJvm / jvmOptions ++= Seq("--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"),
     version := "1.0",
     scalaVersion := "3.3.7",
     Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
     Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
-    run / javaOptions ++= Seq("-Xms128m", "-Xmx1024m"),
+    run / javaOptions ++= Seq("-Xms128m", "-Xmx1024m", "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"),
     libraryDependencies ++= Seq(
       "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
       "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,

@@ -1,5 +1,5 @@
 import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
-import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
+import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.{ jvmOptions, MultiJvm }
 
 ThisBuild / evictionErrorLevel := Level.Info
 val pekkoVersion = "2.0.0-M4"
@@ -11,6 +11,8 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
   .settings(multiJvmSettings: _*)
   .settings(
     organization := "org.apache.pekko",
+    // Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
+    MultiJvm / jvmOptions ++= Seq("--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"),
     scalaVersion := "3.3.7",
     Compile / scalacOptions ++= Seq(
       "-deprecation",

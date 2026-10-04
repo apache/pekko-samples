@@ -16,6 +16,9 @@ scalacOptions := Seq("-feature", "-unchecked", "-deprecation", "-encoding", "utf
 classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.AllLibraryJars
 run / fork := true
 Compile / run / fork := true
+// Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
+run / javaOptions += "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"
+bashScriptExtraDefines += """addJava "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED""""
 
 mainClass in (Compile, run) := Some("pekko.sample.cluster.kubernetes.DemoApp")
 
@@ -25,7 +28,7 @@ dockerExposedPorts := Seq(8080, 7626, 17355)
 dockerUpdateLatest := true
 dockerUsername := sys.props.get("docker.username")
 dockerRepository := sys.props.get("docker.registry")
-dockerBaseImage := "adoptopenjdk:11-jre-hotspot"
+dockerBaseImage := "eclipse-temurin:17"
 
 libraryDependencies ++= {
   Seq(

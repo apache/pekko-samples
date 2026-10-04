@@ -28,5 +28,7 @@ dockerEntrypoint in Docker := Seq("sh", "-c", "bin/clustering $*")
 
 dockerRepository := Some("pekko")
 
-dockerBaseImage := "eclipse-temurin:11"
+dockerBaseImage := "eclipse-temurin:17"
+// Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
+bashScriptExtraDefines += """addJava "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED""""
 enablePlugins(JavaAppPackaging)
