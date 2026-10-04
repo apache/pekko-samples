@@ -43,6 +43,8 @@ lazy val processor = project
   .in(file("processor"))
   .enablePlugins(PekkoGrpcPlugin, JavaAgent)
   .settings(javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.10" % "runtime;test")
+  // Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
+  .settings(javaOptions += "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED")
   .settings(libraryDependencies ++= Seq(
     "org.apache.pekko" %% "pekko-connectors-kafka" % pekkoConnectorsKafkaVersion,
     "org.apache.pekko" %% "pekko-connectors-kafka-cluster-sharding" % pekkoConnectorsKafkaVersion,

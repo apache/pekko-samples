@@ -21,6 +21,8 @@
         <pekko.version>2.0.0-M4</pekko.version>
         <pekko-http.version>2.0.0-M1</pekko-http.version>
         <scala.binary.version>3</scala.binary.version>
+        <!-- Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe -->
+        <argLine>--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED</argLine>
     </properties>
 
     <repositories>

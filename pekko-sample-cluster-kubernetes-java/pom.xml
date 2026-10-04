@@ -23,6 +23,8 @@
     <pekko-management.version>2.0.0-M1</pekko-management.version>
     <scala.binary.version>3</scala.binary.version>
     <version.number>${git.commit.time}-${git.commit.id.abbrev}</version.number>
+    <!-- Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe -->
+    <argLine>--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED</argLine>
   </properties>
 
   <dependencies>
@@ -97,13 +99,13 @@
                   <tag>${version.number}</tag>
                   <tag>latest</tag>
                 </tags>
-                <from>adoptopenjdk:11-jre-hotspot</from>
+                <from>eclipse-temurin:17</from>
                 <ports>
                   <port>8080</port>
                   <port>7626</port>
                 </ports>
                 <entryPoint>
-                  java $JAVA_OPTS -cp '/maven/*' org.apache.pekko.cluster.bootstrap.demo.DemoApp
+                  java --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED $JAVA_OPTS -cp '/maven/*' org.apache.pekko.cluster.bootstrap.demo.DemoApp
                 </entryPoint>
                 <assembly>
                   <descriptorRef>artifact-with-dependencies</descriptorRef>
