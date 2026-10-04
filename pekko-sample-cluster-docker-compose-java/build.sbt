@@ -20,11 +20,11 @@ libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion,
   "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion)
 
-version in Docker := "latest"
+Docker / version := "latest"
 
-dockerExposedPorts in Docker := Seq(1600)
+Docker / dockerExposedPorts := Seq(1600)
 
-dockerEntrypoint in Docker := Seq("sh", "-c", "bin/clustering $*")
+Docker / dockerEntrypoint := Seq("sh", "-c", "bin/clustering $*")
 
 dockerRepository := Some("pekko")
 
