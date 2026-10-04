@@ -63,6 +63,12 @@
       <artifactId>pekko-discovery_${scala.binary.version}</artifactId>
       <version>${pekko.version}</version>
     </dependency>
+    <!-- pekko-http brings in an older pekko-pki; Pekko requires all core modules at the same version -->
+    <dependency>
+      <groupId>org.apache.pekko</groupId>
+      <artifactId>pekko-pki_${scala.binary.version}</artifactId>
+      <version>${pekko.version}</version>
+    </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
