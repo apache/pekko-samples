@@ -1,5 +1,6 @@
-val pekkoVersion = "1.5.0"
-val pekkoHttpVersion = "1.3.0"
+ThisBuild / evictionErrorLevel := Level.Info
+val pekkoVersion = "2.0.0-M4"
+val pekkoHttpVersion = "2.0.0-M1"
 val logbackVersion = "1.3.15"
 
 lazy val buildSettings = Seq(

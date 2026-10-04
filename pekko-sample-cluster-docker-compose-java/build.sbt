@@ -9,7 +9,7 @@ scalacOptions ++= Seq(
   "-unchecked",
   "-encoding", "UTF-8")
 
-val pekkoVersion = "1.5.0"
+val pekkoVersion = "2.0.0-M4"
 val logbackVersion = "1.3.15"
 
 /* dependencies */
@@ -20,13 +20,15 @@ libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion,
   "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion)
 
-version in Docker := "latest"
+Docker / version := "latest"
 
-dockerExposedPorts in Docker := Seq(1600)
+Docker / dockerExposedPorts := Seq(1600)
 
-dockerEntrypoint in Docker := Seq("sh", "-c", "bin/clustering $*")
+Docker / dockerEntrypoint := Seq("sh", "-c", "bin/clustering $*")
 
 dockerRepository := Some("pekko")
 
-dockerBaseImage := "eclipse-temurin:11"
+dockerBaseImage := "eclipse-temurin:17"
+// Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
+bashScriptExtraDefines += """addJava "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED""""
 enablePlugins(JavaAppPackaging)

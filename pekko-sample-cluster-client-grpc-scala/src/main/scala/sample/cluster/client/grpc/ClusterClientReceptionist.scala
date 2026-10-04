@@ -17,7 +17,6 @@ import org.apache.pekko.cluster.pubsub.DistributedPubSub
 import org.apache.pekko.cluster.pubsub.DistributedPubSubMediator
 import org.apache.pekko.event.Logging
 import org.apache.pekko.http.scaladsl.Http
-import org.apache.pekko.http.scaladsl.HttpConnectionContext
 import org.apache.pekko.http.scaladsl.model.HttpRequest
 import org.apache.pekko.http.scaladsl.model.HttpResponse
 import org.apache.pekko.stream.Materializer
@@ -100,11 +99,7 @@ final class ClusterClientReceptionist(system: ExtendedActorSystem) extends Exten
       ClusterClientReceptionistServiceHandler(
         new ClusterClientReceptionistGrpcImpl(settings, pubSubMediator, serialization)(materializer, log))
 
-    Http().bindAndHandleAsync(
-      service,
-      interface = settings.hostPort.hostname,
-      settings.hostPort.port,
-      connectionContext = HttpConnectionContext())
+    Http().newServerAt(settings.hostPort.hostname, settings.hostPort.port).bind(service)
   }
 
   server.onComplete { result =>

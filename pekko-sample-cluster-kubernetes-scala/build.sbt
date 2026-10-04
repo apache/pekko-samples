@@ -3,9 +3,10 @@ ThisBuild / organization := "org.apache.pekko"
 name := "pekko-sample-cluster-kubernetes-scala"
 
 scalaVersion := "3.3.7"
-val pekkoHttpVersion = "1.3.0"
-val pekkoVersion = "1.5.0"
-val pekkoManagementVersion = "1.2.1"
+val pekkoHttpVersion = "2.0.0-M1"
+ThisBuild / evictionErrorLevel := Level.Info
+val pekkoVersion = "2.0.0-M4"
+val pekkoManagementVersion = "2.0.0-M1"
 val logbackVersion = "1.3.15"
 
 // make version compatible with docker for publishing
@@ -15,8 +16,11 @@ scalacOptions := Seq("-feature", "-unchecked", "-deprecation", "-encoding", "utf
 classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.AllLibraryJars
 run / fork := true
 Compile / run / fork := true
+// Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
+run / javaOptions += "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"
+bashScriptExtraDefines += """addJava "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED""""
 
-mainClass in (Compile, run) := Some("pekko.sample.cluster.kubernetes.DemoApp")
+Compile / run / mainClass := Some("pekko.sample.cluster.kubernetes.DemoApp")
 
 enablePlugins(JavaServerAppPackaging, DockerPlugin)
 
@@ -24,7 +28,7 @@ dockerExposedPorts := Seq(8080, 7626, 17355)
 dockerUpdateLatest := true
 dockerUsername := sys.props.get("docker.username")
 dockerRepository := sys.props.get("docker.registry")
-dockerBaseImage := "adoptopenjdk:11-jre-hotspot"
+dockerBaseImage := "eclipse-temurin:17"
 
 libraryDependencies ++= {
   Seq(
