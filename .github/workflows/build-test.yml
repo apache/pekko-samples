@@ -106,7 +106,7 @@ jobs:
         run: cd pekko-sample-cluster-kubernetes-scala && ./scripts/test.sh
 
       - name: Test pekko-sample-cluster-kubernetes-java
-        run: minikube start && cd pekko-sample-cluster-kubernetes-java && ./scripts/test.sh
+        run: minikube start --container-runtime=docker && cd pekko-sample-cluster-kubernetes-java && ./scripts/test.sh
 
       # Build and test the documentation
       - name: Test docs gen
