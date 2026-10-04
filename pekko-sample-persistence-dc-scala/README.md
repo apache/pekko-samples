@@ -6,6 +6,8 @@ to run a replica per datacenter.
 
 ## How to run
 
+Starting Apache Cassandra with the `cassandra` argument runs it in a Docker container using [Testcontainers](https://testcontainers.com/), so Docker must be installed and running.
+
 1. In terminal 1: `sbt "runMain sample.persistence.res.MainApp cassandra"`
 
 1. In terminal 2: `sbt "runMain sample.persistence.res.MainApp 7345 eu-west"`

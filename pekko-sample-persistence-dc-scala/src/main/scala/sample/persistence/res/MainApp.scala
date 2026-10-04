@@ -90,7 +90,7 @@ object MainApp {
     import org.testcontainers.utility.DockerImageName
     val container = new CassandraContainer(DockerImageName.parse("cassandra:5.0.5"))
     // bind to the fixed port 9042 so that the sample nodes can connect with the default driver settings
-    container.setPortBindings(java.util.List.of("9042:9042"))
+    container.setPortBindings(java.util.Collections.singletonList("9042:9042"))
     container.start()
 
     // shut the cassandra instance down when the JVM stops

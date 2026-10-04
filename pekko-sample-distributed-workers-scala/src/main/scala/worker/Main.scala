@@ -13,6 +13,8 @@ object Main {
   // the back-end starts at 2000
   val backEndPortRange = 2000 to 2999
 
+  val backEndSeedPorts = Set(7345, 7355)
+
   val frontEndPortRange = 3000 to 3999
 
   def main(args: Array[String]): Unit = {
@@ -23,7 +25,7 @@ object Main {
 
       case Some(portString) if portString.matches("""\d+""") =>
         val port = portString.toInt
-        if (backEndPortRange.contains(port)) start(port, "back-end")
+        if (backEndPortRange.contains(port) || backEndSeedPorts.contains(port)) start(port, "back-end")
         else if (frontEndPortRange.contains(port)) start(port, "front-end")
         else start(port, "worker", args.lift(1).map(_.toInt).getOrElse(1))
 
@@ -95,7 +97,7 @@ object Main {
     import org.testcontainers.utility.DockerImageName
     val container = new CassandraContainer(DockerImageName.parse("cassandra:5.0.5"))
     // bind to the fixed port 9042 so that the sample nodes can connect with the default driver settings
-    container.setPortBindings(java.util.List.of("9042:9042"))
+    container.setPortBindings(java.util.Collections.singletonList("9042:9042"))
     container.start()
 
     // shut the cassandra instance down when the JVM stops
