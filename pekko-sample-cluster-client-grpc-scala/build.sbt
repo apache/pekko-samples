@@ -1,6 +1,7 @@
 import com.typesafe.sbt.MultiJvmPlugin.multiJvmSettings
 
-val pekkoVersion = "2.0.0-M1"
+ThisBuild / evictionErrorLevel := Level.Info
+val pekkoVersion = "2.0.0-M4"
 
 lazy val `pekko-sample-cluster-client-grpc-scala` = project
   .in(file("."))

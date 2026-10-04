@@ -1,7 +1,8 @@
 name := "pekko-grpc-kubernetes"
-scalaVersion := "3.3.7"
+ThisBuild / scalaVersion := "3.3.7"
 
-lazy val pekkoVersion = "2.0.0-M1"
+ThisBuild / evictionErrorLevel := Level.Info
+lazy val pekkoVersion = "2.0.0-M4"
 lazy val pekkoManagementVersion = "2.0.0-M1"
 lazy val pekkoHttpVersion = "2.0.0-M1"
 
