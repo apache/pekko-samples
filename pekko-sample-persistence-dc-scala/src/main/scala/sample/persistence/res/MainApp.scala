@@ -1,6 +1,5 @@
 package sample.persistence.res
 
-import java.io.File
 import java.util.concurrent.CountDownLatch
 
 import org.apache.pekko.actor.typed.ActorSystem
@@ -90,7 +89,8 @@ object MainApp {
     import org.testcontainers.cassandra.CassandraContainer
     import org.testcontainers.utility.DockerImageName
     val container = new CassandraContainer(DockerImageName.parse("cassandra:5.0.5"))
-    // defaults to port 9042
+    // bind to the fixed port 9042 so that the sample nodes can connect with the default driver settings
+    container.setPortBindings(java.util.List.of("9042:9042"))
     container.start()
 
     // shut the cassandra instance down when the JVM stops

@@ -1,6 +1,5 @@
 package sample.persistence.res;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -84,7 +83,8 @@ public class MainApp {
   private static void startCassandraDatabase() {
     final CassandraContainer container = new CassandraContainer(
       DockerImageName.parse("cassandra:5.0.5"));
-    // defaults to port 9042
+    // bind to the fixed port 9042 so that the sample nodes can connect with the default driver settings
+    container.setPortBindings(java.util.List.of("9042:9042"));
     container.start();
 
     // shut the cassandra instance down when the JVM stops
