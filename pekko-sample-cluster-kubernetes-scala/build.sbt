@@ -20,7 +20,7 @@ Compile / run / fork := true
 run / javaOptions += "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"
 bashScriptExtraDefines += """addJava "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED""""
 
-mainClass in (Compile, run) := Some("pekko.sample.cluster.kubernetes.DemoApp")
+Compile / run / mainClass := Some("pekko.sample.cluster.kubernetes.DemoApp")
 
 enablePlugins(JavaServerAppPackaging, DockerPlugin)
 
