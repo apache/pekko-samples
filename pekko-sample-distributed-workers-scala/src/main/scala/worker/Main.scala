@@ -9,11 +9,8 @@ import com.typesafe.config.{ Config, ConfigFactory }
 
 object Main {
 
-  // note that 7345 and 7355 are expected to be seed nodes though, even if
-  // the back-end starts at 2000
-  val backEndPortRange = 2000 to 2999
-
-  val backEndSeedPorts = Set(7345, 7355)
+  // includes 7345, which is also a seed node (see pekko.cluster.seed-nodes in application.conf)
+  val backEndPortRange = 7000 to 7999
 
   val frontEndPortRange = 3000 to 3999
 
@@ -25,7 +22,7 @@ object Main {
 
       case Some(portString) if portString.matches("""\d+""") =>
         val port = portString.toInt
-        if (backEndPortRange.contains(port) || backEndSeedPorts.contains(port)) start(port, "back-end")
+        if (backEndPortRange.contains(port)) start(port, "back-end")
         else if (frontEndPortRange.contains(port)) start(port, "front-end")
         else start(port, "worker", args.lift(1).map(_.toInt).getOrElse(1))
 

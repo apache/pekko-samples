@@ -241,7 +241,7 @@ sbt "runMain worker.Main 5001 3"
 
 You can also start more such worker nodes in new terminal windows.
 
-You can start more cluster back-end nodes using port 7355 or port numbers between 2000-2999.
+You can start more cluster back-end nodes using port numbers between 7000-7999.
 
 ```bash
 sbt "runMain worker.Main 7355"
