@@ -21,8 +21,8 @@ libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion,
   "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion)
 
-version in Docker := "latest"
-dockerExposedPorts in Docker := Seq(1600)
+Docker / version := "latest"
+Docker / dockerExposedPorts := Seq(1600)
 dockerRepository := Some("pekko")
 dockerBaseImage := "eclipse-temurin:11"
 enablePlugins(JavaAppPackaging)

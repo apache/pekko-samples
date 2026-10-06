@@ -16,7 +16,7 @@ classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.AllLibraryJars
 run / fork := true
 Compile / run / fork := true
 
-mainClass in (Compile, run) := Some("pekko.sample.cluster.kubernetes.DemoApp")
+Compile / run / mainClass := Some("pekko.sample.cluster.kubernetes.DemoApp")
 
 enablePlugins(JavaServerAppPackaging, DockerPlugin)
 
