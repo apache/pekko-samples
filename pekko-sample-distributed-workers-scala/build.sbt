@@ -10,6 +10,10 @@ val logbackVersion = "1.3.15"
 
 Global / cancelable := false
 
+// run in a forked JVM so that sbt keeps the nodes running until Ctrl-C, instead of
+// stopping them as soon as the main method returns
+run / fork := true
+
 libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
   "org.apache.pekko" %% "pekko-persistence-typed" % pekkoVersion,
