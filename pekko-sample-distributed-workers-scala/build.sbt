@@ -10,6 +10,10 @@ val logbackVersion = "1.3.15"
 
 Global / cancelable := false
 
+// run in a forked JVM so that sbt keeps the nodes running until Ctrl-C, instead of
+// stopping them as soon as the main method returns
+run / fork := true
+
 libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
   "org.apache.pekko" %% "pekko-persistence-typed" % pekkoVersion,
@@ -17,7 +21,7 @@ libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion,
   "org.apache.pekko" %% "pekko-persistence-cassandra" % cassandraPluginVersion,
   // this allows us to start cassandra from the sample
-  "org.apache.pekko" %% "pekko-persistence-cassandra-launcher" % cassandraPluginVersion,
+  "org.testcontainers" % "testcontainers-cassandra" % "2.0.5",
   "ch.qos.logback" % "logback-classic" % logbackVersion,
   // test dependencies
   "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoVersion % Test,

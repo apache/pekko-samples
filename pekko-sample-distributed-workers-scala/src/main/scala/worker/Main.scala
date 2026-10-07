@@ -1,19 +1,16 @@
 package worker
 
-import java.io.File
 import java.util.concurrent.CountDownLatch
 import org.apache.pekko.actor.typed.ActorSystem
 import org.apache.pekko.actor.typed.eventstream.EventStream
 import org.apache.pekko.actor.typed.scaladsl.{ ActorContext, Behaviors }
 import org.apache.pekko.cluster.typed.{ Cluster, SelfUp, Subscribe }
-import org.apache.pekko.persistence.cassandra.testkit.CassandraLauncher
 import com.typesafe.config.{ Config, ConfigFactory }
 
 object Main {
 
-  // note that 7345 and 7355 are expected to be seed nodes though, even if
-  // the back-end starts at 2000
-  val backEndPortRange = 2000 to 2999
+  // includes 7345, which is also a seed node (see pekko.cluster.seed-nodes in application.conf)
+  val backEndPortRange = 7000 to 7999
 
   val frontEndPortRange = 3000 to 3999
 
@@ -93,16 +90,16 @@ object Main {
    * in a real application a pre-existing Apache Cassandra cluster should be used.
    */
   def startCassandraDatabase(): Unit = {
-    val databaseDirectory = new File("target/cassandra-db")
-    CassandraLauncher.start(
-      databaseDirectory,
-      CassandraLauncher.DefaultTestConfigResource,
-      clean = false,
-      port = 9042)
+    import org.testcontainers.cassandra.CassandraContainer
+    import org.testcontainers.utility.DockerImageName
+    val container = new CassandraContainer(DockerImageName.parse("cassandra:5.0.5"))
+    // bind to the fixed port 9042 so that the sample nodes can connect with the default driver settings
+    container.setPortBindings(java.util.Collections.singletonList("9042:9042"))
+    container.start()
 
     // shut the cassandra instance down when the JVM stops
     sys.addShutdownHook {
-      CassandraLauncher.stop()
+      container.stop()
     }
   }
 

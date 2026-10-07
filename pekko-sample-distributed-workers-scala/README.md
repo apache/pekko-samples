@@ -191,7 +191,7 @@ Now that we have covered all the details, we can experiment with different sets 
 
 ## Experimenting
 
-When running the application without parameters it runs a six node cluster within the same JVM and starts a Apache Cassandra database. It can be more interesting to run them in separate processes. Open four terminal windows.
+When running the application without parameters it runs a six node cluster within the same JVM and starts a Apache Cassandra database. The Apache Cassandra database is started in a Docker container using [Testcontainers](https://testcontainers.com/), so Docker must be installed and running. It can be more interesting to run them in separate processes. Open four terminal windows.
 
 In the first terminal window, start the Apache Cassandra database with the following command:
 
@@ -209,7 +209,7 @@ With the database running, go to the second terminal window and start the first 
 sbt "runMain worker.Main 7345"
 ```
 
-7345 corresponds to the port of the first seed-nodes element in the configuration. In the log output you see that the cluster node has been started and changed status to 'Up'.
+7345 corresponds to the port of the first seed-nodes element in the configuration. Ports 7345 and 7355 start back-end nodes. In the log output you see that the cluster node has been started and changed status to 'Up'.
 
 In the third terminal window, start the front-end node with the following command:
 
@@ -241,35 +241,31 @@ sbt "runMain worker.Main 5001 3"
 
 You can also start more such worker nodes in new terminal windows.
 
-You can start more cluster back-end nodes using port numbers between 2000-2999.
+You can start more cluster back-end nodes using port numbers between 7000-7999.
 
 ```bash
 sbt "runMain worker.Main 7355"
 ```
 
-The nodes with port 7345 to 2554 are configured to be used as "seed nodes" in this sample, if you shutdown all or start none of these the other nodes will not know how to join the cluster. If all four are shut down and 7345 is started it will join itself and form a new cluster.
+The nodes with ports 7345 and 3000 are configured to be used as "seed nodes" in this sample, if you shutdown all or start none of these the other nodes will not know how to join the cluster. If both are shut down and 7345 is started it will join itself and form a new cluster.
 
-As long as one of the four nodes is alive the cluster will keep working. You can read more about this in the [Pekkodocumentation section on seed nodes](https://pekko.apache.org/docs/pekko/current/scala/cluster-usage.html).
+As long as one of the seed nodes is alive the cluster will keep working. You can read more about this in the [Pekkodocumentation section on seed nodes](https://pekko.apache.org/docs/pekko/current/scala/cluster-usage.html).
 
 You can start more cluster front-end nodes using port numbers between 3000-3999:
 
 ```bash
-sbt "runMain worker.Main 3002
+sbt "runMain worker.Main 3002"
 ```
 
 Any port outside these ranges creates a worker node, for which you can also play around with the number of worker actors on using the second parameter.
 
 ```bash
-sbt "runMain worker.Main 5009 4
+sbt "runMain worker.Main 5009 4"
 ```
 
 ## The journal
 
-The files of the Apache Cassandra database are saved in the target directory and when you restart the application the state is recovered. You can clean the state with:
-
-```bash
-sbt clean
-```
+The Apache Cassandra database runs in a Docker container that is removed when the process that started it stops. While the database is running, restarted back-end nodes recover their state from the journal. Stopping the database discards all of the stored state, so the next run starts with an empty journal.
 
 ## Next steps
 

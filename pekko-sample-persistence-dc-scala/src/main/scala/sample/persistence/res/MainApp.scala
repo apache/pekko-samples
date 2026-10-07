@@ -1,6 +1,5 @@
 package sample.persistence.res
 
-import java.io.File
 import java.util.concurrent.CountDownLatch
 
 import org.apache.pekko.actor.typed.ActorSystem
@@ -8,7 +7,6 @@ import org.apache.pekko.actor.typed.scaladsl.Behaviors
 import org.apache.pekko.cluster.sharding.typed.{ ReplicatedSharding, ReplicatedShardingExtension }
 import org.apache.pekko.http.scaladsl.Http
 import org.apache.pekko.management.scaladsl.PekkoManagement
-import org.apache.pekko.persistence.cassandra.testkit.CassandraLauncher
 import org.apache.pekko.persistence.typed.ReplicaId
 import com.typesafe.config.{ Config, ConfigFactory }
 import sample.persistence.res.bank.BankAccount
@@ -88,12 +86,17 @@ object MainApp {
    * in a real application a pre-existing Cassandra cluster should be used.
    */
   def startCassandraDatabase(): Unit = {
-    val databaseDirectory = new File("target/cassandra-db")
-    CassandraLauncher.start(
-      databaseDirectory,
-      CassandraLauncher.DefaultTestConfigResource,
-      clean = false,
-      port = 9042)
+    import org.testcontainers.cassandra.CassandraContainer
+    import org.testcontainers.utility.DockerImageName
+    val container = new CassandraContainer(DockerImageName.parse("cassandra:5.0.5"))
+    // bind to the fixed port 9042 so that the sample nodes can connect with the default driver settings
+    container.setPortBindings(java.util.Collections.singletonList("9042:9042"))
+    container.start()
+
+    // shut the cassandra instance down when the JVM stops
+    sys.addShutdownHook {
+      container.stop()
+    }
   }
 
 }

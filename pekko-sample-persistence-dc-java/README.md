@@ -3,6 +3,8 @@ pekko-sample-persistence-dc-java
 
 ## How to run
 
+Starting Apache Cassandra with the `cassandra` argument runs it in a Docker container using [Testcontainers](https://testcontainers.com/), so Docker must be installed and running.
+
 1. Setup Apache Cassandra
    * Either start a local Cassandra listening on port 9042 or in terminal 1: `mvn exec:java -Dexec.mainClass=sample.persistence.res.MainApp -Dexec.args="cassandra"`
 
