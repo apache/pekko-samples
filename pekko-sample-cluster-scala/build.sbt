@@ -1,5 +1,4 @@
-import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
-import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
+import com.typesafe.sbt.MultiJvmPlugin.multiJvmSettings
 
 val pekkoVersion = "1.5.0"
 val logbackVersion = "1.3.15"
