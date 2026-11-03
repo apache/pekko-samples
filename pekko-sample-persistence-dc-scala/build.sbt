@@ -4,10 +4,11 @@ name := "pekko-sample-replicated-event-sourcing-scala"
 scalaVersion := "3.3.7"
 
 ThisBuild / evictionErrorLevel := Level.Info
-val pekkoVersion = "2.0.0-M4"
+ThisBuild / resolvers += Resolver.ApacheMavenStagingRepo
+val pekkoVersion = "2.0.0"
 val cassandraPluginVersion = "1.1.0"
 
-val pekkoHttpVersion = "2.0.0-M1"
+val pekkoHttpVersion = "2.0.0-M2"
 val pekkoClusterManagementVersion = "2.0.0-M1"
 
 val logbackVersion = "1.3.15"

@@ -5,7 +5,8 @@ version := "1.0"
 scalaVersion := "3.3.7"
 
 ThisBuild / evictionErrorLevel := Level.Info
-val pekkoVersion = "2.0.0-M4"
+ThisBuild / resolvers += Resolver.ApacheMavenStagingRepo
+val pekkoVersion = "2.0.0"
 val cassandraPluginVersion = "1.1.0"
 val logbackVersion = "1.3.15"
 

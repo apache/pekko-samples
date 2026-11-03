@@ -18,9 +18,17 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <pekko.version>2.0.0-M4</pekko.version>
+        <pekko.version>2.0.0</pekko.version>
         <scala.binary.version>3</scala.binary.version>
     </properties>
+
+    <repositories>
+      <repository>
+        <id>apache-staging</id>
+        <name>Apache Staging Repository</name>
+        <url>https://repository.apache.org/content/groups/staging/</url>
+      </repository>
+    </repositories>
 
     <dependencies>
         <dependency>

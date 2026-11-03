@@ -18,14 +18,22 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <encoding>UTF-8</encoding>
-    <pekko.version>2.0.0-M4</pekko.version>
-    <pekko-http.version>2.0.0-M1</pekko-http.version>
+    <pekko.version>2.0.0</pekko.version>
+    <pekko-http.version>2.0.0-M2</pekko-http.version>
     <pekko-management.version>2.0.0-M1</pekko-management.version>
     <scala.binary.version>3</scala.binary.version>
     <version.number>${git.commit.time}-${git.commit.id.abbrev}</version.number>
     <!-- Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe -->
     <argLine>--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED</argLine>
   </properties>
+
+  <repositories>
+    <repository>
+      <id>apache-staging</id>
+      <name>Apache Staging Repository</name>
+      <url>https://repository.apache.org/content/groups/staging/</url>
+    </repository>
+  </repositories>
 
   <dependencies>
     <dependency>
