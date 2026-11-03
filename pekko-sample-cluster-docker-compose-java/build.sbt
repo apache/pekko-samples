@@ -9,7 +9,8 @@ scalacOptions ++= Seq(
   "-unchecked",
   "-encoding", "UTF-8")
 
-val pekkoVersion = "2.0.0-M4"
+ThisBuild / resolvers += Resolver.ApacheMavenStagingRepo
+val pekkoVersion = "2.0.0"
 val logbackVersion = "1.3.15"
 
 /* dependencies */
