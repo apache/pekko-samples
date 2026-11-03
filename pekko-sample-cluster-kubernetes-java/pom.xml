@@ -15,8 +15,7 @@
   </licenses>
 
   <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.release>17</maven.compiler.release>
     <encoding>UTF-8</encoding>
     <pekko.version>2.0.0</pekko.version>
     <pekko-http.version>2.0.0-M2</pekko-http.version>
