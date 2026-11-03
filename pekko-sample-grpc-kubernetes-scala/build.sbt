@@ -1,5 +1,5 @@
 name := "pekko-grpc-kubernetes"
-ThisBuild / scalaVersion := "3.3.7"
+ThisBuild / scalaVersion := "3.3.9"
 
 ThisBuild / evictionErrorLevel := Level.Info
 ThisBuild / resolvers += Resolver.ApacheMavenStagingRepo

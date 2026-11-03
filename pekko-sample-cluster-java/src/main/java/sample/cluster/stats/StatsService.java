@@ -9,7 +9,6 @@ import org.apache.pekko.actor.typed.javadsl.Receive;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import sample.cluster.CborSerializable;
 
-import java.util.Arrays;
 import java.util.List;
 
 public final class StatsService extends AbstractBehavior<StatsService.Command> {
@@ -78,7 +77,7 @@ public final class StatsService extends AbstractBehavior<StatsService.Command> {
 
   private Behavior<Command> process(ProcessText command) {
     getContext().getLog().info("Delegating request");
-    List<String> words = Arrays.asList(command.text.split(" "));
+    List<String> words = List.of(command.text.split(" "));
     getContext().spawnAnonymous(StatsAggregator.create(words, workers, command.replyTo));
     return this;
   }

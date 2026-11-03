@@ -1,7 +1,7 @@
 organization := "org.apache.pekko"
 name := "pekko-sample-replicated-event-sourcing-scala"
 
-scalaVersion := "3.3.7"
+scalaVersion := "3.3.9"
 
 ThisBuild / evictionErrorLevel := Level.Info
 ThisBuild / resolvers += Resolver.ApacheMavenStagingRepo

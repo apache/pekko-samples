@@ -1,7 +1,7 @@
 organization := "org.apache.pekko"
 
 /* scala versions and options */
-scalaVersion := "3.3.7"
+scalaVersion := "3.3.9"
 
 // These options will be used for *all* versions.
 scalacOptions ++= Seq(

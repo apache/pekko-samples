@@ -13,7 +13,7 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
     organization := "org.apache.pekko",
     // Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
     MultiJvm / jvmOptions ++= Seq("--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"),
-    scalaVersion := "3.3.7",
+    scalaVersion := "3.3.9",
     Compile / scalacOptions ++= Seq(
       "-deprecation",
       "-feature",
