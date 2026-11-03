@@ -199,8 +199,8 @@ public class ShoppingCart {
   }
 
   private Behavior<Command> onInternalGetResponse(InternalGetResponse msg) {
-    if (msg.rsp instanceof GetSuccess) {
-      LWWMap<String, LineItem> data = ((GetSuccess<LWWMap<String, LineItem>>) msg.rsp).get(dataKey);
+    if (msg.rsp instanceof GetSuccess<LWWMap<String, LineItem>> success) {
+      LWWMap<String, LineItem> data = success.get(dataKey);
       msg.replyTo.tell(new Cart(new HashSet<>(data.getEntries().values())));
     } else if (msg.rsp instanceof NotFound) {
       msg.replyTo.tell(new Cart(new HashSet<>()));

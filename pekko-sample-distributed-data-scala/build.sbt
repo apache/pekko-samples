@@ -12,7 +12,7 @@ val `pekko-sample-distributed-data-scala` = project
     // Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
     MultiJvm / jvmOptions ++= Seq("--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"),
     version := "1.0",
-    scalaVersion := "3.3.7",
+    scalaVersion := "3.3.9",
     Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
     Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
     run / javaOptions ++= Seq("-Xms128m", "-Xmx1024m", "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"),
