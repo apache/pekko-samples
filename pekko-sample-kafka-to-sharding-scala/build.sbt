@@ -1,5 +1,4 @@
 ThisBuild / evictionErrorLevel := Level.Info
-ThisBuild / resolvers += Resolver.ApacheMavenStagingRepo
 val pekkoVersion = "2.0.0"
 val pekkoHttpVersion = "2.0.0-M2"
 

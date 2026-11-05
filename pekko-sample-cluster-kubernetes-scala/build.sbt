@@ -5,7 +5,6 @@ name := "pekko-sample-cluster-kubernetes-scala"
 scalaVersion := "3.3.9"
 val pekkoHttpVersion = "2.0.0-M2"
 ThisBuild / evictionErrorLevel := Level.Info
-ThisBuild / resolvers += Resolver.ApacheMavenStagingRepo
 val pekkoVersion = "2.0.0"
 val pekkoManagementVersion = "2.0.0-M1"
 val logbackVersion = "1.3.15"

@@ -1,7 +1,6 @@
 import com.typesafe.sbt.MultiJvmPlugin.multiJvmSettings
 
 ThisBuild / evictionErrorLevel := Level.Info
-ThisBuild / resolvers += Resolver.ApacheMavenStagingRepo
 val pekkoVersion = "2.0.0"
 
 lazy val `pekko-sample-cluster-client-grpc-scala` = project

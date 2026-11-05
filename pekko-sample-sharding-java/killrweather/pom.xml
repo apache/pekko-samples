@@ -35,11 +35,6 @@
             <enabled>true</enabled>
         </snapshots>
         </repository>
-        <repository>
-            <id>apache-staging</id>
-            <name>Apache Staging Repository</name>
-            <url>https://repository.apache.org/content/groups/staging/</url>
-        </repository>
     </repositories>
 
     <dependencies>
