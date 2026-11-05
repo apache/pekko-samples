@@ -2,7 +2,6 @@ name := "pekko-grpc-kubernetes"
 ThisBuild / scalaVersion := "3.3.9"
 
 ThisBuild / evictionErrorLevel := Level.Info
-ThisBuild / resolvers += Resolver.ApacheMavenStagingRepo
 lazy val pekkoVersion = "2.0.0"
 lazy val pekkoManagementVersion = "2.0.0-M1"
 lazy val pekkoHttpVersion = "2.0.0-M2"

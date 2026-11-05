@@ -3,7 +3,6 @@ name := "pekko-sample-persistence-scala"
 
 scalaVersion := "3.3.9"
 
-ThisBuild / resolvers += Resolver.ApacheMavenStagingRepo
 val pekkoVersion = "2.0.0"
 val logbackVersion = "1.3.15"
 
