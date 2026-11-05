@@ -157,12 +157,11 @@ public class ClusterClient extends AbstractLoggingActor {
             // never fail from stream element
             elem -> Optional.empty(),
             settings.bufferSize,
-            OverflowStrategy.dropNew()
+            OverflowStrategy.dropTail()
             )
           .via(killSwitch.flow())
           .map(msg -> {
-            if (msg instanceof Send) {
-              Send send = (Send) msg;
+            if (msg instanceof Send send) {
               Payload payload = serialization.serializePayload(send.msg);
               return Req.newBuilder()
                 .setSend(SendReq.newBuilder()
@@ -170,16 +169,14 @@ public class ClusterClient extends AbstractLoggingActor {
                   .setLocalAffinity(send.localAffinity)
                   .setPayload(payload))
                   .build();
-            } else if (msg instanceof SendToAll) {
-              SendToAll sendToAll = (SendToAll) msg;
+            } else if (msg instanceof SendToAll sendToAll) {
               Payload payload = serialization.serializePayload(sendToAll.msg);
               return Req.newBuilder()
                 .setSendToAll(SendToAllReq.newBuilder()
                   .setPath(sendToAll.path)
                   .setPayload(payload))
                   .build();
-            } else if (msg instanceof Publish) {
-              Publish publish = (Publish) msg;
+            } else if (msg instanceof Publish publish) {
               Payload payload = serialization.serializePayload(publish.msg);
               return Req.newBuilder()
                 .setPublish(PublishReq.newBuilder()

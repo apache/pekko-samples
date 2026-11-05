@@ -28,7 +28,7 @@ class ClusterClientReceptionistGrpcImpl(
     Source
       .actorRef[Any](
         bufferSize = settings.bufferSize,
-        overflowStrategy = OverflowStrategy.dropNew,
+        overflowStrategy = OverflowStrategy.dropTail,
         // never complete from stream element
         completionMatcher = PartialFunction.empty,
         // never fail from stream element

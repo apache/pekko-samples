@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -177,7 +176,7 @@ public class ShoppingCart
 
     public Summary(Map<String, Integer> items, boolean checkedOut) {
       // Summary is included in messages and should therefore be immutable
-      this.items = Collections.unmodifiableMap(new HashMap<>(items));
+      this.items = Map.copyOf(items);
       this.checkedOut = checkedOut;
     }
   }

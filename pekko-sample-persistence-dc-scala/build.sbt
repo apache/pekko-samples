@@ -1,13 +1,14 @@
 organization := "org.apache.pekko"
 name := "pekko-sample-replicated-event-sourcing-scala"
 
-scalaVersion := "3.3.7"
+scalaVersion := "3.3.9"
 
-val pekkoVersion = "1.5.0"
+ThisBuild / evictionErrorLevel := Level.Info
+val pekkoVersion = "2.0.0"
 val cassandraPluginVersion = "1.1.0"
 
-val pekkoHttpVersion = "1.3.0"
-val pekkoClusterManagementVersion = "1.2.1"
+val pekkoHttpVersion = "2.0.0-M2"
+val pekkoClusterManagementVersion = "2.0.0-M1"
 
 val logbackVersion = "1.3.15"
 
