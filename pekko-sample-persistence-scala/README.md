@@ -19,3 +19,10 @@ sbt:pekko-sample-persistence-scala> test
 ```
 
 The `ShoppingCart` application is expanded further in the `pekko-sample-cqrs-scala` sample. In that sample the events are tagged to be consumed by even processors to build other representations from the events, or publish the events to other services.
+
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main and test sources. Java sources are not rewritten.

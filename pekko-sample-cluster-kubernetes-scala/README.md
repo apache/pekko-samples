@@ -88,3 +88,10 @@ as described in the [Starting](#starting) section.
 This example uses [Apache Pekko Cluster Bootstrap](https://pekko.apache.org/docs/pekko-management/current/bootstrap/index.html)
 to initialize the cluster, using the [Kubernetes API discovery mechanism](https://pekko.apache.org/docs/pekko-management/current/discovery/index.html#discovery-method-kubernetes-api) 
 to find peer nodes.
+
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main and test sources. Java sources are not rewritten.

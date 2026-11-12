@@ -289,3 +289,10 @@ and
 
  You can also find a good overview of the various modules that make up Pekkoin
  [this section of the official documentation](https://pekko.apache.org/docs/pekko/current/scala/guide/modules.html#cluster-singleton)
+
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main and test sources. Java sources are not rewritten.

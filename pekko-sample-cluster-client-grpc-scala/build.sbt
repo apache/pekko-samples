@@ -24,3 +24,8 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
       "org.apache.pekko" %% "pekko-multi-node-testkit" % pekkoVersion % Test,
       "org.scalatest" %% "scalatest" % "3.2.19" % Test))
   .configs(MultiJvm)
+  .settings(scalafixConfigSettings(MultiJvm))
+
+addCommandAlias(
+  "sortImports",
+  """;scalafixEnable;scalafixAll OrganizeImports""")

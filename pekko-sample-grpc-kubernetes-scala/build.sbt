@@ -43,3 +43,7 @@ lazy val grpcService = (project in file("grpc-service"))
       "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
       "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
       "ch.qos.logback" % "logback-classic" % "1.3.15"))
+
+addCommandAlias(
+  "sortImports",
+  """;scalafixEnable;scalafixAll OrganizeImports""")

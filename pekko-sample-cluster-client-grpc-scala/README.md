@@ -11,4 +11,11 @@ Project structure:
   side that messages are sent via
 * [ClusterClientReceptionist](src/main/scala/sample/cluster/client/grpc/ClusterClientReceptionist.scala)
   is an Apache Pekko extension on the cluster (server) side that implements the gRPC service and delegates
-  messages to actors in the cluster that have been registered in Distributed PubSub. 
+  messages to actors in the cluster that have been registered in Distributed PubSub.
+
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main, test, and multi-JVM test sources. Java sources are not rewritten.

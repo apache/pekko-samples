@@ -19,3 +19,10 @@ Starting Apache Cassandra with the `cassandra` argument runs it in a Docker cont
    * To add a thumbs-up for resource `pekko` from user `u2` in DC `eu-west`: `curl -X POST http://127.0.0.1:27345/thumbs-up/pekko/u2`
    * To get the users that gave thumbs-up for resource `pekko`: `curl http://127.0.0.1:27355/thumbs-up/pekko`
    * Note the port numbers 27355 for eu-west and 27345 for eu-central
+
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main and test sources. Java sources are not rewritten.

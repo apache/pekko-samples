@@ -157,3 +157,9 @@ StatsSampleOneMaster starts 4 actor systems (cluster members) in the same JVM pr
 
 Tests can be found in [src/multi-jvm](src/multi-jvm). You can run them by typing `sbt multi-jvm:test`.
 
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main, test, and multi-JVM test sources. Java sources are not rewritten.

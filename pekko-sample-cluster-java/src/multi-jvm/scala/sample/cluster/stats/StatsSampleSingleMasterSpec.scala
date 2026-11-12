@@ -1,20 +1,22 @@
 package sample.cluster.stats
 
+import scala.concurrent.duration._
+
 import org.apache.pekko
 import pekko.actor.testkit.typed.scaladsl.TestProbe
-import pekko.actor.typed.{ ActorRef, ActorSystem }
 import pekko.actor.typed.scaladsl.adapter._
 import pekko.actor.typed.scaladsl.{ Behaviors, Routers }
+import pekko.actor.typed.{ ActorRef, ActorSystem }
 import pekko.cluster.Cluster
 import pekko.cluster.ClusterEvent.{ CurrentClusterState, MemberUp }
 import pekko.cluster.typed.{ ClusterSingleton, ClusterSingletonSettings, SingletonActor }
 import pekko.remote.testkit.{ MultiNodeConfig, MultiNodeSpec }
-import com.typesafe.config.ConfigFactory
+
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 
-import scala.concurrent.duration._
+import com.typesafe.config.ConfigFactory
 
 object StatsSampleSingleMasterSpecConfig extends MultiNodeConfig {
   // register the named roles (nodes) of the test

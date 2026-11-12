@@ -4,3 +4,5 @@ addSbtPlugin("com.github.sbt" % "sbt-javaagent" % "0.2.0") // ALPN agent
 addSbtPlugin("com.thesamet" % "sbt-protoc" % "1.0.8")
 
 libraryDependencies += "com.thesamet.scalapb" %% "compilerplugin" % "0.11.20"
+
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.10")

@@ -214,5 +214,11 @@ Enter user id or :q to quit
 We've now demonstrated two things:
 
 * Keeping the processing local, where ever the Kafka partition is consumed the shard will be moved to that location
-* The state for each entity is globally accessible from all nodes 
+* The state for each entity is globally accessible from all nodes
 
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main and test sources. Java sources are not rewritten.

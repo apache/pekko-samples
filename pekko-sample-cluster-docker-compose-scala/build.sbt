@@ -26,3 +26,7 @@ Docker / dockerExposedPorts := Seq(1600)
 dockerRepository := Some("pekko")
 dockerBaseImage := "eclipse-temurin:11"
 enablePlugins(JavaAppPackaging)
+
+addCommandAlias(
+  "sortImports",
+  """;scalafixEnable;scalafixAll OrganizeImports""")
