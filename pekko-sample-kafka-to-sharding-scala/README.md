@@ -216,3 +216,8 @@ We've now demonstrated two things:
 * Keeping the processing local, where ever the Kafka partition is consumed the shard will be moved to that location
 * The state for each entity is globally accessible from all nodes 
 
+
+## Code formatting
+
+Run `sbt applyCodeStyle` to format this sample and `sbt checkCodeStyle` to
+verify its Scala sources and build files against the Apache Pekko style.

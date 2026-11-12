@@ -29,3 +29,7 @@ val `pekko-sample-distributed-data-scala` = project
     Test / logBuffered := false,
     licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0"))))
   .configs(MultiJvm)
+  .settings(org.scalafmt.sbt.ScalafmtPlugin.scalafmtConfigSettings(MultiJvm))
+
+addCommandAlias("applyCodeStyle", "MultiJvm / scalafmt; scalafmtAll; scalafmtSbt")
+addCommandAlias("checkCodeStyle", "MultiJvm / scalafmtCheck; scalafmtCheckAll; scalafmtSbtCheck")

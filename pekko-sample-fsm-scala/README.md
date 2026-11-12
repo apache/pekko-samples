@@ -10,3 +10,8 @@ Start the application by typing `sbt "runMain sample.DiningHakkers"`. In the log
 
 Read more about Apache Pekko Typed in [the documentation](https://pekko.apache.org/docs/pekko/current/typed/index.html).
 
+
+## Code formatting
+
+Run `sbt applyCodeStyle` to format this sample and `sbt checkCodeStyle` to
+verify its Scala sources and build files against the Apache Pekko style.

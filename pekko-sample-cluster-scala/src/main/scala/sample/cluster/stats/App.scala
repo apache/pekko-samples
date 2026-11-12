@@ -16,7 +16,7 @@ object App {
   private object RootBehavior {
     def apply(): Behavior[Nothing] = Behaviors.setup[Nothing] { ctx =>
       val cluster = Cluster(ctx.system)
-      if (cluster.selfMember.hasRole("compute")) {
+      if cluster.selfMember.hasRole("compute") then {
         // on every compute node there is one service instance that delegates to N local workers
         val numberOfWorkers =
           ctx.system.settings.config.getInt("stats-service.workers-per-node")
@@ -34,7 +34,7 @@ object App {
         Receptionist
           .Register(StatsServiceKey, service)
       }
-      if (cluster.selfMember.hasRole("client")) {
+      if cluster.selfMember.hasRole("client") then {
         val serviceRouter =
           ctx.spawn(Routers.group(App.StatsServiceKey), "ServiceRouter")
         ctx.spawn(StatsClient(serviceRouter), "Client")
@@ -44,7 +44,7 @@ object App {
   }
 
   def main(args: Array[String]): Unit = {
-    if (args.isEmpty) {
+    if args.isEmpty then {
       startup("compute", 17356)
       startup("compute", 17357)
       startup("compute", 0)

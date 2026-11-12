@@ -65,3 +65,6 @@ lazy val producer = project
     "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
     "ch.qos.logback" % "logback-classic" % logbackVersion,
     "org.scalatest" %% "scalatest" % "3.2.19" % Test))
+
+addCommandAlias("applyCodeStyle", "scalafmtAll; scalafmtSbt")
+addCommandAlias("checkCodeStyle", "scalafmtCheckAll; scalafmtSbtCheck")

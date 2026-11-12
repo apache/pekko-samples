@@ -158,3 +158,10 @@ AppOneMaster starts 4 actor systems (cluster members) in the same JVM process. I
 The multi-jvm testkit which allows for starting a cluster with multiple separate JVMs is only available from Scala with
 the Scala build tool `sbt`. Such tests are included for completeness and can be found in [src/multi-jvm](src/multi-jvm). 
 You can run them by typing `sbt multi-jvm:test`.
+
+## Code formatting
+
+Run `sbt applyCodeStyle` to format this sample and `sbt checkCodeStyle` to
+verify its Scala sources and build files against the Apache Pekko style.
+These commands also format/check Java sources; use JDK 17 or later.
+Multi-JVM Scala sources are included in both commands.

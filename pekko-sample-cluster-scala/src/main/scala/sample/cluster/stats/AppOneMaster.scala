@@ -39,7 +39,7 @@ object AppOneMaster {
         .withSettings(singletonSettings)
       val serviceProxy = ClusterSingleton(ctx.system).init(serviceSingleton)
 
-      if (cluster.selfMember.hasRole("compute")) {
+      if cluster.selfMember.hasRole("compute") then {
         // on every compute node N local workers, which a cluster singleton stats service delegates work to
         val numberOfWorkers =
           ctx.system.settings.config.getInt("stats-service.workers-per-node")
@@ -51,7 +51,7 @@ object AppOneMaster {
             .Register(WorkerServiceKey, worker)
         }
       }
-      if (cluster.selfMember.hasRole("client")) {
+      if cluster.selfMember.hasRole("client") then {
         ctx.spawn(StatsClient(serviceProxy), "Client")
       }
       Behaviors.empty
@@ -59,7 +59,7 @@ object AppOneMaster {
   }
 
   def main(args: Array[String]): Unit = {
-    if (args.isEmpty) {
+    if args.isEmpty then {
       startup("compute", 17356)
       startup("compute", 17357)
       startup("compute", 0)

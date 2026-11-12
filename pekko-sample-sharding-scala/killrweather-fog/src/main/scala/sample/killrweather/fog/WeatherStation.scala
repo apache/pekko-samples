@@ -100,7 +100,7 @@ private class WeatherStation(context: ActorContext[WeatherStation.Command], wsid
     val futureResponseBody: Future[String] = http.singleRequest(Post(stationUrl, json))
       .flatMap(res =>
         Unmarshal(res).to[String].map(body =>
-          if (res.status.isSuccess()) body
+          if res.status.isSuccess() then body
           else throw new RuntimeException(s"Failed to register data: $body")))
     context.pipeToSelf(futureResponseBody) {
       case Success(s) => ProcessSuccess(s)

@@ -12,5 +12,4 @@ public class ClusteringApp {
 
     ActorSystem<?> system = ActorSystem.create(ClusterListener.create(), clusterName);
   }
-
 }

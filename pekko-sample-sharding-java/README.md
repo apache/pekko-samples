@@ -183,3 +183,9 @@ For example:
 ### Shutting down
 
 Shut down one of the nodes by pressing 'ctrl-c' in one of the terminal windows. The other nodes will detect the failure after a while, which you can see in the log output in the other terminals.
+
+## Code formatting
+
+Run `sbt applyCodeStyle` to format this sample and `sbt checkCodeStyle` to
+verify its Scala sources and build files against the Apache Pekko style.
+These commands also format/check Java sources; use JDK 17 or later.

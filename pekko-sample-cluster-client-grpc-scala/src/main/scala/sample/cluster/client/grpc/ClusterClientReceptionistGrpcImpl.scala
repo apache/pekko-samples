@@ -39,7 +39,7 @@ class ClusterClientReceptionistGrpcImpl(
       }
       .mapMaterializedValue { sessionRspRef =>
         in.runForeach { req =>
-          if (req.req.isSend) {
+          if req.req.isSend then {
             val sendReq = req.getSend
             val msg = serialization.deserializePayload(sendReq.payload.get)
             // using sessionRspRef as sender so that replies are emitted to the response stream back to the client
@@ -47,14 +47,14 @@ class ClusterClientReceptionistGrpcImpl(
               DistributedPubSubMediator
                 .Send(sendReq.path, msg, sendReq.localAffinity),
               sessionRspRef)
-          } else if (req.req.isSendToAll) {
+          } else if req.req.isSendToAll then {
             val sendToAllReq = req.getSendToAll
             val msg =
               serialization.deserializePayload(sendToAllReq.payload.get)
             pubSubMediator.tell(
               DistributedPubSubMediator.SendToAll(sendToAllReq.path, msg),
               sessionRspRef)
-          } else if (req.req.isPublish) {
+          } else if req.req.isPublish then {
             val publishReq = req.getPublish
             val msg = serialization.deserializePayload(publishReq.payload.get)
             pubSubMediator.tell(

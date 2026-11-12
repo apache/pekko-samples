@@ -35,8 +35,7 @@ class Auction(
     }
 
   private def recoveryCompleted(state: AuctionState): Unit = {
-    if (shouldClose(state))
-      context.self ! Close
+    if shouldClose(state) then context.self ! Close
 
     val millisUntilClosing = closingAt.toEpochMilli - replicationContext.currentTimeMillis()
     timers.startSingleTimer(Finish, millisUntilClosing.millis)
@@ -97,7 +96,7 @@ class Auction(
   private def eventHandler(state: AuctionState, event: Event): AuctionState = {
     val newState = state.applyEvent(event)
     context.log.infoN("Applying event {}. New start {}", event, newState)
-    if (!replicationContext.recoveryRunning) {
+    if !replicationContext.recoveryRunning then {
       eventTriggers(event, newState)
     }
     newState
@@ -113,8 +112,8 @@ class Auction(
               "AuctionFinished at {}, already finished at [{}]",
               finished.atReplica,
               alreadyFinishedAtDc.mkString(", "))
-            if (alreadyFinishedAtDc(replicationContext.replicaId)) {
-              if (shouldClose(newState)) context.self ! Close
+            if alreadyFinishedAtDc(replicationContext.replicaId) then {
+              if shouldClose(newState) then context.self ! Close
             } else {
               context.log.info("Sending finish to self")
               context.self ! Finish
@@ -131,7 +130,7 @@ class Auction(
     (state.phase match {
       case Closing(alreadyFinishedAtDc) =>
         val allDone = MainApp.AllReplicas.diff(alreadyFinishedAtDc).isEmpty
-        if (!allDone) {
+        if !allDone then {
           context.log.info2(
             s"Not closing auction as not all DCs have reported finished. All DCs: {}. Reported finished {}",
             MainApp.AllReplicas,
@@ -203,8 +202,7 @@ object Auction {
     def applyEvent(event: Event): AuctionState =
       event match {
         case BidRegistered(b) =>
-          if (isHigherBid(b, highestBid))
-            withNewHighestBid(b)
+          if isHigherBid(b, highestBid) then withNewHighestBid(b)
           else
             withTooLowBid(b)
         case AuctionFinished(atDc) =>

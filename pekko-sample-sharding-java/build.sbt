@@ -51,3 +51,9 @@ lazy val `killrweather-fog` = project
 addCommandAlias("sharding1", "runMain sample.killrweather.KillrWeather 7345")
 addCommandAlias("sharding2", "runMain sample.killrweather.KillrWeather 7355")
 addCommandAlias("sharding3", "runMain sample.killrweather.KillrWeather 0")
+
+ThisBuild / javafmtFormatterCompatibleJavaVersion := 17
+ThisBuild / javafmtSortImports := false
+
+addCommandAlias("applyCodeStyle", "scalafmtAll; scalafmtSbt; javafmtAll")
+addCommandAlias("checkCodeStyle", "scalafmtCheckAll; scalafmtSbtCheck; javafmtCheckAll")

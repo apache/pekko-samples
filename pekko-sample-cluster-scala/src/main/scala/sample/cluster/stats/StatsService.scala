@@ -62,7 +62,7 @@ object StatsAggregator {
     Behaviors.receiveMessage {
       case CalculationComplete(length) =>
         val newResults = results :+ length
-        if (newResults.size == expectedResponses) {
+        if newResults.size == expectedResponses then {
           val meanWordLength = newResults.sum.toDouble / newResults.size
           replyTo ! StatsService.JobResult(meanWordLength)
           Behaviors.stopped

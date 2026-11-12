@@ -89,14 +89,14 @@ private[killrweather] object WeatherStation {
   }
 
   private def average(values: Vector[Double]): Double =
-    if (values.isEmpty) Double.NaN
+    if values.isEmpty then Double.NaN
     else values.sum / values.size
 
   private def running(context: ActorContext[Command], wsid: String, values: Vector[Data]): Behavior[Command] =
     Behaviors.receiveMessage[Command] {
       case Record(data, received, replyTo) =>
         val updated = values :+ data
-        if (context.log.isDebugEnabled) {
+        if context.log.isDebugEnabled then {
           val averageForSameType = average(updated.filter(_.dataType == data.dataType).map(_.value))
           context.log.debugN(
             "{} total readings from station {}, type {}, average {}, diff: processingTime - eventTime: {} ms",
@@ -112,7 +112,7 @@ private[killrweather] object WeatherStation {
       case Query(dataType, func, replyTo) =>
         val valuesForType = values.filter(_.dataType == dataType)
         val queryResult: Vector[TimeWindow] =
-          if (valuesForType.isEmpty) Vector.empty
+          if valuesForType.isEmpty then Vector.empty
           else
             func match {
               case Function.Average =>

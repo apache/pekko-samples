@@ -157,3 +157,9 @@ StatsSampleOneMaster starts 4 actor systems (cluster members) in the same JVM pr
 
 Tests can be found in [src/multi-jvm](src/multi-jvm). You can run them by typing `sbt multi-jvm:test`.
 
+
+## Code formatting
+
+Run `sbt applyCodeStyle` to format this sample and `sbt checkCodeStyle` to
+verify its Scala sources and build files against the Apache Pekko style.
+Multi-JVM Scala sources are included in both commands.

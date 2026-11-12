@@ -24,7 +24,6 @@ public class FogSettings {
     return new FogSettings(
         config.getInt("initial-weather-stations"),
         config.getString("weather-station.hostname"),
-        config.getDuration("weather-station.sample-interval")
-    );
+        config.getDuration("weather-station.sample-interval"));
   }
 }
