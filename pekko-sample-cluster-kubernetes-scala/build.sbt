@@ -44,3 +44,7 @@ libraryDependencies ++= {
     "org.apache.pekko" %% "pekko-testkit" % pekkoVersion % Test,
     "org.apache.pekko" %% "pekko-stream-testkit" % pekkoVersion % Test)
 }
+
+addCommandAlias(
+  "sortImports",
+  """;scalafixEnable;scalafixAll OrganizeImports""")

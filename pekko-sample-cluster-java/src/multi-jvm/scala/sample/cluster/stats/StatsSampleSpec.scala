@@ -1,5 +1,7 @@
 package sample.cluster.stats
 
+import scala.concurrent.duration._
+
 import org.apache.pekko
 import pekko.actor.testkit.typed.scaladsl.TestProbe
 import pekko.actor.typed.ActorSystem
@@ -9,9 +11,8 @@ import pekko.cluster.Cluster
 import pekko.cluster.ClusterEvent.CurrentClusterState
 import pekko.cluster.ClusterEvent.MemberUp
 import pekko.remote.testkit.MultiNodeConfig
-import com.typesafe.config.ConfigFactory
 
-import scala.concurrent.duration._
+import com.typesafe.config.ConfigFactory
 
 object StatsSampleSpecConfig extends MultiNodeConfig {
   // register the named roles (nodes) of the test

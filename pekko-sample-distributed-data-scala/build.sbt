@@ -29,3 +29,8 @@ val `pekko-sample-distributed-data-scala` = project
     Test / logBuffered := false,
     licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0"))))
   .configs(MultiJvm)
+  .settings(scalafixConfigSettings(MultiJvm))
+
+addCommandAlias(
+  "sortImports",
+  """;scalafixEnable;scalafixAll OrganizeImports""")

@@ -93,3 +93,10 @@ Open [ReplicatedMetrics.scala](src/main/scala/sample/distributeddata/ReplicatedM
 The multi-node test for the `ReplicatedCache` can be found in [ReplicatedMetricsSpec.scala](src/multi-jvm/scala/sample/distributeddata/ReplicatedMetricsSpec.scala).
 
 Note that there are some [Limitations](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#limitations) that you should be aware of. For example, Apache Pekko Distributed Data is not intended for _Big Data_.
+
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main, test, and multi-JVM test sources. Java sources are not rewritten.

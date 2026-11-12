@@ -11,3 +11,10 @@ In SBT, just run `docker:publishLocal` to create a local docker container.
 To run the cluster, run `docker compose up`. This will create 3 nodes, a seed and two regular members, called `seed`, `c1`, and `c2` respectively.
 
 While running, try opening a new terminal and (from the same directory) try things like `docker compose stop seed` and watch the cluster nodes respond.
+
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main and test sources. Java sources are not rewritten.
