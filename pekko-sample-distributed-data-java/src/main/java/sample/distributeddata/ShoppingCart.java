@@ -33,12 +33,11 @@ import org.apache.pekko.cluster.ddata.typed.javadsl.ReplicatorMessageAdapter;
 
 public class ShoppingCart {
 
-  //#read-write-majority
-  private final WriteConsistency writeMajority = 
-      new WriteMajority(Duration.ofSeconds(3));
-  private final static ReadConsistency readMajority = 
-      new ReadMajority(Duration.ofSeconds(3));
-  //#read-write-majority
+  // #read-write-majority
+  private final WriteConsistency writeMajority = new WriteMajority(Duration.ofSeconds(3));
+  private static final ReadConsistency readMajority = new ReadMajority(Duration.ofSeconds(3));
+
+  // #read-write-majority
 
   public interface Command {}
 
@@ -97,33 +96,30 @@ public class ShoppingCart {
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
-        return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
+      if (this == obj) return true;
+      if (obj == null) return false;
+      if (getClass() != obj.getClass()) return false;
       LineItem other = (LineItem) obj;
       if (productId == null) {
-        if (other.productId != null)
-          return false;
-      } else if (!productId.equals(other.productId))
-        return false;
-      if (quantity != other.quantity)
-        return false;
+        if (other.productId != null) return false;
+      } else if (!productId.equals(other.productId)) return false;
+      if (quantity != other.quantity) return false;
       if (title == null) {
-        if (other.title != null)
-          return false;
-      } else if (!title.equals(other.title))
-        return false;
+        if (other.title != null) return false;
+      } else if (!title.equals(other.title)) return false;
       return true;
     }
 
     @Override
     public String toString() {
-      return "LineItem [productId=" + productId + ", title=" + title + ", quantity=" + quantity + "]";
+      return "LineItem [productId="
+          + productId
+          + ", title="
+          + title
+          + ", quantity="
+          + quantity
+          + "]";
     }
-
   }
 
   private interface InternalCommand extends Command {}
@@ -157,10 +153,11 @@ public class ShoppingCart {
   }
 
   public static Behavior<Command> create(String userId) {
-    return Behaviors.setup(context ->
-        DistributedData.withReplicatorMessageAdapter(
-            (ReplicatorMessageAdapter<Command, LWWMap<String, LineItem>> replicator) ->
-                new ShoppingCart(context, replicator, userId).createBehavior()));
+    return Behaviors.setup(
+        context ->
+            DistributedData.withReplicatorMessageAdapter(
+                (ReplicatorMessageAdapter<Command, LWWMap<String, LineItem>> replicator) ->
+                    new ShoppingCart(context, replicator, userId).createBehavior()));
   }
 
   private final ReplicatorMessageAdapter<Command, LWWMap<String, LineItem>> replicator;
@@ -170,16 +167,14 @@ public class ShoppingCart {
   public ShoppingCart(
       ActorContext<Command> context,
       ReplicatorMessageAdapter<Command, LWWMap<String, LineItem>> replicator,
-      String userId
-  ) {
+      String userId) {
     this.replicator = replicator;
     this.dataKey = LWWMapKey.create("cart-" + userId);
     node = DistributedData.get(context.getSystem()).selfUniqueAddress();
   }
 
   public Behavior<Command> createBehavior() {
-    return Behaviors
-        .receive(Command.class)
+    return Behaviors.receive(Command.class)
         .onMessage(GetCart.class, this::onGetCart)
         .onMessage(InternalGetResponse.class, this::onInternalGetResponse)
         .onMessage(AddItem.class, this::onAddItem)
@@ -189,7 +184,7 @@ public class ShoppingCart {
         .build();
   }
 
-  //#get-cart
+  // #get-cart
   private Behavior<Command> onGetCart(GetCart command) {
     replicator.askGet(
         askReplyTo -> new Get<>(dataKey, readMajority, askReplyTo),
@@ -208,14 +203,14 @@ public class ShoppingCart {
       // ReadMajority failure, try again with local read
       replicator.askGet(
           askReplyTo -> new Get<>(dataKey, Replicator.readLocal(), askReplyTo),
-          rsp -> new InternalGetResponse(rsp, msg.replyTo)
-      );
+          rsp -> new InternalGetResponse(rsp, msg.replyTo));
     }
     return Behaviors.same();
   }
-  //#get-cart
 
-  //#add-item
+  // #get-cart
+
+  // #add-item
   private Behavior<Command> onAddItem(AddItem command) {
     replicator.askUpdate(
         askReplyTo ->
@@ -224,14 +219,13 @@ public class ShoppingCart {
                 LWWMap.empty(),
                 writeMajority,
                 askReplyTo,
-                cart -> updateCart(cart, command.item)
-            ),
+                cart -> updateCart(cart, command.item)),
         InternalUpdateResponse::new);
 
     return Behaviors.same();
   }
 
-  //#add-item
+  // #add-item
 
   private LWWMap<String, LineItem> updateCart(LWWMap<String, LineItem> data, LineItem item) {
     if (data.contains(item.productId)) {
@@ -244,7 +238,7 @@ public class ShoppingCart {
     }
   }
 
-  //#remove-item
+  // #remove-item
   private Behavior<Command> onRemoveItem(RemoveItem command) {
     // Try to fetch latest from a majority of nodes first, since ORMap
     // remove must have seen the item to be able to remove it.
@@ -275,11 +269,11 @@ public class ShoppingCart {
                 LWWMap.empty(),
                 writeMajority,
                 askReplyTo,
-                cart -> cart.remove(node, productId)
-            ),
+                cart -> cart.remove(node, productId)),
         InternalUpdateResponse::new);
   }
-  //#remove-item
+
+  // #remove-item
 
   private Behavior<Command> onInternalUpdateResponse(InternalUpdateResponse<?> msg) {
     if (msg.rsp instanceof UpdateSuccess) {

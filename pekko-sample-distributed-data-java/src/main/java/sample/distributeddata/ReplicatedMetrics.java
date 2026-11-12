@@ -80,26 +80,31 @@ public class ReplicatedMetrics extends AbstractBehavior<ReplicatedMetrics.Comman
   }
 
   public static Behavior<Command> create(Duration measureInterval, Duration cleanupInterval) {
-    return Behaviors.setup(context -> Behaviors.withTimers(timers -> {
-      timers.startTimerAtFixedRate(Tick.INSTANCE, Tick.INSTANCE, measureInterval);
-      timers.startTimerAtFixedRate(Cleanup.INSTANCE, Cleanup.INSTANCE, cleanupInterval);
-      return DistributedData.withReplicatorMessageAdapter(
-          (ReplicatorMessageAdapter<Command, LWWMap<String, Long>> replicator)->
-              new ReplicatedMetrics(context, replicator)
-      );
-    }));
+    return Behaviors.setup(
+        context ->
+            Behaviors.withTimers(
+                timers -> {
+                  timers.startTimerAtFixedRate(Tick.INSTANCE, Tick.INSTANCE, measureInterval);
+                  timers.startTimerAtFixedRate(Cleanup.INSTANCE, Cleanup.INSTANCE, cleanupInterval);
+                  return DistributedData.withReplicatorMessageAdapter(
+                      (ReplicatorMessageAdapter<Command, LWWMap<String, Long>> replicator) ->
+                          new ReplicatedMetrics(context, replicator));
+                }));
   }
 
   public static class UsedHeap {
     public Map<String, Double> percentPerNode;
+
     public UsedHeap(Map<String, Double> percentPerNode) {
       this.percentPerNode = percentPerNode;
     }
+
     @Override
     public String toString() {
-      return percentPerNode.entrySet().stream().map(entry ->
-        entry.getKey() + " --> " + entry.getValue() + " %"
-      ).reduce((str1, str2) -> str1 + "\n" + str2).get();
+      return percentPerNode.entrySet().stream()
+          .map(entry -> entry.getKey() + " --> " + entry.getValue() + " %")
+          .reduce((str1, str2) -> str1 + "\n" + str2)
+          .get();
     }
   }
 
@@ -121,8 +126,7 @@ public class ReplicatedMetrics extends AbstractBehavior<ReplicatedMetrics.Comman
 
   private ReplicatedMetrics(
       ActorContext<ReplicatedMetrics.Command> context,
-      ReplicatorMessageAdapter<Command, LWWMap<String, Long>> replicator
-  ) {
+      ReplicatorMessageAdapter<Command, LWWMap<String, Long>> replicator) {
     super(context);
     this.replicator = replicator;
 
@@ -144,13 +148,16 @@ public class ReplicatedMetrics extends AbstractBehavior<ReplicatedMetrics.Comman
   @Override
   public Receive<Command> createReceive() {
     return newReceiveBuilder()
-      .onMessageEquals(Tick.INSTANCE, this::receiveTick)
-      .onMessage(InternalSubscribeResponse.class, this::onInternalSubscribeResponse)
-      .onMessage(InternalUpdateResponse.class, notUsed -> this)
-      .onMessage(InternalClusterMemberUp.class, rsp -> receiveMemberUp(rsp.msg.member().address()))
-      .onMessage(InternalClusterMemberRemoved.class, rsp -> receiveMemberRemoved(rsp.msg.member().address()))
-      .onMessageEquals(Cleanup.INSTANCE, this::receiveCleanup)
-      .build();
+        .onMessageEquals(Tick.INSTANCE, this::receiveTick)
+        .onMessage(InternalSubscribeResponse.class, this::onInternalSubscribeResponse)
+        .onMessage(InternalUpdateResponse.class, notUsed -> this)
+        .onMessage(
+            InternalClusterMemberUp.class, rsp -> receiveMemberUp(rsp.msg.member().address()))
+        .onMessage(
+            InternalClusterMemberRemoved.class,
+            rsp -> receiveMemberRemoved(rsp.msg.member().address()))
+        .onMessageEquals(Cleanup.INSTANCE, this::receiveCleanup)
+        .build();
   }
 
   private Behavior<Command> receiveTick() {
@@ -159,17 +166,27 @@ public class ReplicatedMetrics extends AbstractBehavior<ReplicatedMetrics.Comman
     long max = heap.getMax();
 
     replicator.askUpdate(
-        askReplyTo -> new Update<>(usedHeapKey, LWWMap.create(), writeLocal(), askReplyTo,
-            curr -> curr.put(node, selfNodeKey, used)),
+        askReplyTo ->
+            new Update<>(
+                usedHeapKey,
+                LWWMap.create(),
+                writeLocal(),
+                askReplyTo,
+                curr -> curr.put(node, selfNodeKey, used)),
         InternalUpdateResponse::new);
 
     replicator.askUpdate(
-        askReplyTo -> new Update<>(maxHeapKey, LWWMap.create(), writeLocal(), askReplyTo, curr -> {
-          if (curr.contains(selfNodeKey) && curr.get(selfNodeKey).get() == max)
-            return curr; // unchanged
-          else
-            return curr.put(node, selfNodeKey, max);
-        }),
+        askReplyTo ->
+            new Update<>(
+                maxHeapKey,
+                LWWMap.create(),
+                writeLocal(),
+                askReplyTo,
+                curr -> {
+                  if (curr.contains(selfNodeKey) && curr.get(selfNodeKey).get() == max)
+                    return curr; // unchanged
+                  else return curr.put(node, selfNodeKey, max);
+                }),
         InternalUpdateResponse::new);
 
     return this;
@@ -208,35 +225,35 @@ public class ReplicatedMetrics extends AbstractBehavior<ReplicatedMetrics.Comman
 
   private Behavior<Command> receiveMemberRemoved(Address address) {
     nodesInCluster.remove(nodeKey(address));
-    if (address.equals(cluster.selfMember().uniqueAddress().address()))
-      return Behaviors.stopped();
-    else
-      return this;
+    if (address.equals(cluster.selfMember().uniqueAddress().address())) return Behaviors.stopped();
+    else return this;
   }
 
   private Behavior<Command> receiveCleanup() {
     // note that this function is run in the replicator, so we cannot safely reference
     // mutable internal state of this actor, we therefore make a defensive copy here
     final Set<String> nodesAtCleanup = Collections.unmodifiableSet(new HashSet<>(nodesInCluster));
-    Function<LWWMap<String, Long>, LWWMap<String, Long>> cleanupRemoved = (data) -> {
-      LWWMap<String, Long> result = data;
-      for (String k : data.getEntries().keySet()) {
-        if (!nodesAtCleanup.contains(k)) {
-          result = result.remove(node, k);
-        }
-      }
-      return result;
-    };
+    Function<LWWMap<String, Long>, LWWMap<String, Long>> cleanupRemoved =
+        (data) -> {
+          LWWMap<String, Long> result = data;
+          for (String k : data.getEntries().keySet()) {
+            if (!nodesAtCleanup.contains(k)) {
+              result = result.remove(node, k);
+            }
+          }
+          return result;
+        };
 
     replicator.askUpdate(
-        askReplyTo -> new Update<>(usedHeapKey, LWWMap.create(), writeLocal(), askReplyTo, cleanupRemoved),
+        askReplyTo ->
+            new Update<>(usedHeapKey, LWWMap.create(), writeLocal(), askReplyTo, cleanupRemoved),
         InternalUpdateResponse::new);
 
     replicator.askUpdate(
-        askReplyTo -> new Update<>(maxHeapKey, LWWMap.create(), writeLocal(), askReplyTo, cleanupRemoved),
+        askReplyTo ->
+            new Update<>(maxHeapKey, LWWMap.create(), writeLocal(), askReplyTo, cleanupRemoved),
         InternalUpdateResponse::new);
 
     return this;
   }
-
 }

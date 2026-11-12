@@ -19,3 +19,8 @@ sbt:pekko-sample-persistence-scala> test
 ```
 
 The `ShoppingCart` application is expanded further in the `pekko-sample-cqrs-scala` sample. In that sample the events are tagged to be consumed by even processors to build other representations from the events, or publish the events to other services.
+
+## Code formatting
+
+Run `sbt applyCodeStyle` to format this sample and `sbt checkCodeStyle` to
+verify its Scala sources and build files against the Apache Pekko style.

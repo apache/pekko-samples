@@ -24,3 +24,7 @@ lazy val `pekko-sample-cluster-client-grpc-scala` = project
       "org.apache.pekko" %% "pekko-multi-node-testkit" % pekkoVersion % Test,
       "org.scalatest" %% "scalatest" % "3.2.19" % Test))
   .configs(MultiJvm)
+  .settings(org.scalafmt.sbt.ScalafmtPlugin.scalafmtConfigSettings(MultiJvm))
+
+addCommandAlias("applyCodeStyle", "MultiJvm / scalafmt; scalafmtAll; scalafmtSbt")
+addCommandAlias("checkCodeStyle", "MultiJvm / scalafmtCheck; scalafmtCheckAll; scalafmtSbtCheck")

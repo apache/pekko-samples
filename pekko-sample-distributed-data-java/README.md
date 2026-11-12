@@ -97,3 +97,10 @@ Open [ReplicatedMetrics.java](src/main/java/sample/distributeddata/ReplicatedMet
 The multi-node test for the `ReplicatedCache` can be found in [ReplicatedMetricsSpec.scala](src/multi-jvm/scala/sample/distributeddata/ReplicatedMetricsSpec.scala).
 
 Note that there are some [Limitations](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#limitations) that you should be aware of. For example, Apache Pekko Distributed Data is not intended for _Big Data_.
+
+## Code formatting
+
+Run `sbt applyCodeStyle` to format this sample and `sbt checkCodeStyle` to
+verify its Scala sources and build files against the Apache Pekko style.
+These commands also format/check Java sources; use JDK 17 or later.
+Multi-JVM Scala sources are included in both commands.

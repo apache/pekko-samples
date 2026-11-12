@@ -29,7 +29,7 @@ object KillrWeather {
 
     ports.foreach { port =>
       val httpPort =
-        if (port > 0) 10000 + port // offset from pekko port
+        if port > 0 then 10000 + port // offset from pekko port
         else 0 // let OS decide
 
       val config = configWithPort(port)

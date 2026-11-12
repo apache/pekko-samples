@@ -123,7 +123,7 @@ object ShoppingCart {
       (state, command) =>
         // The shopping cart behavior changes if it's checked out or not.
         // The commands are handled differently for each case.
-        if (state.isCheckedOut) checkedOutShoppingCart(cartId, state, command)
+        if state.isCheckedOut then checkedOutShoppingCart(cartId, state, command)
         else openShoppingCart(cartId, state, command),
       (state, event) => handleEvent(state, event))
       .withRetention(RetentionCriteria.snapshotEvery(numberOfEvents = 100, keepNSnapshots = 3))
@@ -133,10 +133,10 @@ object ShoppingCart {
   private def openShoppingCart(cartId: String, state: State, command: Command): Effect[Event, State] =
     command match {
       case AddItem(itemId, quantity, replyTo) =>
-        if (state.hasItem(itemId)) {
+        if state.hasItem(itemId) then {
           replyTo ! StatusReply.Error(s"Item '$itemId' was already added to this shopping cart")
           Effect.none
-        } else if (quantity <= 0) {
+        } else if quantity <= 0 then {
           replyTo ! StatusReply.Error("Quantity must be greater than zero")
           Effect.none
         } else {
@@ -146,7 +146,7 @@ object ShoppingCart {
         }
 
       case RemoveItem(itemId, replyTo) =>
-        if (state.hasItem(itemId)) {
+        if state.hasItem(itemId) then {
           Effect.persist(ItemRemoved(cartId, itemId)).thenRun(updatedCart =>
             replyTo ! StatusReply.Success(updatedCart.toSummary))
         } else {
@@ -155,10 +155,10 @@ object ShoppingCart {
         }
 
       case AdjustItemQuantity(itemId, quantity, replyTo) =>
-        if (quantity <= 0) {
+        if quantity <= 0 then {
           replyTo ! StatusReply.Error("Quantity must be greater than zero")
           Effect.none
-        } else if (state.hasItem(itemId)) {
+        } else if state.hasItem(itemId) then {
           Effect
             .persist(ItemQuantityAdjusted(cartId, itemId, quantity))
             .thenRun(updatedCart => replyTo ! StatusReply.Success(updatedCart.toSummary))
@@ -168,7 +168,7 @@ object ShoppingCart {
         }
 
       case Checkout(replyTo) =>
-        if (state.isEmpty) {
+        if state.isEmpty then {
           replyTo ! StatusReply.Error("Cannot checkout an empty shopping cart")
           Effect.none
         } else {

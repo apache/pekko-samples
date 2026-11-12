@@ -93,22 +93,21 @@ public class VotingService {
   private final ReadConsistency readAll = new ReadAll(Duration.ofSeconds(3));
 
   public static Behavior<Command> create() {
-    return Behaviors.setup(context ->
-      DistributedData.withReplicatorMessageAdapter(
-        (ReplicatorMessageAdapter<Command, Flag> replicatorFlag) ->
-          DistributedData.withReplicatorMessageAdapter(
-            (ReplicatorMessageAdapter<Command, PNCounterMap<String>> replicatorCounters) ->
-              new VotingService(context, replicatorFlag, replicatorCounters).createBehavior()
-          )
-      )
-    );
+    return Behaviors.setup(
+        context ->
+            DistributedData.withReplicatorMessageAdapter(
+                (ReplicatorMessageAdapter<Command, Flag> replicatorFlag) ->
+                    DistributedData.withReplicatorMessageAdapter(
+                        (ReplicatorMessageAdapter<Command, PNCounterMap<String>>
+                                replicatorCounters) ->
+                            new VotingService(context, replicatorFlag, replicatorCounters)
+                                .createBehavior())));
   }
 
   private VotingService(
       ActorContext<Command> context,
       ReplicatorMessageAdapter<Command, Flag> replicatorFlag,
-      ReplicatorMessageAdapter<Command, PNCounterMap<String>> replicatorCounters
-  ) {
+      ReplicatorMessageAdapter<Command, PNCounterMap<String>> replicatorCounters) {
     this.replicatorFlag = replicatorFlag;
     this.replicatorCounters = replicatorCounters;
 
@@ -118,12 +117,11 @@ public class VotingService {
   }
 
   public Behavior<Command> createBehavior() {
-    return Behaviors
-      .receive(Command.class)
-      .onMessageEquals(Open.INSTANCE, this::receiveOpen)
-      .onMessage(InternalSubscribeResponse.class, this::onInternalSubscribeResponse)
-      .onMessage(GetVotes.class, this::receiveGetVotesEmpty)
-      .build();
+    return Behaviors.receive(Command.class)
+        .onMessageEquals(Open.INSTANCE, this::receiveOpen)
+        .onMessage(InternalSubscribeResponse.class, this::onInternalSubscribeResponse)
+        .onMessage(GetVotes.class, this::receiveGetVotesEmpty)
+        .build();
   }
 
   private Behavior<Command> receiveOpen() {
@@ -145,18 +143,22 @@ public class VotingService {
   }
 
   private BehaviorBuilder<Command> matchOpen() {
-    return Behaviors
-      .receive(Command.class)
-      .onMessage(Vote.class, this::receiveVote)
-      .onMessage(InternalUpdateResponse.class, notUsed -> Behaviors.same()) // ok
-      .onMessageEquals(Close.INSTANCE, this::receiveClose)
-      .onMessage(InternalSubscribeResponse.class, this::onInternalSubscribeResponse);
+    return Behaviors.receive(Command.class)
+        .onMessage(Vote.class, this::receiveVote)
+        .onMessage(InternalUpdateResponse.class, notUsed -> Behaviors.same()) // ok
+        .onMessageEquals(Close.INSTANCE, this::receiveClose)
+        .onMessage(InternalSubscribeResponse.class, this::onInternalSubscribeResponse);
   }
 
   private Behavior<Command> receiveVote(Vote vote) {
     replicatorCounters.askUpdate(
-        askReplyTo -> new Update<>(countersKey, PNCounterMap.create(), writeLocal(), askReplyTo,
-            curr -> curr.increment(node, vote.participant, 1)),
+        askReplyTo ->
+            new Update<>(
+                countersKey,
+                PNCounterMap.create(),
+                writeLocal(),
+                askReplyTo,
+                curr -> curr.increment(node, vote.participant, 1)),
         InternalUpdateResponse::new);
 
     return Behaviors.same();
@@ -189,17 +191,16 @@ public class VotingService {
 
   private Behavior<Command> matchGetVotesImpl(boolean open, BehaviorBuilder<Command> receive) {
     return receive
-      .onMessage(GetVotes.class, this::receiveGetVotes)
-      .onMessage(InternalGetResponse.class, rsp -> onInternalGetResponse(open, rsp))
-      .onMessage(InternalUpdateResponse.class, notUsed -> Behaviors.same())
-      .build();
+        .onMessage(GetVotes.class, this::receiveGetVotes)
+        .onMessage(InternalGetResponse.class, rsp -> onInternalGetResponse(open, rsp))
+        .onMessage(InternalUpdateResponse.class, notUsed -> Behaviors.same())
+        .build();
   }
 
   private Behavior<Command> receiveGetVotes(GetVotes getVotes) {
     replicatorCounters.askGet(
         askReplyTo -> new Get<>(countersKey, readAll, askReplyTo),
-        rsp -> new InternalGetResponse(getVotes.replyTo, rsp)
-    );
+        rsp -> new InternalGetResponse(getVotes.replyTo, rsp));
     return Behaviors.same();
   }
 

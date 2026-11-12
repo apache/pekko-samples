@@ -16,7 +16,7 @@ import scala.concurrent.duration._
 object Fog {
 
   def main(args: Array[String]): Unit = {
-    val weatherApiPorts = if (args.isEmpty) Seq(12553, 12554) else args.map(_.toInt).toSeq
+    val weatherApiPorts = if args.isEmpty then Seq(12553, 12554) else args.map(_.toInt).toSeq
     ActorSystem[Nothing](Guardian(weatherApiPorts), "Fog")
   }
 }

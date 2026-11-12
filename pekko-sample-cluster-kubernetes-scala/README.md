@@ -88,3 +88,8 @@ as described in the [Starting](#starting) section.
 This example uses [Apache Pekko Cluster Bootstrap](https://pekko.apache.org/docs/pekko-management/current/bootstrap/index.html)
 to initialize the cluster, using the [Kubernetes API discovery mechanism](https://pekko.apache.org/docs/pekko-management/current/discovery/index.html#discovery-method-kubernetes-api) 
 to find peer nodes.
+
+## Code formatting
+
+Run `sbt applyCodeStyle` to format this sample and `sbt checkCodeStyle` to
+verify its Scala sources and build files against the Apache Pekko style.

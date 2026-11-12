@@ -10,30 +10,37 @@ import org.apache.pekko.actor.typed.Behavior;
 import org.apache.pekko.actor.typed.javadsl.*;
 import org.apache.pekko.actor.typed.receptionist.Receptionist;
 
-//#frontend
+// #frontend
 public class Frontend extends AbstractBehavior<Frontend.Event> {
 
   interface Event {}
+
   private enum Tick implements Event {
     INSTANCE
   }
+
   private static final class WorkersUpdated implements Event {
     public final Set<ActorRef<Worker.TransformText>> newWorkers;
+
     public WorkersUpdated(Set<ActorRef<Worker.TransformText>> newWorkers) {
       this.newWorkers = newWorkers;
     }
   }
+
   private static final class TransformCompleted implements Event {
     public final String originalText;
     public final String transformedText;
+
     public TransformCompleted(String originalText, String transformedText) {
       this.originalText = originalText;
       this.transformedText = transformedText;
     }
   }
+
   private static final class JobFailed implements Event {
     public final String why;
     public final String text;
+
     public JobFailed(String why, String text) {
       this.why = why;
       this.text = text;
@@ -41,11 +48,8 @@ public class Frontend extends AbstractBehavior<Frontend.Event> {
   }
 
   public static Behavior<Event> create() {
-    return Behaviors.setup(context ->
-        Behaviors.withTimers(timers ->
-          new Frontend(context, timers)
-        )
-    );
+    return Behaviors.setup(
+        context -> Behaviors.withTimers(timers -> new Frontend(context, timers)));
   }
 
   private final List<ActorRef<Worker.TransformText>> workers = new ArrayList<>();
@@ -54,9 +58,13 @@ public class Frontend extends AbstractBehavior<Frontend.Event> {
   private Frontend(ActorContext<Event> context, TimerScheduler<Event> timers) {
     super(context);
     ActorRef<Receptionist.Listing> subscriptionAdapter =
-        context.messageAdapter(Receptionist.Listing.class, listing ->
-          new WorkersUpdated(listing.getServiceInstances(Worker.WORKER_SERVICE_KEY)));
-    context.getSystem().receptionist().tell(Receptionist.subscribe(Worker.WORKER_SERVICE_KEY, subscriptionAdapter));
+        context.messageAdapter(
+            Receptionist.Listing.class,
+            listing -> new WorkersUpdated(listing.getServiceInstances(Worker.WORKER_SERVICE_KEY)));
+    context
+        .getSystem()
+        .receptionist()
+        .tell(Receptionist.subscribe(Worker.WORKER_SERVICE_KEY, subscriptionAdapter));
 
     timers.startTimerWithFixedDelay(Tick.INSTANCE, Tick.INSTANCE, Duration.ofSeconds(2));
   }
@@ -71,14 +79,17 @@ public class Frontend extends AbstractBehavior<Frontend.Event> {
         .build();
   }
 
-
   private Behavior<Event> onTransformCompleted(TransformCompleted event) {
-    getContext().getLog().info("Got completed transform of {}: {}", event.originalText, event.transformedText);
+    getContext()
+        .getLog()
+        .info("Got completed transform of {}: {}", event.originalText, event.transformedText);
     return this;
   }
 
   private Behavior<Event> onJobFailed(JobFailed event) {
-    getContext().getLog().warn("Transformation of text {} failed. Because: {}", event.text, event.why);
+    getContext()
+        .getLog()
+        .warn("Transformation of text {} failed. Because: {}", event.text, event.why);
     return this;
   }
 
@@ -91,19 +102,19 @@ public class Frontend extends AbstractBehavior<Frontend.Event> {
       ActorRef<Worker.TransformText> selectedWorker = workers.get(jobCounter % workers.size());
       getContext().getLog().info("Sending work for processing to {}", selectedWorker);
       String text = "hello-" + jobCounter;
-      getContext().ask(
-          Worker.TextTransformed.class,
-          selectedWorker,
-          timeout,
-          responseRef -> new Worker.TransformText(text, responseRef),
-          (response, failure) -> {
-            if (response != null) {
-              return new TransformCompleted(text, response.text);
-            } else {
-              return new JobFailed("Processing timed out", text);
-            }
-          }
-      );
+      getContext()
+          .ask(
+              Worker.TextTransformed.class,
+              selectedWorker,
+              timeout,
+              responseRef -> new Worker.TransformText(text, responseRef),
+              (response, failure) -> {
+                if (response != null) {
+                  return new TransformCompleted(text, response.text);
+                } else {
+                  return new JobFailed("Processing timed out", text);
+                }
+              });
       jobCounter++;
     }
     return this;
@@ -112,8 +123,10 @@ public class Frontend extends AbstractBehavior<Frontend.Event> {
   private Behavior<Event> onWorkersUpdated(WorkersUpdated event) {
     workers.clear();
     workers.addAll(event.newWorkers);
-    getContext().getLog().info("List of services registered with the receptionist changed: {}", event.newWorkers);
+    getContext()
+        .getLog()
+        .info("List of services registered with the receptionist changed: {}", event.newWorkers);
     return this;
   }
 }
-//#frontend
+// #frontend
