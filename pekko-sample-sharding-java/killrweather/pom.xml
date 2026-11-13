@@ -19,7 +19,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <pekko.version>2.0.0</pekko.version>
-        <pekko-http.version>2.0.0-M2</pekko-http.version>
+        <pekko-http.version>2.0.0</pekko-http.version>
         <scala.binary.version>3</scala.binary.version>
         <!-- Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe -->
         <argLine>--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED</argLine>

@@ -7,7 +7,7 @@ ThisBuild / evictionErrorLevel := Level.Info
 val pekkoVersion = "2.0.0"
 val cassandraPluginVersion = "1.1.0"
 
-val pekkoHttpVersion = "2.0.0-M2"
+val pekkoHttpVersion = "2.0.0"
 val pekkoClusterManagementVersion = "2.0.0-M1"
 
 val logbackVersion = "1.3.15"

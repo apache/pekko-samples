@@ -4,7 +4,7 @@ ThisBuild / scalaVersion := "3.3.9"
 ThisBuild / evictionErrorLevel := Level.Info
 lazy val pekkoVersion = "2.0.0"
 lazy val pekkoManagementVersion = "2.0.0-M1"
-lazy val pekkoHttpVersion = "2.0.0-M2"
+lazy val pekkoHttpVersion = "2.0.0"
 
 lazy val root = (project in file("."))
   .aggregate(httpToGrpc, grpcService)

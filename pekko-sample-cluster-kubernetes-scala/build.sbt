@@ -3,7 +3,7 @@ ThisBuild / organization := "org.apache.pekko"
 name := "pekko-sample-cluster-kubernetes-scala"
 
 scalaVersion := "3.3.9"
-val pekkoHttpVersion = "2.0.0-M2"
+val pekkoHttpVersion = "2.0.0"
 ThisBuild / evictionErrorLevel := Level.Info
 val pekkoVersion = "2.0.0"
 val pekkoManagementVersion = "2.0.0-M1"
