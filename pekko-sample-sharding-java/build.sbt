@@ -1,10 +1,11 @@
-val pekkoVersion = "1.5.0"
-val pekkoHttpVersion = "1.3.0"
+ThisBuild / evictionErrorLevel := Level.Info
+val pekkoVersion = "2.0.0"
+val pekkoHttpVersion = "2.0.0"
 val logbackVersion = "1.3.15"
 
 lazy val buildSettings = Seq(
   organization := "org.apache.pekko",
-  scalaVersion := "3.3.7")
+  scalaVersion := "3.3.9")
 
 lazy val commonJavacOptions = Seq(
   "-Xlint:unchecked",

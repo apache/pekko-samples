@@ -177,10 +177,10 @@ public class ReplicatedMetrics extends AbstractBehavior<ReplicatedMetrics.Comman
 
   private Behavior<Command> onInternalSubscribeResponse(InternalSubscribeResponse rsp) {
     SubscribeResponse<LWWMap<String, Long>> rsp1 = rsp.rsp;
-    if (rsp1 instanceof Changed && rsp1.key().equals(maxHeapKey)) {
-      receiveMaxHeapChanged((Changed<LWWMap<String, Long>>) rsp1);
-    } else if (rsp1 instanceof Changed && rsp1.key().equals(usedHeapKey)) {
-      receiveUsedHeapChanged((Changed<LWWMap<String, Long>>) rsp1);
+    if (rsp1 instanceof Changed<LWWMap<String, Long>> changed && changed.key().equals(maxHeapKey)) {
+      receiveMaxHeapChanged(changed);
+    } else if (rsp1 instanceof Changed<LWWMap<String, Long>> changed && changed.key().equals(usedHeapKey)) {
+      receiveUsedHeapChanged(changed);
     }
     return this;
   }
@@ -217,7 +217,7 @@ public class ReplicatedMetrics extends AbstractBehavior<ReplicatedMetrics.Comman
   private Behavior<Command> receiveCleanup() {
     // note that this function is run in the replicator, so we cannot safely reference
     // mutable internal state of this actor, we therefore make a defensive copy here
-    final Set<String> nodesAtCleanup = Collections.unmodifiableSet(new HashSet<>(nodesInCluster));
+    final Set<String> nodesAtCleanup = Set.copyOf(nodesInCluster);
     Function<LWWMap<String, Long>, LWWMap<String, Long>> cleanupRemoved = (data) -> {
       LWWMap<String, Long> result = data;
       for (String k : data.getEntries().keySet()) {

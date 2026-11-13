@@ -40,7 +40,7 @@ class ClusterClientReceptionistGrpcImpl implements ClusterClientReceptionistServ
         // never fail from stream element
         elem -> Optional.empty(),
         settings.bufferSize,
-        OverflowStrategy.dropNew())
+        OverflowStrategy.dropTail())
       .map( rsp -> {
         Payload payload = serialization.serializePayload(rsp);
         return Rsp.newBuilder().setPayload(payload).build();

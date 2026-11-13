@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * A sharded `WeatherStation` has a set of recorded datapoints
@@ -180,7 +179,7 @@ final class WeatherStation extends AbstractBehavior<WeatherStation.Command> {
       List<Double> dataForSameType = values.stream()
           .filter(d -> d.dataType == record.data.dataType)
           .map(d -> d.value)
-          .collect(Collectors.toList());
+          .toList();
       double averageForSameType = average(dataForSameType);
       getContext().getLog().debug("{} total readings from station {}, type {}, average {}, diff: processingTime - eventTime: {} ms",
           values.size(),
@@ -195,33 +194,31 @@ final class WeatherStation extends AbstractBehavior<WeatherStation.Command> {
   }
 
   private Behavior<Command> onQuery(Query query) {
-    List<Data> dataForType = values.stream().filter(d -> d.dataType == query.dataType).collect(Collectors.toList());
+    List<Data> dataForType = values.stream().filter(d -> d.dataType == query.dataType).toList();
     final List<TimeWindow> queryResult;
     if (dataForType.isEmpty()) {
-      queryResult = Collections.emptyList();
+      queryResult = List.of();
     } else {
-      switch (query.func) {
-        case Average:
-          long start = dataForType.stream().findFirst().map(d -> d.eventTime).orElse(0L);
-          long end = dataForType.isEmpty() ? 0 : dataForType.get(dataForType.size() - 1).eventTime;
-          List<Double> valuesForType = dataForType.stream().map(d -> d.value).collect(Collectors.toList());
-          queryResult = Collections.singletonList(new TimeWindow(start, end, average(valuesForType)));
-          break;
-        case HighLow:
+      queryResult = switch (query.func) {
+        case Average -> {
+          long start = dataForType.get(0).eventTime;
+          long end = dataForType.get(dataForType.size() - 1).eventTime;
+          List<Double> valuesForType = dataForType.stream().map(d -> d.value).toList();
+          yield List.of(new TimeWindow(start, end, average(valuesForType)));
+        }
+        case HighLow -> {
           Data min = dataForType.stream().reduce((a, b) -> a.value < b.value ? a : b).get();
           Data max = dataForType.stream().reduce((a, b) -> a.value > b.value ? a : b).get();
-          queryResult = Arrays.asList(
+          yield List.of(
               new TimeWindow(min.eventTime, max.eventTime, min.value),
               new TimeWindow(min.eventTime, max.eventTime, max.value));
-          break;
-        case Current:
+        }
+        case Current -> {
           // we know it is not empty from up above
           Data current = dataForType.get(dataForType.size() - 1);
-          queryResult = Collections.singletonList(new TimeWindow(current.eventTime, current.eventTime, current.value));
-          break;
-        default:
-          throw new IllegalArgumentException("Unknown operation " + query.func);
-      }
+          yield List.of(new TimeWindow(current.eventTime, current.eventTime, current.value));
+        }
+      };
     }
     query.replyTo.tell(new QueryResult(wsid, query.dataType, query.func, dataForType.size(), queryResult));
     return this;

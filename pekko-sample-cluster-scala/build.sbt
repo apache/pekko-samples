@@ -1,6 +1,6 @@
 import com.typesafe.sbt.MultiJvmPlugin.multiJvmSettings
 
-val pekkoVersion = "1.5.0"
+val pekkoVersion = "2.0.0"
 val logbackVersion = "1.3.15"
 
 lazy val `pekko-sample-cluster-scala` = project
@@ -8,7 +8,9 @@ lazy val `pekko-sample-cluster-scala` = project
   .settings(multiJvmSettings: _*)
   .settings(
     organization := "org.apache.pekko",
-    scalaVersion := "3.3.7",
+    // Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
+    MultiJvm / jvmOptions ++= Seq("--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"),
+    scalaVersion := "3.3.9",
     Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
     Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
     run / javaOptions ++= Seq("-Xms128m", "-Xmx1024m", "-Djava.library.path=./target/native"),

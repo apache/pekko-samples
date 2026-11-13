@@ -10,9 +10,11 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <pekko.version>1.5.0</pekko.version>
-    <pekko.grpc.version>1.2.0</pekko.grpc.version>
+    <pekko.version>2.0.0</pekko.version>
+    <pekko.grpc.version>2.0.0-M2</pekko.grpc.version>
     <scala.binary.version>3</scala.binary.version>
+    <!-- Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe -->
+    <argLine>--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED</argLine>
   </properties>
 
   <dependencies>
@@ -67,8 +69,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <release>17</release>
           <fork>true</fork>
           <compilerArgs>
             <arg>-Xlint</arg>

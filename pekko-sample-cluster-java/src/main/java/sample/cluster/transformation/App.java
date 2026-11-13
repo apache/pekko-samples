@@ -7,10 +7,9 @@ import org.apache.pekko.cluster.typed.Cluster;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 public class App {
 
@@ -53,7 +52,7 @@ public class App {
     // Override the configuration of the port
     Map<String, Object> overrides = new HashMap<>();
     overrides.put("pekko.remote.artery.canonical.port", port);
-    overrides.put("pekko.cluster.roles", Collections.singletonList(role));
+    overrides.put("pekko.cluster.roles", List.of(role));
 
     Config config = ConfigFactory.parseMap(overrides)
         .withFallback(ConfigFactory.load("transformation"));
