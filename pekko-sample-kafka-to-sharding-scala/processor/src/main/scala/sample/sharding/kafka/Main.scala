@@ -96,7 +96,7 @@ object Main {
     def startGrpc(
         system: ActorSystem[?], frontEndPort: Int, region: ActorRef[UserEvents.Command]): Future[Http.ServerBinding] = {
       val service: HttpRequest => Future[HttpResponse] =
-        UserServiceHandler(new UserGrpcService(system, region))(system.toClassic)
+        UserServiceHandler(new UserGrpcService(system, region))(using system.toClassic)
       Http()(system.toClassic).newServerAt("127.0.0.1", frontEndPort).bind(service)
 
     }
