@@ -12,9 +12,76 @@ on:
   pull_request:
 
 jobs:
+  classify-pr:
+    name: Classify root documentation changes
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-22.04
+    outputs:
+      docs_only: ${{ steps.classify.outputs.docs_only }}
+    steps:
+      - name: Checkout exact PR merge
+        id: checkout
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          fetch-tags: false
+          persist-credentials: false
+
+      - name: Prove that only existing root documentation files changed
+        id: classify
+        if: steps.checkout.outcome == 'success'
+        continue-on-error: true
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python3 -I - <<'PYTHON'
+          import os
+          import re
+          import subprocess
+
+          allowed = {b"README.md"}
+
+          def git(*args):
+              return subprocess.check_output(("git", *args))
+
+          def docs_only(before, after):
+              # Raw NUL-separated records preserve filenames verbatim. No rename
+              # detection means a rename is seen as an add/delete and cannot qualify.
+              records = git("diff", "--raw", "-z", "--no-renames", "--no-ext-diff",
+                            "--no-textconv", "--ignore-submodules=none", before, after, "--")
+              if not records:
+                  return False
+              fields = records.split(b"\0")
+              return fields.pop() == b"" and len(fields) % 2 == 0 and all(
+                  path in allowed and metadata.split()[:2] == [b":100644", b"100644"]
+                  and metadata.split()[-1] == b"M"
+                  for metadata, path in zip(fields[::2], fields[1::2])
+              )
+
+          base, head, merge = (os.environ[name] for name in ("PR_BASE_SHA", "PR_HEAD_SHA", "GITHUB_SHA"))
+          if all(re.fullmatch(r"[0-9a-f]{40}", sha) for sha in (base, head, merge)):
+              parents = git("rev-list", "--parents", "-n", "1", merge).decode("ascii").split()
+              if parents == [merge, base, head]:
+                  merge_bases = git("merge-base", "--all", base, head).decode("ascii").split()
+                  # Prove both the PR's own changes and the actual merge result. Any
+                  # ambiguity, failure or absent proof leaves docs_only unset.
+                  if len(merge_bases) == 1 and docs_only(merge_bases[0], head) and docs_only(base, merge):
+                      with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+                          output.write("docs_only=true\n")
+          PYTHON
+
   build-test:
     name: Build and test all samples
     runs-on: ubuntu-22.04
+    needs: [classify-pr]
+    if: >-
+      ${{ always() && !cancelled() &&
+          (github.event_name != 'pull_request' ||
+           needs.classify-pr.result != 'success' ||
+           needs.classify-pr.outputs.docs_only != 'true') }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
