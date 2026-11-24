@@ -25,7 +25,7 @@ lazy val httpToGrpc = (project in file("http-to-grpc"))
       "org.apache.pekko" %% "pekko-discovery-kubernetes-api" % pekkoManagementVersion,
       "ch.qos.logback" % "logback-classic" % "1.3.15"),
     dockerExposedPorts := Seq(8080),
-    dockerBaseImage := "eclipse-temurin:21",
+    dockerBaseImage := "eclipse-temurin:21"
   )
 
 // gRPC back end that echoes back messages
@@ -43,3 +43,6 @@ lazy val grpcService = (project in file("grpc-service"))
       "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
       "org.apache.pekko" %% "pekko-http" % pekkoHttpVersion,
       "ch.qos.logback" % "logback-classic" % "1.3.15"))
+
+addCommandAlias("applyCodeStyle", "scalafmtAll; scalafmtSbt")
+addCommandAlias("checkCodeStyle", "scalafmtCheckAll; scalafmtSbtCheck")

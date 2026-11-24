@@ -114,8 +114,7 @@ object ReplicatedMetrics {
 
             case InternalClusterMemberRemoved(ClusterEvent.MemberRemoved(m, _)) =>
               nodesInCluster -= nodeKey(m.address)
-              if (m.address == cluster.selfMember.uniqueAddress.address)
-                Behaviors.stopped
+              if m.address == cluster.selfMember.uniqueAddress.address then Behaviors.stopped
               else
                 Behaviors.same
 

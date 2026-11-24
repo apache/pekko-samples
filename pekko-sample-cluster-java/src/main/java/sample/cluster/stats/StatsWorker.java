@@ -15,20 +15,25 @@ import sample.cluster.CborSerializable;
 public final class StatsWorker extends AbstractBehavior<StatsWorker.Command> {
 
   interface Command extends CborSerializable {}
+
   public static final class Process implements Command {
     public final String word;
     public final ActorRef<Processed> replyTo;
+
     public Process(String word, ActorRef<Processed> replyTo) {
       this.word = word;
       this.replyTo = replyTo;
     }
   }
+
   private enum EvictCache implements Command {
     INSTANCE
   }
+
   public static final class Processed implements CborSerializable {
     public final String word;
     public final int length;
+
     public Processed(String word, int length) {
       this.word = word;
       this.length = length;
@@ -42,14 +47,16 @@ public final class StatsWorker extends AbstractBehavior<StatsWorker.Command> {
   }
 
   public static Behavior<StatsWorker.Command> create() {
-    return Behaviors.setup(context ->
-        Behaviors.withTimers(timers -> {
-          context.getLog().info("Worker starting up");
-          timers.startTimerWithFixedDelay(EvictCache.INSTANCE, EvictCache.INSTANCE, Duration.ofSeconds(30));
+    return Behaviors.setup(
+        context ->
+            Behaviors.withTimers(
+                timers -> {
+                  context.getLog().info("Worker starting up");
+                  timers.startTimerWithFixedDelay(
+                      EvictCache.INSTANCE, EvictCache.INSTANCE, Duration.ofSeconds(30));
 
-          return new StatsWorker(context);
-        })
-    );
+                  return new StatsWorker(context);
+                }));
   }
 
   @Override

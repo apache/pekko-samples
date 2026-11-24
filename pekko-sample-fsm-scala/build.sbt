@@ -11,3 +11,6 @@ libraryDependencies ++= Seq(
 
 licenses := Seq(
   ("CC0", url("http://creativecommons.org/publicdomain/zero/1.0")))
+
+addCommandAlias("applyCodeStyle", "scalafmtAll; scalafmtSbt")
+addCommandAlias("checkCodeStyle", "scalafmtCheckAll; scalafmtSbtCheck")

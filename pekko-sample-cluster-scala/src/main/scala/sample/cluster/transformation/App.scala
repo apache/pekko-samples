@@ -11,14 +11,14 @@ object App {
     def apply(): Behavior[Nothing] = Behaviors.setup[Nothing] { ctx =>
       val cluster = Cluster(ctx.system)
 
-      if (cluster.selfMember.hasRole("backend")) {
+      if cluster.selfMember.hasRole("backend") then {
         val workersPerNode =
           ctx.system.settings.config.getInt("transformation.workers-per-node")
         (1 to workersPerNode).foreach { n =>
           ctx.spawn(Worker(), s"Worker$n")
         }
       }
-      if (cluster.selfMember.hasRole("frontend")) {
+      if cluster.selfMember.hasRole("frontend") then {
         ctx.spawn(Frontend(), "Frontend")
       }
       Behaviors.empty
@@ -27,7 +27,7 @@ object App {
 
   def main(args: Array[String]): Unit = {
     // starting 2 frontend nodes and 3 backend nodes
-    if (args.isEmpty) {
+    if args.isEmpty then {
       startup("backend", 17356)
       startup("backend", 17357)
       startup("frontend", 0)

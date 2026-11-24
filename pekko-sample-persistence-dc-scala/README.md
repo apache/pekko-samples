@@ -19,3 +19,8 @@ Starting Apache Cassandra with the `cassandra` argument runs it in a Docker cont
    * To add a thumbs-up for resource `pekko` from user `u2` in DC `eu-west`: `curl -X POST http://127.0.0.1:27345/thumbs-up/pekko/u2`
    * To get the users that gave thumbs-up for resource `pekko`: `curl http://127.0.0.1:27355/thumbs-up/pekko`
    * Note the port numbers 27355 for eu-west and 27345 for eu-central
+
+## Code formatting
+
+Run `sbt applyCodeStyle` to format this sample and `sbt checkCodeStyle` to
+verify its Scala sources and build files against the Apache Pekko style.

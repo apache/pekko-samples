@@ -20,10 +20,10 @@ object ClientApp {
     val client = UserServiceClient(clientSettings)
 
     var userId = ""
-    while (userId != ":q") {
+    while userId != ":q" do {
       println("Enter user id or :q to quit")
       userId = StdIn.readLine()
-      if (userId != ":q") {
+      if userId != ":q" then {
         val runningTotal = Await.result(client.userStats(UserStatsRequest(userId)), Duration.Inf)
         println(
           s"User ${userId} has made ${runningTotal.totalPurchases} purchases for a total of ${runningTotal.amountSpent}p")

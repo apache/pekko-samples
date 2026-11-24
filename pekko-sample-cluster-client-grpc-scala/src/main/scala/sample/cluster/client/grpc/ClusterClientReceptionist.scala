@@ -129,7 +129,7 @@ object ClusterReceptionistSettings {
   }
 
   private def roleOption(role: String): Option[String] =
-    if (role == "") None else Option(role)
+    if role == "" then None else Option(role)
 
 }
 

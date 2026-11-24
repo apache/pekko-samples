@@ -62,7 +62,7 @@ object BankAccount {
     case Deposit(amount, ack) =>
       Effect.persist(Deposited(amount)).thenRun(_ => ack ! StatusReply.ack())
     case Withdraw(amount, ack) =>
-      if (state.balance - amount >= 0) {
+      if state.balance - amount >= 0 then {
         Effect.persist(Withdrawn(amount)).thenRun(_ => ack ! StatusReply.ack())
       } else {
         Effect.none.thenRun(_ => ack ! StatusReply.error("insufficient funds"))
@@ -78,13 +78,13 @@ object BankAccount {
    */
   def detectOverdrawn(
       state: BankAccount.State, replicationContext: ReplicationContext, context: ActorContext[Command]): Unit = {
-    if (replicationContext.concurrent // this event happened concurrently with other events already processed
-      && replicationContext.replicaId == ReplicaId("eu-central") // if we only want to do the side effect in a single DC
-      && !replicationContext.recoveryRunning // probably want to avoid re-execution of side effects during recovery
-    ) {
+    if replicationContext.concurrent // this event happened concurrently with other events already processed
+    && replicationContext.replicaId == ReplicaId("eu-central") // if we only want to do the side effect in a single DC
+    && !replicationContext.recoveryRunning // probably want to avoid re-execution of side effects during recovery
+    then {
       // there's a chance we may have gone into the overdraft due to concurrent events due to concurrent requests
       // or a network partition
-      if (state.balance < 0) {
+      if state.balance < 0 then {
         // the trigger could happen here, in a projection, or as done here by sending a command back to self so that an event can be stored
         context.self ! AlertOverdrawn(state.balance)
       }

@@ -5,8 +5,6 @@ import org.apache.pekko.actor.typed.javadsl.*;
 import org.apache.pekko.http.javadsl.Http;
 import org.apache.pekko.http.javadsl.model.ContentTypes;
 import org.apache.pekko.http.javadsl.model.HttpRequest;
-import org.apache.pekko.http.javadsl.model.StatusCode;
-import org.apache.pekko.http.javadsl.model.StatusCodes;
 import org.apache.pekko.http.javadsl.unmarshalling.Unmarshaller;
 import org.apache.pekko.serialization.jackson.JacksonObjectMapperProvider;
 import org.apache.pekko.stream.SystemMaterializer;
@@ -19,29 +17,32 @@ import java.util.concurrent.CompletionStage;
 public class WeatherStation extends AbstractBehavior<WeatherStation.Command> {
 
   interface Command {}
+
   enum Sample implements Command {
     INSTANCE
   }
+
   private static final class ProcessSuccess implements Command {
     final String msg;
+
     public ProcessSuccess(String msg) {
       this.msg = msg;
     }
   }
+
   private static final class ProcessFailure implements Command {
     final Throwable e;
+
     public ProcessFailure(Throwable e) {
       this.e = e;
     }
   }
 
-
   public static Behavior<Command> create(String wsid, FogSettings settings, int httpPort) {
-    return Behaviors.setup(context ->
-        Behaviors.withTimers(timers ->
-          new WeatherStation(context, timers, wsid, settings, httpPort)
-        )
-    );
+    return Behaviors.setup(
+        context ->
+            Behaviors.withTimers(
+                timers -> new WeatherStation(context, timers, wsid, settings, httpPort)));
   }
 
   private final String wsid;
@@ -52,21 +53,28 @@ public class WeatherStation extends AbstractBehavior<WeatherStation.Command> {
   private final String stationUrl;
   private final ObjectMapper objectMapper;
 
-  private WeatherStation(ActorContext<Command> context, TimerScheduler<Command> timers, String wsid, FogSettings settings, int httpPort) {
+  private WeatherStation(
+      ActorContext<Command> context,
+      TimerScheduler<Command> timers,
+      String wsid,
+      FogSettings settings,
+      int httpPort) {
     super(context);
     this.wsid = wsid;
     this.settings = settings;
     this.timers = timers;
     this.http = Http.get(Adapter.toClassic(context.getSystem()));
     stationUrl = "http://" + settings.host + ":" + httpPort + "/weather/" + wsid;
-    objectMapper = JacksonObjectMapperProvider.get(getContext().getSystem()).getOrCreate("weather-station", Optional.empty());
+    objectMapper =
+        JacksonObjectMapperProvider.get(getContext().getSystem())
+            .getOrCreate("weather-station", Optional.empty());
     timers.startSingleTimer(Sample.INSTANCE, Sample.INSTANCE, settings.sampleInterval);
   }
 
   @Override
   public Receive<Command> createReceive() {
     return newReceiveBuilder()
-      .onMessageEquals(Sample.INSTANCE, this::onSample)
+        .onMessageEquals(Sample.INSTANCE, this::onSample)
         .onMessage(ProcessSuccess.class, this::onProcessSuccess)
         .onMessage(ProcessFailure.class, this::onProcessFailure)
         .build();
@@ -93,27 +101,33 @@ public class WeatherStation extends AbstractBehavior<WeatherStation.Command> {
   private void recordTemperature(long eventTime, double value) throws Exception {
     Data data = new Data(eventTime, "temperature", value);
 
-    // FIXME no Java API in Apache Pekko HTTP to do this using the marshalling infra, see pekko-http#2128
+    // FIXME no Java API in Apache Pekko HTTP to do this using the marshalling infra, see
+    // pekko-http#2128
     String json = objectMapper.writeValueAsString(data);
     CompletionStage<String> futureResponseBody =
-        http.singleRequest(HttpRequest.POST(stationUrl).withEntity(ContentTypes.APPLICATION_JSON, json))
-          .thenCompose(response ->
-            Unmarshaller.entityToString().unmarshal(response.entity(), SystemMaterializer.get(getContext().getSystem()).materializer())
-              .thenApply(body -> {
-                if (response.status().isSuccess())
-                  return body;
-                else throw new RuntimeException("Failed to register data: " + body);
-              })
-          );
+        http.singleRequest(
+                HttpRequest.POST(stationUrl).withEntity(ContentTypes.APPLICATION_JSON, json))
+            .thenCompose(
+                response ->
+                    Unmarshaller.entityToString()
+                        .unmarshal(
+                            response.entity(),
+                            SystemMaterializer.get(getContext().getSystem()).materializer())
+                        .thenApply(
+                            body -> {
+                              if (response.status().isSuccess()) return body;
+                              else throw new RuntimeException("Failed to register data: " + body);
+                            }));
 
-    getContext().pipeToSelf(futureResponseBody, (response, failure) -> {
-      if (failure == null) {
-        return new ProcessSuccess(response);
-      } else {
-        return new ProcessFailure(failure);
-      }
-    });
-
+    getContext()
+        .pipeToSelf(
+            futureResponseBody,
+            (response, failure) -> {
+              if (failure == null) {
+                return new ProcessSuccess(response);
+              } else {
+                return new ProcessFailure(failure);
+              }
+            });
   }
-
 }

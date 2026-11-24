@@ -26,3 +26,10 @@ lazy val `pekko-sample-cluster-java` = project
     Test / parallelExecution := false,
     licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0"))))
   .configs(MultiJvm)
+  .settings(org.scalafmt.sbt.ScalafmtPlugin.scalafmtConfigSettings(MultiJvm))
+
+ThisBuild / javafmtFormatterCompatibleJavaVersion := 17
+ThisBuild / javafmtSortImports := false
+
+addCommandAlias("applyCodeStyle", "MultiJvm / scalafmt; scalafmtAll; scalafmtSbt; javafmtAll")
+addCommandAlias("checkCodeStyle", "MultiJvm / scalafmtCheck; scalafmtCheckAll; scalafmtSbtCheck; javafmtCheckAll")

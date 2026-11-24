@@ -19,24 +19,45 @@ public final class ClusterListener extends AbstractBehavior<ClusterEvent.Cluster
     super(context);
     context.getLog().debug("starting up cluster listener...");
     final Cluster cluster = Cluster.get(context.getSystem());
-    cluster.subscriptions().tell(Subscribe.create(context.getSelf(), ClusterEvent.ClusterDomainEvent.class));
+    cluster
+        .subscriptions()
+        .tell(Subscribe.create(context.getSelf(), ClusterEvent.ClusterDomainEvent.class));
   }
 
   @Override
   public Receive<ClusterEvent.ClusterDomainEvent> createReceive() {
     return newReceiveBuilder()
-        .onMessage(ClusterEvent.MemberUp.class, event -> {
-          getContext().getLog().info("Member is Up: {}", event.member().address());
-          return this;
-        }).onMessage(ClusterEvent.UnreachableMember.class, event -> {
-          getContext().getLog().info("Member detected as unreachable: {}", event.member().address());
-          return this;
-        }).onMessage(ClusterEvent.MemberRemoved.class, event -> {
-          getContext().getLog().info("Member is Removed: {} after {}", event.member().address(), event.previousStatus());
-          return this;
-        }).onMessage(ClusterEvent.MemberRemoved.class, event -> {
-          getContext().getLog().info("Member Event: " + event.toString());
-          return this;
-        }).build();
+        .onMessage(
+            ClusterEvent.MemberUp.class,
+            event -> {
+              getContext().getLog().info("Member is Up: {}", event.member().address());
+              return this;
+            })
+        .onMessage(
+            ClusterEvent.UnreachableMember.class,
+            event -> {
+              getContext()
+                  .getLog()
+                  .info("Member detected as unreachable: {}", event.member().address());
+              return this;
+            })
+        .onMessage(
+            ClusterEvent.MemberRemoved.class,
+            event -> {
+              getContext()
+                  .getLog()
+                  .info(
+                      "Member is Removed: {} after {}",
+                      event.member().address(),
+                      event.previousStatus());
+              return this;
+            })
+        .onMessage(
+            ClusterEvent.MemberRemoved.class,
+            event -> {
+              getContext().getLog().info("Member Event: " + event.toString());
+              return this;
+            })
+        .build();
   }
 }

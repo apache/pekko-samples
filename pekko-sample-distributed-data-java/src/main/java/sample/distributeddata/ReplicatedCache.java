@@ -67,23 +67,16 @@ public class ReplicatedCache {
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
-        return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
+      if (this == obj) return true;
+      if (obj == null) return false;
+      if (getClass() != obj.getClass()) return false;
       Cached other = (Cached) obj;
       if (key == null) {
-        if (other.key != null)
-          return false;
-      } else if (!key.equals(other.key))
-        return false;
+        if (other.key != null) return false;
+      } else if (!key.equals(other.key)) return false;
       if (value == null) {
-        if (other.value != null)
-          return false;
-      } else if (!value.equals(other.value))
-        return false;
+        if (other.value != null) return false;
+      } else if (!value.equals(other.value)) return false;
       return true;
     }
 
@@ -91,7 +84,6 @@ public class ReplicatedCache {
     public String toString() {
       return "Cached [key=" + key + ", value=" + value + "]";
     }
-
   }
 
   public static class Evict implements Command {
@@ -110,8 +102,7 @@ public class ReplicatedCache {
     public final GetResponse<LWWMap<String, String>> rsp;
 
     private InternalGetResponse(
-        String key, ActorRef<Cached> replyTo, GetResponse<LWWMap<String, String>> rsp
-    ) {
+        String key, ActorRef<Cached> replyTo, GetResponse<LWWMap<String, String>> rsp) {
       this.key = key;
       this.replyTo = replyTo;
       this.rsp = rsp;
@@ -127,10 +118,11 @@ public class ReplicatedCache {
   }
 
   public static Behavior<Command> create() {
-    return Behaviors.setup(context ->
-        DistributedData.withReplicatorMessageAdapter(
-            (ReplicatorMessageAdapter<Command, LWWMap<String, String>> replicator) ->
-                new ReplicatedCache(context, replicator).createBehavior()));
+    return Behaviors.setup(
+        context ->
+            DistributedData.withReplicatorMessageAdapter(
+                (ReplicatorMessageAdapter<Command, LWWMap<String, String>> replicator) ->
+                    new ReplicatedCache(context, replicator).createBehavior()));
   }
 
   private final ReplicatorMessageAdapter<Command, LWWMap<String, String>> replicator;
@@ -138,15 +130,13 @@ public class ReplicatedCache {
 
   public ReplicatedCache(
       ActorContext<Command> context,
-      ReplicatorMessageAdapter<Command, LWWMap<String, String>> replicator
-  ) {
+      ReplicatorMessageAdapter<Command, LWWMap<String, String>> replicator) {
     this.replicator = replicator;
     node = DistributedData.get(context.getSystem()).selfUniqueAddress();
   }
 
   public Behavior<Command> createBehavior() {
-    return Behaviors
-        .receive(Command.class)
+    return Behaviors.receive(Command.class)
         .onMessage(PutInCache.class, cmd -> receivePutInCache(cmd.key, cmd.value))
         .onMessage(Evict.class, cmd -> receiveEvict(cmd.key))
         .onMessage(GetFromCache.class, cmd -> receiveGetFromCache(cmd.key, cmd.replyTo))
@@ -163,8 +153,7 @@ public class ReplicatedCache {
                 LWWMap.empty(),
                 writeLocal(),
                 askReplyTo,
-                curr -> curr.put(node, key, value)
-            ),
+                curr -> curr.put(node, key, value)),
         InternalUpdateResponse::new);
 
     return Behaviors.same();
@@ -178,8 +167,7 @@ public class ReplicatedCache {
                 LWWMap.empty(),
                 writeLocal(),
                 askReplyTo,
-                curr -> curr.remove(node, key)
-            ),
+                curr -> curr.remove(node, key)),
         InternalUpdateResponse::new);
 
     return Behaviors.same();
@@ -195,8 +183,10 @@ public class ReplicatedCache {
 
   private Behavior<Command> onInternalGetResponse(InternalGetResponse msg) {
     if (msg.rsp instanceof GetSuccess) {
-      Option<String> valueOption = ((GetSuccess<LWWMap<String, String>>) msg.rsp).get(dataKey(msg.key)).get(msg.key);
-      Optional<String> valueOptional = Optional.ofNullable(valueOption.isDefined() ? valueOption.get() : null);
+      Option<String> valueOption =
+          ((GetSuccess<LWWMap<String, String>>) msg.rsp).get(dataKey(msg.key)).get(msg.key);
+      Optional<String> valueOptional =
+          Optional.ofNullable(valueOption.isDefined() ? valueOption.get() : null);
       msg.replyTo.tell(new Cached(msg.key, valueOptional));
     } else if (msg.rsp instanceof NotFound) {
       msg.replyTo.tell(new Cached(msg.key, Optional.empty()));
@@ -207,5 +197,4 @@ public class ReplicatedCache {
   private Key<LWWMap<String, String>> dataKey(String entryKey) {
     return LWWMapKey.create("cache-" + Math.abs(entryKey.hashCode() % 100));
   }
-
 }

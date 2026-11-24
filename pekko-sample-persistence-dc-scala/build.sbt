@@ -31,3 +31,6 @@ licenses := Seq(("CC0", url("http://creativecommons.org/publicdomain/zero/1.0"))
 addCommandAlias("cassandra", "runMain sample.persistence.res.MainApp cassandra")
 addCommandAlias("eu-west", "runMain sample.persistence.res.MainApp 7345 eu-west")
 addCommandAlias("eu-central", "runMain sample.persistence.res.MainApp 7355 eu-central")
+
+addCommandAlias("applyCodeStyle", "scalafmtAll; scalafmtSbt")
+addCommandAlias("checkCodeStyle", "scalafmtCheckAll; scalafmtSbtCheck")

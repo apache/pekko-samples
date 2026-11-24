@@ -22,8 +22,8 @@ object Main {
 
       case Some(portString) if portString.matches("""\d+""") =>
         val port = portString.toInt
-        if (backEndPortRange.contains(port)) start(port, "back-end")
-        else if (frontEndPortRange.contains(port)) start(port, "front-end")
+        if backEndPortRange.contains(port) then start(port, "back-end")
+        else if frontEndPortRange.contains(port) then start(port, "front-end")
         else start(port, "worker", args.lift(1).map(_.toInt).getOrElse(1))
 
       case Some("cassandra") =>
@@ -61,14 +61,14 @@ object Main {
         Behaviors.receiveMessage {
           case SelfUp(_) =>
             ctx.log.info("Node is up")
-            if (cluster.selfMember.hasRole("back-end")) {
+            if cluster.selfMember.hasRole("back-end") then {
               WorkManagerSingleton.init(ctx.system)
             }
-            if (cluster.selfMember.hasRole("front-end")) {
+            if cluster.selfMember.hasRole("front-end") then {
               val workManagerProxy = WorkManagerSingleton.init(ctx.system)
               ctx.spawn(FrontEnd(workManagerProxy), "front-end")
             }
-            if (cluster.selfMember.hasRole("worker")) {
+            if cluster.selfMember.hasRole("worker") then {
               (1 to workers).foreach(n => ctx.spawn(Worker(), s"worker-$n"))
             }
             Behaviors.same

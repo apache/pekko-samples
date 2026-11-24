@@ -87,3 +87,6 @@ lazy val `pekko-sample-grpc-kubernetes-scala` = project
   .settings(
     name := "Apache Pekko gRPC on Kubernetes",
     baseProject := "pekko-sample-grpc-kubernetes-scala")
+
+addCommandAlias("applyCodeStyle", "scalafmtAll; scalafmtSbt")
+addCommandAlias("checkCodeStyle", "scalafmtCheckAll; scalafmtSbtCheck")

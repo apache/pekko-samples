@@ -26,3 +26,6 @@ Docker / dockerExposedPorts := Seq(1600)
 dockerRepository := Some("pekko")
 dockerBaseImage := "eclipse-temurin:11"
 enablePlugins(JavaAppPackaging)
+
+addCommandAlias("applyCodeStyle", "scalafmtAll; scalafmtSbt")
+addCommandAlias("checkCodeStyle", "scalafmtCheckAll; scalafmtSbtCheck")

@@ -30,3 +30,9 @@ dockerRepository := Some("pekko")
 
 dockerBaseImage := "eclipse-temurin:11"
 enablePlugins(JavaAppPackaging)
+
+ThisBuild / javafmtFormatterCompatibleJavaVersion := 17
+ThisBuild / javafmtSortImports := false
+
+addCommandAlias("applyCodeStyle", "scalafmtAll; scalafmtSbt; javafmtAll")
+addCommandAlias("checkCodeStyle", "scalafmtCheckAll; scalafmtSbtCheck; javafmtCheckAll")

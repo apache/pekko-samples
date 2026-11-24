@@ -289,3 +289,8 @@ and
 
  You can also find a good overview of the various modules that make up Pekkoin
  [this section of the official documentation](https://pekko.apache.org/docs/pekko/current/scala/guide/modules.html#cluster-singleton)
+
+## Code formatting
+
+Run `sbt applyCodeStyle` to format this sample and `sbt checkCodeStyle` to
+verify its Scala sources and build files against the Apache Pekko style.

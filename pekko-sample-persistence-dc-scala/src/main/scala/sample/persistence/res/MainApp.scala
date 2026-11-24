@@ -58,7 +58,7 @@ object MainApp {
     val bankAccountReplicatedSharding: ReplicatedSharding[BankAccount.Command] =
       replicatedSharding.init(BankAccount.Provider)
 
-    if (port != 0) {
+    if port != 0 then {
       val httpHost = "0.0.0.0"
       val httpPort = 20000 + port
       Http().newServerAt(httpHost, httpPort)

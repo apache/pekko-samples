@@ -53,7 +53,7 @@ object WorkManager {
 
       def tryStartWork(workState: WorkState): Effect[WorkDomainEvent, WorkState] = {
 
-        if (workState.hasWork) {
+        if workState.hasWork then {
           requestNext match {
             case Some(next) =>
               val work = workState.nextWork
@@ -82,7 +82,7 @@ object WorkManager {
           command match {
             case RequestNextWrapper(rn) =>
               ctx.log.info("work request: {}")
-              if (requestNext.isDefined) {
+              if requestNext.isDefined then {
                 throw new IllegalStateException(s"Request next when there is already demand ${rn}, ${requestNext}")
               }
               requestNext = Some(rn)
@@ -101,7 +101,7 @@ object WorkManager {
               tryStartWork(workState)
             case work: SubmitWork =>
               // idempotent
-              if (workState.isAccepted(work.work.workId)) {
+              if workState.isAccepted(work.work.workId) then {
                 work.replyTo ! WorkManager.Ack(work.work.workId)
                 Effect.none
               } else {

@@ -42,7 +42,7 @@ object Frontend {
         ctx.log.info("List of services registered with the receptionist changed: {}", newWorkers)
         running(ctx, newWorkers.toIndexedSeq, jobCounter)
       case Tick =>
-        if (workers.isEmpty) {
+        if workers.isEmpty then {
           ctx.log.warn("Got tick request but no workers available, not sending any work")
           Behaviors.same
         } else {

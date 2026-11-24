@@ -17,18 +17,18 @@ public class App {
       startup(17356);
       startup(17357);
       startup(0);
-    } else
-      Arrays.stream(args).map(Integer::parseInt).forEach(App::startup);
+    } else Arrays.stream(args).map(Integer::parseInt).forEach(App::startup);
   }
 
   private static Behavior<Void> rootBehavior() {
-    return Behaviors.setup(context -> {
+    return Behaviors.setup(
+        context -> {
 
-      // Create an actor that handles cluster domain events
-      context.spawn(ClusterListener.create(), "ClusterListener");
+          // Create an actor that handles cluster domain events
+          context.spawn(ClusterListener.create(), "ClusterListener");
 
-      return Behaviors.empty();
-    });
+          return Behaviors.empty();
+        });
   }
 
   private static void startup(int port) {
@@ -37,8 +37,7 @@ public class App {
     Map<String, Object> overrides = new HashMap<>();
     overrides.put("pekko.remote.artery.canonical.port", port);
 
-    Config config = ConfigFactory.parseMap(overrides)
-        .withFallback(ConfigFactory.load());
+    Config config = ConfigFactory.parseMap(overrides).withFallback(ConfigFactory.load());
 
     // Create an Apache Pekko system
     ActorSystem<Void> system = ActorSystem.create(rootBehavior(), "ClusterSystem", config);
