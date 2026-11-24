@@ -59,3 +59,7 @@ lazy val `killrweather-fog` = project
 addCommandAlias("sharding1", "killrweather/runMain sample.killrweather.KillrWeather 7345")
 addCommandAlias("sharding2", "killrweather/runMain sample.killrweather.KillrWeather 7355")
 addCommandAlias("sharding3", "killrweather/runMain sample.killrweather.KillrWeather 0")
+
+addCommandAlias(
+  "sortImports",
+  """;scalafixEnable;scalafixAll OrganizeImports""")

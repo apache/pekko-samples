@@ -10,3 +10,9 @@ Start the application by typing `sbt "runMain sample.DiningHakkers"`. In the log
 
 Read more about Apache Pekko Typed in [the documentation](https://pekko.apache.org/docs/pekko/current/typed/index.html).
 
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main and test sources. Java sources are not rewritten.

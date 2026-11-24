@@ -1,20 +1,20 @@
 package sample
 
+import scala.concurrent.duration._
+
+import sample.Chopstick.Busy
+import sample.Chopstick.ChopstickAnswer
+import sample.Chopstick.ChopstickMessage
+import sample.Chopstick.Put
+import sample.Chopstick.Taken
+import sample.Hakker.Command
+
 import org.apache.pekko.NotUsed
 import org.apache.pekko.actor.typed.ActorRef
 import org.apache.pekko.actor.typed.ActorSystem
 import org.apache.pekko.actor.typed.Behavior
 import org.apache.pekko.actor.typed.scaladsl.ActorContext
 import org.apache.pekko.actor.typed.scaladsl.Behaviors
-import sample.Chopstick.Busy
-import sample.Chopstick.ChopstickAnswer
-import sample.Chopstick.ChopstickMessage
-import sample.Chopstick.Put
-import sample.Chopstick.Take
-import sample.Chopstick.Taken
-import sample.Hakker.Command
-
-import scala.concurrent.duration._
 
 // Apache Pekko adaptation of
 // http://www.dalnefre.com/wp/2010/08/dining-philosophers-in-humus/

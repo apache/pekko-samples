@@ -179,3 +179,10 @@ For example:
 ### Shutting down
 
 Shut down one of the nodes by pressing 'ctrl-c' in one of the terminal windows. The other nodes will detect the failure after a while, which you can see in the log output in the other terminals.
+
+### Organize Scala imports
+
+Run `sbt sortImports` to organize Scala imports with Scalafix and remove unused
+imports. The command enables SemanticDB and unused-import diagnostics for this sbt session
+and processes both
+main and test sources. Java sources are not rewritten.
