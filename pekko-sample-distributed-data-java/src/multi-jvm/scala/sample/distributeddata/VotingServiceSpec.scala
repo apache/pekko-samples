@@ -93,7 +93,7 @@ class VotingServiceSpec extends MultiNodeSpec(VotingServiceSpec) with STMultiNod
         votingService ! new GetVotes(p.ref)
         val votes = p.expectMessageType[Votes](3.seconds)
         votes.open should be(false)
-        import scala.collection.JavaConverters._
+        import scala.jdk.CollectionConverters._
         votes.result.asScala.toMap should be(expected)
       }
 

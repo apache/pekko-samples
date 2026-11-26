@@ -1,7 +1,7 @@
 package sample.distributeddata
 
 import java.time.Duration
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
 import org.apache.pekko.actor.testkit.typed.scaladsl.TestProbe
 import org.apache.pekko.actor.typed.ActorSystem

@@ -171,12 +171,12 @@ public class VotingService {
   }
 
   private Behavior<Command> onInternalSubscribeResponse(InternalSubscribeResponse rsp) {
-    if (rsp.rsp instanceof Changed && rsp.rsp.key().equals(openedKey)) {
-      if (((Changed<Flag>) rsp.rsp).dataValue().enabled()) {
+    if (rsp.rsp instanceof Changed<Flag> changed && changed.key().equals(openedKey)) {
+      if (changed.dataValue().enabled()) {
         return becomeOpen();
       }
-    } else if (rsp.rsp instanceof Changed && rsp.rsp.key().equals(closedKey)) {
-      if (((Changed<Flag>) rsp.rsp).dataValue().enabled()) {
+    } else if (rsp.rsp instanceof Changed<Flag> changed && changed.key().equals(closedKey)) {
+      if (changed.dataValue().enabled()) {
         return matchGetVotes(false);
       }
     }
@@ -204,9 +204,8 @@ public class VotingService {
   }
 
   private Behavior<Command> onInternalGetResponse(boolean open, InternalGetResponse rsp) {
-    if (rsp.rsp instanceof GetSuccess && rsp.rsp.key().equals(countersKey)) {
-      GetSuccess<PNCounterMap<String>> rsp1 = (GetSuccess<PNCounterMap<String>>) rsp.rsp;
-      Map<String, BigInteger> result = rsp1.dataValue().getEntries();
+    if (rsp.rsp instanceof GetSuccess<PNCounterMap<String>> success && success.key().equals(countersKey)) {
+      Map<String, BigInteger> result = success.dataValue().getEntries();
       rsp.replyTo.tell(new Votes(result, open));
     } else if (rsp.rsp instanceof NotFound && rsp.rsp.key().equals(countersKey)) {
       rsp.replyTo.tell(new Votes(new HashMap<>(), open));

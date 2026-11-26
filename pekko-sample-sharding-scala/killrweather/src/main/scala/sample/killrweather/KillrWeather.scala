@@ -4,7 +4,7 @@ import org.apache.pekko.actor.AddressFromURIString
 import org.apache.pekko.actor.typed.ActorSystem
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 /**
  * Main entry point for the application.

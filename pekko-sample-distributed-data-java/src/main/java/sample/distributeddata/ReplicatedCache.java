@@ -194,8 +194,8 @@ public class ReplicatedCache {
   }
 
   private Behavior<Command> onInternalGetResponse(InternalGetResponse msg) {
-    if (msg.rsp instanceof GetSuccess) {
-      Option<String> valueOption = ((GetSuccess<LWWMap<String, String>>) msg.rsp).get(dataKey(msg.key)).get(msg.key);
+    if (msg.rsp instanceof GetSuccess<LWWMap<String, String>> success) {
+      Option<String> valueOption = success.get(dataKey(msg.key)).get(msg.key);
       Optional<String> valueOptional = Optional.ofNullable(valueOption.isDefined() ? valueOption.get() : null);
       msg.replyTo.tell(new Cached(msg.key, valueOptional));
     } else if (msg.rsp instanceof NotFound) {

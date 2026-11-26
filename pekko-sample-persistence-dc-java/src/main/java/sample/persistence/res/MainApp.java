@@ -1,9 +1,7 @@
 package sample.persistence.res;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.pekko.actor.typed.ActorSystem;
@@ -24,7 +22,7 @@ import sample.persistence.res.counter.ThumbsUpHttp;
 public class MainApp {
 
   public static Set<ReplicaId> ALL_REPLICAS =
-          Collections.unmodifiableSet(new HashSet<>(Arrays.asList(new ReplicaId("eu-west"), new ReplicaId("eu-central"))));
+          Set.of(new ReplicaId("eu-west"), new ReplicaId("eu-central"));
 
   public static void main(String[] args) {
     if (args.length == 0) {
@@ -84,7 +82,7 @@ public class MainApp {
     final CassandraContainer container = new CassandraContainer(
       DockerImageName.parse("cassandra:5.0.5"));
     // bind to the fixed port 9042 so that the sample nodes can connect with the default driver settings
-    container.setPortBindings(java.util.Collections.singletonList("9042:9042"));
+    container.setPortBindings(List.of("9042:9042"));
     container.start();
 
     // shut the cassandra instance down when the JVM stops

@@ -1,7 +1,7 @@
 organization := "org.apache.pekko"
 
 /* scala versions and options */
-scalaVersion := "3.3.7"
+scalaVersion := "3.3.9"
 
 // These options will be used for *all* versions.
 scalacOptions ++= Seq(
@@ -9,7 +9,7 @@ scalacOptions ++= Seq(
   "-unchecked",
   "-encoding", "UTF-8")
 
-val pekkoVersion = "1.5.0"
+val pekkoVersion = "2.0.0"
 val logbackVersion = "1.3.15"
 
 /* dependencies */
@@ -28,5 +28,7 @@ Docker / dockerEntrypoint := Seq("sh", "-c", "bin/clustering $*")
 
 dockerRepository := Some("pekko")
 
-dockerBaseImage := "eclipse-temurin:11"
+dockerBaseImage := "eclipse-temurin:17"
+// Agrona (used by pekko-remote Artery) needs access to jdk.internal.misc.Unsafe
+bashScriptExtraDefines += """addJava "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED""""
 enablePlugins(JavaAppPackaging)

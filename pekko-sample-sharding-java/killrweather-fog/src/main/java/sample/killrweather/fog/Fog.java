@@ -4,7 +4,6 @@ import org.apache.pekko.actor.typed.ActorSystem;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * In another terminal start the `Fog` (see Fog computing https://en.wikipedia.org/wiki/Fog_computing).
@@ -16,9 +15,9 @@ public class Fog {
   public static void main(String[] args) {
     final List<Integer> weatherApiPorts;
     if (args.length == 0) {
-      weatherApiPorts = Arrays.asList(12553, 12554);
+      weatherApiPorts = List.of(12553, 12554);
     } else {
-      weatherApiPorts = Arrays.asList(args).stream().map(arg -> Integer.parseInt(arg)).collect(Collectors.toList());
+      weatherApiPorts = Arrays.stream(args).map(Integer::parseInt).toList();
     }
 
     ActorSystem.create(Guardian.create(weatherApiPorts), "Fog");
